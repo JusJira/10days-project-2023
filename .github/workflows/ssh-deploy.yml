@@ -25,3 +25,12 @@ jobs:
             rm -rf .next
             pnpm build
             pm2 restart 10days
+
+  discord:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+        - uses: sarisia/actions-status-discord@v1
+          if: always()
+          with:
+            webhook: ${{ secrets.DISCORD_WEBHOOK }}
