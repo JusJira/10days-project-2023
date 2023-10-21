@@ -26,16 +26,16 @@ const Navbar = () => {
 
   return (
     <div className="">
-        <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen p-6 px-[5vw] lg:px-[7vw] border-b-2 border-x-[100%] dark:bg-slate-900">
+        <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen p-6 px-[5vw] lg:px-[7vw] border-b-2 border-x-[100%]">
           {/* Logo */}
-          <h1 className="text-3xl text-gray-900 dark:text-gray-100">Heyyo</h1>
+          <h1 className="text-3xl">Heyyo</h1>
 
           {/* Desktop Navigation */}
           <ul className="pl-8 list-none sm:flex hidden items-center flex-1 space-x-8">
             {navLinks.map((nav, index) => (
               <li
                 key={index}
-                className="text-gray-900 dark:text-gray-100 "
+                className=""
               >
                 <Link href={`${nav.link}`}>{nav.label}</Link>
               </li>
