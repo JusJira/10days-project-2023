@@ -25,7 +25,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="transition-all duration-1000">
+    <div className="">
         <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen p-6 px-[5vw] lg:px-[7vw] border-b-2 border-x-[100%] dark:bg-slate-900">
           {/* Logo */}
           <h1 className="text-3xl text-gray-900 dark:text-gray-100">Heyyo</h1>
