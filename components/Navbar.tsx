@@ -44,7 +44,7 @@ const Navbar = () => {
           
           {/* Account Navigation */}
           <div className="flex space-x-8">
-            <Button variant="ghost">Sign In</Button>
+            <Link href="/login"><Button variant="ghost">Sign In</Button></Link>
             <Button>Register</Button>
             <ModeToggle />
             
