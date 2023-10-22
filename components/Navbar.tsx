@@ -45,7 +45,7 @@ const Navbar = () => {
           {/* Account Navigation */}
           <div className="flex space-x-8">
             <Link href="/login"><Button variant="ghost">Sign In</Button></Link>
-            <Button>Register</Button>
+            <Link href="/register"><Button>Register</Button></Link>
             <ModeToggle />
             
           </div>
