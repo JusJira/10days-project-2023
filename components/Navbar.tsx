@@ -43,10 +43,13 @@ const Navbar = () => {
           </ul>
           
           {/* Account Navigation */}
-          <div className="flex space-x-8">
+          <div className="flex space-x-8 align-middle">
             <Link href="/login"><Button variant="ghost">Sign In</Button></Link>
             <Link href="/register"><Button>Register</Button></Link>
-            <ModeToggle />
+            <div className="grid w-full content-center">
+              <ModeToggle />
+            </div>
+            
             
           </div>
           
