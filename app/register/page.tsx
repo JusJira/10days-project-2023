@@ -36,7 +36,8 @@ export default function Register() {
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="username">Password</Label>
-                            <Input id="password" type="password" placeholder="Enter password" />
+                            <Input id="password" type="password" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[A-za-z\d]{8,}"  placeholder="Enter password" 
+                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="username">Confirm Password</Label>
