@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/Theme-provider";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -12,6 +13,11 @@ import Link from "next/link";
 
 export default function Login() {
     return (
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
         <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden">
             <div className="w-full m-auto lg:max-w-lg">
                 <Card>
@@ -41,5 +47,6 @@ export default function Login() {
                 </Card>
             </div>
         </div>
+        </ThemeProvider>
     )
 }

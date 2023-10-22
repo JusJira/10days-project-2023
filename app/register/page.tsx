@@ -9,9 +9,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { ThemeProvider } from "@/components/Theme-provider";
+
 
 export default function Register() {
     return (
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
         <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden">
             <div className="w-full m-auto lg:max-w-lg">
                 <Card>
@@ -44,5 +51,6 @@ export default function Register() {
                 </Card>
             </div>
         </div>
+        </ThemeProvider>
     )
 }
