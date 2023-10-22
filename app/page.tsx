@@ -10,7 +10,7 @@ export default function Home() {
             enableSystem
             disableTransitionOnChange>
       <Navbar />
-      
+      <div className='min-h-screen'></div>
       </ThemeProvider>
     </main>
   )
