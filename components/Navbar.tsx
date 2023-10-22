@@ -25,8 +25,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="">
-        <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen p-6 px-[5vw] lg:px-[7vw] border-b-2 border-x-[100%]">
+        <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen p-6 px-[5vw] lg:px-[7vw] border-b-2 border-x-[100%] bg-background/30 backdrop-blur-md">
           {/* Logo */}
           <h1 className="text-3xl">Heyyo</h1>
 
@@ -58,7 +57,6 @@ const Navbar = () => {
 
 
         </nav>
-    </div>
   )
 }
 
