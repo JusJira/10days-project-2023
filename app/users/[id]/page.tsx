@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 
-export default function Login() {
+export default function Profile() {
     return (
         <>
             <Navbar />

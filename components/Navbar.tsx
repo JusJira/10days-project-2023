@@ -5,15 +5,11 @@ import { ModeToggle } from './ui/dark-mode-toggle';
 import { Menu } from 'lucide-react';
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Label } from './ui/label';
 
 const Navbar = () => {
 
@@ -84,8 +80,6 @@ const Navbar = () => {
             <div className="grid w-full content-center">
               <ModeToggle />
             </div>
-            
-            
           </div>
           
           
