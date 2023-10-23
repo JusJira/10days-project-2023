@@ -3,13 +3,22 @@
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useState, useEffect } from 'react'
 import { Button } from "./button"
+
 
 export function ModeToggle() {
   const { setTheme } = useTheme()
- 
+  const [mounted, setMounted] = useState(false)
   
+  // useEffect only runs on the client, so now we can safely show the UI
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   
+  if (!mounted) {
+    return null
+  }
 
   return (<>
     <Button variant = 'ghost' size = 'icon' className="background transition-all duration-300 block dark:hidden " onClick = {()=> {setTheme('dark')}}>

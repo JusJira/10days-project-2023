@@ -14,11 +14,7 @@ import { ThemeProvider } from "@/components/Theme-provider";
 
 export default function Register() {
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
+
         <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden">
             <div className="w-full m-auto lg:max-w-lg">
                 <Card>
@@ -27,8 +23,8 @@ export default function Register() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="grid gap-2">
-                            <Label htmlFor="username">Username</Label>
-                            <Input id="username" type="text" placeholder="Enter username" />
+                            <Label htmlFor="username">Email</Label>
+                            <Input id="username" type="text" placeholder="Enter email address" />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="username">Display Name</Label>
@@ -52,6 +48,6 @@ export default function Register() {
                 </Card>
             </div>
         </div>
-        </ThemeProvider>
+
     )
 }

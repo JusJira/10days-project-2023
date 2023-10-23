@@ -13,11 +13,7 @@ import Link from "next/link";
 
 export default function Login() {
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
+
         <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden">
             <div className="w-full m-auto lg:max-w-lg">
                 <Card>
@@ -26,8 +22,8 @@ export default function Login() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="grid gap-2">
-                            <Label htmlFor="username">Username</Label>
-                            <Input id="username" type="text" placeholder="Enter username" />
+                            <Label htmlFor="username">Email</Label>
+                            <Input id="username" type="text" placeholder="Enter email address" />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="username">Password</Label>
@@ -47,6 +43,6 @@ export default function Login() {
                 </Card>
             </div>
         </div>
-        </ThemeProvider>
+
     )
 }
