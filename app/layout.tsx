@@ -27,7 +27,12 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable} flex h-[100dvh] flex-col`}>
-        <ThemeProvider attribute="class" defaultTheme="dark">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <main className="h-full flex-[1] overflow-scroll">{children}</main>
           <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 bg-neutral-900">
             <Link href="/" className="hover:bg-neutral-700">

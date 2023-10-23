@@ -51,17 +51,25 @@ export function DarkModeToggle() {
     }
   };
 
-  return (
-    <div className="flex h-10 w-2/3 flex-row items-center justify-between rounded-md border-[1px] border-black bg-white px-2 shadow-2xl dark:bg-black lg:w-48">
-      <span className="sr-only">Dark mode toggle</span>
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-      <Label htmlFor="dark-mode">{theme == 'dark' ? 'Dark Mode' : 'Light Mode'}</Label>
-      <Switch
-        id="dark-mode"
-        checked={theme == "dark"}
-        onCheckedChange={(state) => handleTheme(state)}
-      />
-    </div>
-  );
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => setLoading(false), []);
+
+  if (!loading)
+    return (
+      <div className="flex h-10 w-2/3 flex-row items-center justify-between rounded-md border-[1px] border-black bg-white px-2 shadow-2xl dark:bg-black lg:w-48">
+        <span className="sr-only">Dark mode toggle</span>
+        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <Label htmlFor="dark-mode">
+          {theme == "dark" ? "Dark Mode" : "Light Mode"}
+        </Label>
+        <Switch
+          id="dark-mode"
+          checked={theme == "dark"}
+          onCheckedChange={(state) => handleTheme(state)}
+        />
+      </div>
+    );
+  else return <div className="h-10 w-2/3"></div>;
 }

@@ -1,4 +1,4 @@
-import { DarkModeToggle, ModeToggle } from "@/components/ThemeToggle";
+import { DarkModeToggle} from "@/components/ThemeToggle";
 import SignOutButton from "@/components/signOutButton";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
@@ -13,7 +13,7 @@ export default async function account() {
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
       <div className="flex h-full min-h-full items-center justify-center rounded-md bg-white p-3 dark:bg-neutral-900">
         {session ? (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center justify-center">
             Hi {session?.user?.name}
             <Image
               className="rounded-full"
