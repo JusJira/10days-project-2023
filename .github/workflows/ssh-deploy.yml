@@ -1,7 +1,7 @@
 name: Deployment Workflow
 on:
   push:
-    branches: [main]
+    branches: [justin-dev]
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /home/dev/10days-project-2023
+            cd /home/dev/10days-dev/10days-project-2023
             eval `ssh-agent -s`
             ssh-add ~/.ssh/id_keyid
             git pull origin main
@@ -26,13 +26,4 @@ jobs:
             GOOGLE_CLIENT_ID= ${{ secrets.GOOGLE_CLIENT_ID }}
             GOOGLE_CLIENT_SECRET= ${{ secrets.GOOGLE_CLIENT_SECRET }}
             pnpm build
-            pm2 restart 10days
-
-  discord:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-        - uses: sarisia/actions-status-discord@v1
-          if: always()
-          with:
-            webhook: ${{ secrets.DISCORD_WEBHOOK }}
+            pm2 restart 10dev
