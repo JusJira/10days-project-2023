@@ -1,25 +1,24 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { GoogleLogo } from "@/components/icons/GoogleLogo";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { LogosGoogleIcon, SvgSpinnersGooeyBalls1 } from "@/components/Icons";
 import { signIn } from "next-auth/react";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function Login({ className, ...props }: UserAuthFormProps) {
+
+export default function Login() {
   const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false);
   return (
     <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden">
@@ -61,7 +60,7 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
               </div>
               <div className="grid gap-2 text-center">
                 <Label className="mt-2 text-xs text-center mb-2">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link
                     href="/register"
                     className="text-indigo-600 hover:text-indigo-500"
@@ -85,7 +84,7 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
                 </span>
               </div>
             </div>
-            <div className={cn("grid gap-6", className)} {...props}>
+            <div className="grid -gap-6">
               <button
                 type="button"
                 className={cn(buttonVariants({ variant: "outline" }))}
