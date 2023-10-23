@@ -22,29 +22,30 @@ export default function Register() {
                         <CardTitle className="text-2xl text-center">Register</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="grid gap-2">
-                            <Label htmlFor="username">Email</Label>
-                            <Input id="username" type="text" placeholder="Enter email address" />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="username">Display Name</Label>
-                            <Input id="displayName" type="text" placeholder="Enter your display name" />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="username">Password</Label>
-                            <Input id="password" type="password" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[A-za-z\d]{8,}" placeholder="Enter password" 
-                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="username">Confirm Password</Label>
-                            <Input id="confirmPassword" type="password" placeholder="Type your password again" />
-                        </div>
-                        
+                        <form className="space-y-4">
+                            <div className="grid gap-2">
+                                <Label htmlFor="username">Email</Label>
+                                <Input id="username" type="text" placeholder="Enter email address" />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="username">Display Name</Label>
+                                <Input id="displayName" type="text" placeholder="Enter your display name" />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="username">Password</Label>
+                                <Input id="password" type="password" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[A-za-z\d]{8,}" placeholder="Enter password" 
+                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="username">Confirm Password</Label>
+                                <Input id="confirmPassword" type="password" placeholder="Type your password again" />
+                            </div>
+                            <div className="grid grid-cols-6">
+                                <Button className="col-start-2 col-end-6">Next</Button>
+                            </div>
+                        </form>
                         
                     </CardContent>
-                    <CardFooter className="flex flex-col">
-                        <Button className="">Next</Button>
-                    </CardFooter>
                 </Card>
             </div>
         </div>
