@@ -33,7 +33,7 @@ export default function Login() {
                             </div>
                             <div className="flex items-center justify-center">
                                 <Input id="checked-checkbox" type = 'checkbox' className ="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                <Label htmlFor ="checked-checkbox" className ="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</Label>
+                                <Label htmlFor ="checked-checkbox" className ="ml-2 text-xs font-medium text-gray-900 dark:text-gray-300">Remember me</Label>
                             </div>
                             <div className="grid gap-2 text-center">
                                 <Label className="mt-2 text-xs text-center mb-2">
