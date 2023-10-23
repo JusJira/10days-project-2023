@@ -25,12 +25,12 @@ export default function Register() {
                         <form className="space-y-4">
                             <div className="grid gap-2">
                                 <Label htmlFor="username">Email</Label>
-                                <Input id="username" type="text" placeholder="Enter email address" />
+                                <Input id="username" type="email" placeholder="Enter email address" />
                             </div>
-                            <div className="grid gap-2">
+                            {/* <div className="grid gap-2">
                                 <Label htmlFor="username">Display Name</Label>
                                 <Input id="displayName" type="text" placeholder="Enter your display name" />
-                            </div>
+                            </div> */}
                             <div className="grid gap-2">
                                 <Label htmlFor="username">Password</Label>
                                 <Input id="password" type="password" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[A-za-z\d]{8,}" placeholder="Enter password" 
