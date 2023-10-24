@@ -6,11 +6,75 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id            String    @id @unique
-  name          String?
-  email         String?   @unique
-  image         String?
+  id          String      @id @unique
+  balance     Int         @default(0)
+  address     String?
+  displayName String?
+  image       String?
+  accountId   Int         @default(autoincrement())
+  products    Product[]   @relation("ProductsOwn")
+  orders      Order[]     @relation("UserOrder")
+  wishlists   Wishlist[]  @relation("userWishlist")
+  reviews     Review[]    @relation("userReview")
 
   @@map("users")
+}
+
+model Product {
+  id          Int         @id @default(autoincrement())
+  ownerId     String      @unique
+  price       Int   
+  name        String    
+  description String?   
+  image       String?   
+  quantity    Int         @default(0)
+  createdAt   DateTime    @default(now()) @db.Timestamp(3)
+  owner       User        @relation("ProductsOwn", fields: [ownerId], references: [id])
+  orderLineContains  OrderLine[]   @relation("ContainInOrderLine")
+  wishlists   Wishlist[]  @relation("productWishlist")
+  reviews     Review[]    @relation("productReview")
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  userId      String
+  user        User        @relation("UserOrder", fields: [userId], references: [id])
+  orderedAt   DateTime    @default(now()) @db.Timestamp(3)
+  orderLines  OrderLine[] @relation("OrderContain")
+}
+
+model OrderLine {
+  orderId     Int
+  order       Order       @relation("OrderContain", fields: [orderId], references: [id])
+  productId   Int
+  product     Product     @relation("ContainInOrderLine", fields: [productId], references: [id])
+
+
+  @@id([orderId, productId])
+}
+
+model Wishlist {
+  userId      String
+  user        User        @relation("userWishlist", fields: [userId], references: [id])
+  productId   Int
+  product     Product     @relation("productWishlist", fields: [productId], references: [id])
+  wishedAt    DateTime
+
+
+  @@id([userId, productId])
+}
+
+model Review {
+  id          Int         @id @default(autoincrement())
+  userId      String
+  user        User        @relation("userReview", fields: [userId], references: [id])
+  productId   Int
+  product     Product     @relation("productReview", fields: [productId], references: [id])
+  score       Int         
+  description String
+  reviewedAt  DateTime    @default(now()) @db.Timestamp(3)
+
+  @@unique([userId, productId])
 }
