@@ -50,7 +50,7 @@ export async function POST(req: Request) {
         return new Response("No receiver found", { status: 404 });
     }
     if (sender && receiver) {
-        if (amount > sender.balance) {
+        if (amount > (sender.balance as number)) {
             return new Response("Amount is more than balance", { status: 405 });
         }
         else {
