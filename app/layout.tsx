@@ -30,7 +30,7 @@ export default async function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
-          <main className="h-full flex-[1] overflow-scroll">{children}</main>
+          <main className="h-full flex-[1] overflow-scroll bg-neutral-100 dark:bg-neutral-800">{children}</main>
           <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl">
             <Link
               href="/"

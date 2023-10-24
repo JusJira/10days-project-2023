@@ -10,7 +10,7 @@ model User {
   id            String    @id @unique
   name          String?
   email         String?   @unique
-  image         String?
+  balance       Int? @default(0)
 
   @@map("users")
 }
