@@ -9,11 +9,23 @@ datasource db {
 
 model User {
   id          String   @id @unique
-  email       String?
-  balance     Decimal @default(0)
+  balance     Int?     @default(0)
   address     String?
   displayName String?
   image       String?
+  Product     Product?
 
   @@map("users")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  ownerId     String   @unique
+  price       Int
+  name        String
+  description String?
+  image       String?
+  quantity    Int      @default(0)
+  createdAt   DateTime @default(now())
+  users       User     @relation(fields: [ownerId], references: [id])
 }

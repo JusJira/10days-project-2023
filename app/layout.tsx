@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Metadata } from "next";
 import { Home, ShoppingCart, UserCircle2 } from "lucide-react";
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "ChadMart - Market for GigaChad's",
@@ -60,6 +61,7 @@ export default async function RootLayout({
               </div>
             </Link>
           </footer>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
