@@ -33,7 +33,7 @@ export default async function RootLayout({
         >
           <Navbar />
           <main className="h-full flex-[1] overflow-scroll">{children}</main>
-          <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl">
+          <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl md:hidden">
             <Link
               href="/"
               className="hover:bg-neutral-300 dark:hover:bg-neutral-700 dark:text-white text-black"

@@ -9,11 +9,11 @@ const Navbar = () => {
 
   const navLinks = [
     {
-      label: "idk",
+      label: "Cart",
       link: "#"
     },
     {
-      label: "what",
+      label: "Account",
       link: "#"
     },
     {
@@ -27,9 +27,9 @@ const Navbar = () => {
   ];
 
   return (
-        <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen py-6 px-8 border-b-2 border-x-[100%] bg-background/30 backdrop-blur-md">
+        <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen py-6 px-8 border-b-2 border-x-[100%] bg-background/30 backdrop-blur-md hidden md:flex">
           
-          <h1 className="text-3xl">Heyyo</h1>
+          <h1 className="text-3xl">Chad Mart</h1>
 
           {/* Desktop Navigation */}
           <ul className="pl-8 list-none md:flex hidden items-center flex-1 space-x-8">
