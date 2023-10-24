@@ -23,8 +23,6 @@ jobs:
           envs: DB,KINDE_CLIENT_ID,KINDE_CLIENT_SECRET
           script: |
             cd /home/dev/10days-project-2023
-            eval `ssh-agent -s`
-            ssh-add ~/.ssh/id_keyid
             git pull origin main
             git status
             pnpm install
