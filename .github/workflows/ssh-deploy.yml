@@ -10,35 +10,18 @@ jobs:
     steps:
       - name: SSH to server
         uses: appleboy/ssh-action@v1.0.0
-        env:
-          +     DB: ${{ secrets.DB_URL }}
-          +     KINDE_CLIENT_ID: ${{ secrets.KINDE_CLIENT_ID }}
-          +     KINDE_CLIENT_SECRET: ${{ secrets.KINDE_CLIENT_SECRET }}
-          +     KINDE_ISSUER_URL: ${{vars.KINDE_ISSUER_URL}}
-          +     KINDE_SITE_URL: ${{vars.KINDE_SITE_URL}}
-          +     KINDE_POST_LOGOUT_REDIRECT_URL: ${{vars.KINDE_POST_LOGOUT_REDIRECT_URL}}
-          +     KINDE_POST_LOGIN_REDIRECT_URL: ${{vars.KINDE_POST_LOGIN_REDIRECT_URL}}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script_stop: true
-          envs: DB,KINDE_CLIENT_ID,KINDE_CLIENT_SECRET
           script: |
             cd /home/dev/10days-project-2023
             git pull origin main
             git status
             pnpm install
             rm -rf .next
-            echo "$DB"
-            DATABASE_URL=$DB
-            KINDE_CLIENT_ID=$KINDE_CLIENT_ID
-            KINDE_CLIENT_SECRET=$KINDE_CLIENT_SECRET
-            KINDE_ISSUER_URL=$KINDE_ISSUER_URL
-            KINDE_SITE_URL=$KINDE_SITE_URL
-            KINDE_POST_LOGOUT_REDIRECT_URL=$KINDE_POST_LOGOUT_REDIRECT_URL
-            KINDE_POST_LOGIN_REDIRECT_URL=$KINDE_POST_LOGIN_REDIRECT_UR
             pnpm build
             pm2 restart 10days
 
