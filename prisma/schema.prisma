@@ -10,7 +10,7 @@ datasource db {
 model User {
   id          String   @id @unique
   email       String?
-  balance     Decimal?
+  balance     Decimal @default(0)
   address     String?
   displayName String?
   image       String?
