@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Metadata } from "next";
 import { Home, ShoppingCart, UserCircle2 } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "ChadMart - Market for GigaChad's",
@@ -30,6 +31,7 @@ export default async function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
+          <Navbar />
           <main className="h-full flex-[1] overflow-scroll">{children}</main>
           <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl">
             <Link
