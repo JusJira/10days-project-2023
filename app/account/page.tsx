@@ -55,7 +55,7 @@ if (!dbUser) {
           </div>
           <div className="flex w-full justify-center">
             <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white px-2 shadow-2xl dark:bg-black lg:w-48">
-              <span className="flex flex-row items-center justify-center">Balance: {dbUser?.balance} <Lightbulb size={24} strokeWidth={2} /></span>
+              <span className="flex flex-row items-center justify-center">Balance: {dbUser?.balance?.toFixed(2)} <Lightbulb size={24} strokeWidth={2} /></span>
             </div>
           </div>
         </div>
