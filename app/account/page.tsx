@@ -8,6 +8,8 @@ import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 export default async function account() {
   const {getUser} = getKindeServerSession();
   const user = await getUser();
+  console.log(user)
+
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
       <div className="flex h-full min-h-full items-center justify-center rounded-md bg-white p-3 dark:bg-neutral-900">
@@ -35,6 +37,21 @@ export default async function account() {
           </Button>
         </div>
       )}
+      {
+        (user) && (
+          <div className="grid-cols-4">
+            <div className="inline-flex basis-24 items-center justify-center min-w-24 min-h-24 w-24 h-24 md:w-24 md:h-24 overflow-hidden bg-[#C3DCE3] rounded-full">
+              {
+                (!user.picture) ? 
+                (<span className="font-large text-[#2B788B] font-[Montserrat]">{(user.given_name || "A")[0]}</span>)
+                :
+                (<img className='h-full !object-cover' src="https://nhadepso.com/wp-content/uploads/2023/03/cap-nhat-99-hinh-anh-avatar-gau-cute-de-thuong-ngo-nghinh_1.jpg"></img>)
+              }
+            </div>
+          </div>
+        )
+      }
+      
     </div>
   );
 }

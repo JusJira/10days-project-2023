@@ -4,8 +4,12 @@ import { Button } from './ui/button';
 import { DarkModeToggle } from './ThemeToggle';
 import { Menu } from 'lucide-react';
 import { IconModeToggle } from './IconThemeToggle';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const Navbar = () => {
+  const { getUser } = getKindeServerSession();
+  const user = getUser()
 
   const navLinks = [
     {
@@ -13,21 +17,13 @@ const Navbar = () => {
       link: "#"
     },
     {
-      label: "Account",
+      label: "Something",
       link: "#"
     },
-    {
-      label: "i'll",
-      link: "#"
-    },
-    {
-      label: "put",
-      link: "#"
-    }
   ];
 
   return (
-        <nav className="sticky top-0 flex items-center justify-between h-16 max-w-screen py-6 px-8 border-b-2 border-x-[100%] bg-background/30 backdrop-blur-md hidden md:flex">
+        <nav className="sticky top-0 items-center justify-between h-16 max-w-screen py-6 px-8 border-b-2 border-x-[100%] bg-background/30 backdrop-blur-md hidden md:flex">
           
           <h1 className="text-3xl">Chad Mart</h1>
 
@@ -49,8 +45,24 @@ const Navbar = () => {
           
           {/* Account */}
           <div className="flex space-x-6 align-middle">
-            <Link href="/login"><Button variant="ghost">Sign In</Button></Link>
-            <Link href="/register"><Button>Register</Button></Link>
+            {
+              (!user) ? 
+              <>
+                <Link href="/login"><Button variant="ghost">Sign In</Button></Link>
+                <Link href="/register"><Button>Register</Button></Link>
+              </> :
+              <>
+              <Link href="/account">
+                <Avatar>
+                  <AvatarImage src="https://nhadepso.com/wp-content/uploads/2023/03/cap-nhat-99-hinh-anh-avatar-gau-cute-de-thuong-ngo-nghinh_1.jpg" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </Link>
+                
+              </>
+            }
+
+
             <div className="grid w-full content-center">
               <IconModeToggle />
             </div>

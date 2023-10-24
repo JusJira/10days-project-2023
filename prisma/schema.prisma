@@ -13,6 +13,7 @@ model User {
   address     String?
   displayName String?
   image       String?
+  bio         String?
   accountId   Int         @default(autoincrement())
   products    Product[]   @relation("ProductsOwn")
   orders      Order[]     @relation("UserOrder")
