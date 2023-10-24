@@ -21,7 +21,6 @@ export default async function account() {
       </div>
       {user ? (
         <div className="flex h-full  min-h-full flex-col items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
-          <div>Version {process.env.VERSION}</div>
           <div className="flex w-full justify-center">
             <DarkModeToggle />
           </div>

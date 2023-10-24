@@ -15,7 +15,7 @@ function SignOutButton() {
     // >
     //   Sign Out
     // </Button>
-    <Link className={`${buttonVariants({ variant: "outline" })} w-2/3 lg:w-48 !border-black`} href="/api/auth/logout">
+    <Link className={`${buttonVariants({ variant: "outline" })} w-2/3 lg:w-48 !border-black`} href="/api/auth/logout" prefetch={false}>
       Sign Out
     </Link>
   );
