@@ -10,11 +10,17 @@ jobs:
     steps:
       - name: SSH to server
         uses: appleboy/ssh-action@v1.0.0
+        env:
+          +     DB: ${{ secrets.DB_URL }}
+          +     KINDE_CLIENT_ID: ${{ secrets.KINDE_CLIENT_ID }}
+          +     KINDE_CLIENT_SECRET: ${{ secrets.KINDE_CLIENT_SECRET }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
+          script_stop: true
+          envs: DB,KINDE_CLIENT_ID,KINDE_CLIENT_SECRET
           script: |
             cd /home/dev/10days-project-2023
             eval `ssh-agent -s`
