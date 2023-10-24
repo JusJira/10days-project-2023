@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from './ui/button';
 import { DarkModeToggle } from './ThemeToggle';
 import { Menu } from 'lucide-react';
+import { IconModeToggle } from './IconThemeToggle';
 
 const Navbar = () => {
 
@@ -51,7 +52,7 @@ const Navbar = () => {
             <Link href="/login"><Button variant="ghost">Sign In</Button></Link>
             <Link href="/register"><Button>Register</Button></Link>
             <div className="grid w-full content-center">
-              <DarkModeToggle />
+              <IconModeToggle />
             </div>
           </div>
           
