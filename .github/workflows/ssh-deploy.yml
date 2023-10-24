@@ -31,6 +31,7 @@ jobs:
             git status
             pnpm install
             rm -rf .next
+            echo "$DB"
             DATABASE_URL=$DB
             KINDE_CLIENT_ID=$KINDE_CLIENT_ID
             KINDE_CLIENT_SECRET=$KINDE_CLIENT_SECRET
