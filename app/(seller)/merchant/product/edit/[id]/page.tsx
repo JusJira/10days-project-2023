@@ -65,7 +65,7 @@ export default function Page({ params }: { params: { id: string } }) {
         console.error(error);
         router.push("/");
       });
-  }, [id]);
+  });
 
   async function onDelete() {
     const response = await fetch("/api/product/delete", {

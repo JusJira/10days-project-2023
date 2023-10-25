@@ -23,8 +23,8 @@ export default async function Page({ params }: { params: { id: string } }) {
           <Image
             src={data?.image as string}
             alt="Product Image"
-            width={300}
-            height={300}
+            width={1000}
+            height={1000}
           />
         </div>
         <div className="flex flex-col justify-between">

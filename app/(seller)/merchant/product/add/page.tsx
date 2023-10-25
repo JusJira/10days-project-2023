@@ -34,8 +34,6 @@ export default function InputForm() {
     resolver: zodResolver(FormSchema),
   });
 
-  const router = useRouter()
-
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
 
@@ -54,9 +52,9 @@ export default function InputForm() {
     });
 
     setIsLoading(false);
-    window.location.href = '/merchant/product'
 
     if (response?.ok) {
+      window.location.href = '/merchant/product'
       return toast({
         title: "Success",
         description: "Your product has been added.",
@@ -116,13 +114,12 @@ export default function InputForm() {
           />
           <div className="flex-col flex items-center justify-center gap-3">
             <div className="relative">
-              {resource ? <Image src={resource} alt="Product Image" fill></Image>: null}
+              {resource ? <img src={resource} alt="Product Image"></img>: null}
             </div>
             <UploadButton
               endpoint="imageUploader"
               onClientUploadComplete={(res) => {
                 // Do something with the response
-
                 if (res) {
                   form.setValue('image',res[0].url)
                   setResource(res[0].url)
