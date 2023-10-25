@@ -72,7 +72,7 @@ export function ProfileForm() {
         }  
       )
       alert(JSON.stringify(data, null, 2));
-      console.log(res);
+      console.log((await res.json()).message);
     
   }
 
