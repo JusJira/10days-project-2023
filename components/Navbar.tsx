@@ -58,7 +58,7 @@ const Navbar = async () => {
                 <Link href="/register"><Button>Register</Button></Link>
               </> :
               <>
-              <Link href="/account">
+              <Link href="/account" >
                 <Avatar>
                   <AvatarImage src={userData?.image} />
                   <AvatarFallback>CN</AvatarFallback>
