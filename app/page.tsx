@@ -2,6 +2,8 @@ import ProductBox from "@/components/productBox";
 import { db } from "@/lib/db";
 import Image from "next/image";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const products = await db.product.findMany({
     select: {
