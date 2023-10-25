@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id          String     @id @unique
   balance     Int        @default(0)
@@ -60,7 +59,7 @@ model OrderLine {
 model Wishlist {
   userId    String
   productId Int
-  wishedAt  DateTime
+  wishedAt  DateTime @default(now())
   product   Product  @relation("productWishlist", fields: [productId], references: [id])
   user      User     @relation("userWishlist", fields: [userId], references: [id])
 

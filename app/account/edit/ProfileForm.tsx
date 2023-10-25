@@ -46,7 +46,7 @@ const defaultValues: Partial<ProfileFormValues> = {
     //   bio: userData?.bio||""
 }
 
-export function ProfileForm({user } : {user : User | null}) {
+export function ProfileForm() {
     
 
   const form = useForm<ProfileFormValues>({
@@ -57,8 +57,6 @@ export function ProfileForm({user } : {user : User | null}) {
 
 
   async function onSubmit(data: ProfileFormValues) {
-    if (!user) alert('lose session error')
-    else{
       const res = await fetch("/api/editProfile",
         {
           method : "PUT",
@@ -67,7 +65,6 @@ export function ProfileForm({user } : {user : User | null}) {
             "Content-Type": "application/json",
           },
           body : JSON.stringify({
-            id : user.id,
             displayName : data.displayName,
             bio : data.bio
           })
@@ -76,7 +73,7 @@ export function ProfileForm({user } : {user : User | null}) {
       )
       alert(JSON.stringify(data, null, 2));
       console.log(res);
-    }
+    
   }
 
   return (
@@ -120,6 +117,7 @@ export function ProfileForm({user } : {user : User | null}) {
           )}
         />
         <Button type="submit">Update Profile</Button>
+        
       </form>
     </Form>
   )
