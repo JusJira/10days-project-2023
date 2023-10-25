@@ -83,8 +83,6 @@ export function ProfileForm() {
     finally {
       window.location.replace("/account")
     }
-      
-      
     
   }
 
