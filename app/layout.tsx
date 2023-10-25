@@ -6,6 +6,8 @@ import { Metadata } from "next";
 import { Home, ShoppingCart, UserCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
+import { Toaster } from "@/components/ui/toaster"
+
 export const metadata: Metadata = {
   title: "ChadMart - Market for GigaChad's",
   description:
@@ -64,6 +66,8 @@ export default async function RootLayout({
           </footer>
           
         </ThemeProvider>
+
+        <Toaster />
       </body>
     </html>
   );

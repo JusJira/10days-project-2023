@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { UploadButton } from "@/lib/uploadthing";
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast"
+
 
 
 // Build form schema
@@ -51,6 +53,8 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 export function ProfileForm({userData} : {userData: any}) { // change any type if u have free time, I am lazy
   const [profileImage, setProfileImage] = useState<string>(userData?.image);
+  
+  const { toast } = useToast()
 
   const defaultValues: Partial<ProfileFormValues> = {
     displayName: userData?.displayName||"",
@@ -66,7 +70,7 @@ export function ProfileForm({userData} : {userData: any}) { // change any type i
 
 
   async function onSubmit(data: ProfileFormValues) {
-    alert(JSON.stringify(data, null, 2));
+    // alert(JSON.stringify(data, null, 2));
     try {
       const res = await fetch("/api/editProfile",
         {
@@ -82,9 +86,13 @@ export function ProfileForm({userData} : {userData: any}) { // change any type i
             address: data.address
           })
 
-        }  
+        }
       )
-      console.log(res);
+      // console.log(res);
+      // toast({
+      //   title: "Edit Profile",
+      //   description: `The profile is saved.`,
+      // })
     }
     catch (err) {
       console.log(err)
@@ -153,8 +161,12 @@ export function ProfileForm({userData} : {userData: any}) { // change any type i
                   endpoint="imageUploader"
                   onClientUploadComplete={(res) => {
                     // Do something with the response
-                    console.log("Files: ", res);
-                    alert("Upload Completed");
+                    toast({
+                      title: "Upload Image : Success",
+                      description: `The image will be loaded soon. By the way, you must press "Update Profile" to update image.`,
+                    })
+                    // console.log("Files: ", res);
+                    // alert("Upload Completed");
                     if (res) {
                       setProfileImage(res[0].url)
                     }
@@ -162,7 +174,11 @@ export function ProfileForm({userData} : {userData: any}) { // change any type i
                   }}
                   onUploadError={(error: Error) => {
                     // Do something with the error.
-                    alert(`ERROR! ${error.message}`);
+                    toast({
+                      title: "Upload Image : Error",
+                      description: `${error.message}`,
+                    })
+                    // alert(`ERROR! ${error.message}`);
                   }}
                 />
               </div>
