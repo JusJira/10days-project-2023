@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -21,6 +21,8 @@ import { db } from "@/lib/db"
 import { User } from "@prisma/client"
 import { Router, useRouter } from 'next/router'
 import { redirect } from "next/navigation"
+import { getdbUser } from "@/lib/getUser"
+import { useEffect, useState } from "react"
 
 // Build form schema
 const profileFormSchema = z.object({
@@ -41,15 +43,20 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 //     id: user?.id||""
 //   }
 // })
+// const userData = await getdbUser()
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-    //   displayName: userData?.displayName||"",
-    //   bio: userData?.bio||""
+      // displayName: userData?.displayName||"",
+      // bio: userData?.bio||""
 }
 
-export function ProfileForm() {
-    
+
+export function ProfileForm({userData} : {userData: any}) { // change any type if u have free time, I am lazy
+  const defaultValues: Partial<ProfileFormValues> = {
+    displayName: userData?.displayName||"",
+    bio: userData?.bio||""
+  }
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -59,6 +66,7 @@ export function ProfileForm() {
 
 
   async function onSubmit(data: ProfileFormValues) {
+    alert(JSON.stringify(data, null, 2));
     try {
       const res = await fetch("/api/editProfile",
         {
@@ -74,7 +82,6 @@ export function ProfileForm() {
 
         }  
       )
-      alert(JSON.stringify(data, null, 2));
       console.log(res);
     }
     catch (err) {

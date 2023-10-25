@@ -20,6 +20,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-toast": "^1.1.5",
+    "@uploadthing/react": "^5.7.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.288.0",
@@ -30,6 +31,7 @@
     "react-hook-form": "^7.47.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^5.7.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -44,7 +46,6 @@
     "tailwindcss": "^3",
     "typescript": "^5"
   },
-
   "browser": {
     "fs": false,
     "os": false,

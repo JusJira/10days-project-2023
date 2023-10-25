@@ -60,8 +60,8 @@ model Wishlist {
   userId    String
   productId Int
   wishedAt  DateTime @default(now())
-  product   Product  @relation("productWishlist", fields: [productId], references: [id])
-  user      User     @relation("userWishlist", fields: [userId], references: [id])
+  product   Product  @relation("productWishlist", fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation("userWishlist", fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, productId])
 }
