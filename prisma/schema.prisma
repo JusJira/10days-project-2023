@@ -16,7 +16,7 @@ model User {
   accountId   Int        @default(autoincrement())
   bio         String?
   Order       Order[]
-  Product     Product?
+  Product     Product[]
   Review      Review[]
   Wishlist    Wishlist[]
 
@@ -25,7 +25,7 @@ model User {
 
 model Product {
   id          Int         @id @default(autoincrement())
-  ownerId     String      @unique
+  ownerId     String      
   price       Int
   name        String
   description String?
