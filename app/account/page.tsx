@@ -50,16 +50,14 @@ export default async function account() {
             <DarkModeToggle />
           </div>
           <div className="flex w-full justify-center">
-            <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white px-2 shadow-2xl dark:bg-black lg:w-48">
+            <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white px-2 dark:bg-black lg:w-48">
               <span className="flex flex-row items-center justify-center">
                 Balance: {dbUser?.balance}{" "}
                 <Lightbulb size={24} strokeWidth={2} />
               </span>
             </div>
           </div>
-          <div className="flex h-full min-h-full items-center justify-center rounded-md bg-white p-3 dark:bg-neutral-900">
               <Link className={`${buttonVariants({ variant: "outline" })} w-2/3 lg:w-48 !border-black`} href='/merchant'>Merchant Page</Link>
-          </div>
           <div className="flex w-full justify-center">
             <SignOutButton />
           </div>
