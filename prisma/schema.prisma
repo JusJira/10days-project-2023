@@ -12,7 +12,7 @@ model User {
   balance     Int         @default(0)
   address     String?
   displayName String?
-  image       String?
+  image       String      @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png")
   bio         String?
   accountId   Int         @default(autoincrement())
   products    Product[]   @relation("ProductsOwn")
@@ -29,7 +29,7 @@ model Product {
   price       Int   
   name        String    
   description String?   
-  image       String?   
+  image       String      @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202889/10-day-project/image/products/x125n4rie6tnb67parkw.jpg")
   quantity    Int         @default(0)
   createdAt   DateTime    @default(now()) @db.Timestamp(3)
   owner       User        @relation("ProductsOwn", fields: [ownerId], references: [id])
