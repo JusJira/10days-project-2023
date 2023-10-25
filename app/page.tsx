@@ -11,7 +11,6 @@ export default async function Home() {
       image: true,
     },
   });
-  console.log(products);
   return (
     <div className="bg-neutral-100 dark:bg-neutral-800 h-full w-full">
       <div className="p-8">

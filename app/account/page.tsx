@@ -9,6 +9,7 @@ import {
 import { db } from "@/lib/db";
 import { Lightbulb } from "lucide-react";
 import UserProfile from "@/components/userProfile";
+import Link from "next/link";
 
 export default async function account() {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -55,6 +56,9 @@ export default async function account() {
                 <Lightbulb size={24} strokeWidth={2} />
               </span>
             </div>
+          </div>
+          <div className="flex h-full min-h-full items-center justify-center rounded-md bg-white p-3 dark:bg-neutral-900">
+              <Link className={`${buttonVariants({ variant: "outline" })} w-2/3 lg:w-48 !border-black`} href='/merchant'>Merchant Page</Link>
           </div>
           <div className="flex w-full justify-center">
             <SignOutButton />

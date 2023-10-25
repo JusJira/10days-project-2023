@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CldUploadButton } from "next-cloudinary";
 import { UploadButton } from "@/utils/uploadthing";
 import {useRouter} from "next/navigation"
+import Image from "next/image";
 import { productSchema } from "@/utils/zod";
 
 const FormSchema = productSchema
@@ -114,14 +115,14 @@ export default function InputForm() {
             )}
           />
           <div className="flex-col flex items-center justify-center gap-3">
-            <div>
-              {resource ? <img src={resource}></img>: null}
+            <div className="relative">
+              {resource ? <Image src={resource} alt="Product Image" fill></Image>: null}
             </div>
             <UploadButton
               endpoint="imageUploader"
               onClientUploadComplete={(res) => {
                 // Do something with the response
-                console.log("Files: ", res);
+
                 if (res) {
                   form.setValue('image',res[0].url)
                   setResource(res[0].url)
