@@ -12,7 +12,7 @@ const Navbar = async () => {
 
   const userData = await db.user.findUnique({
     where: {
-      id: user.id||""
+      id: user?.id||""
     }
   })
 

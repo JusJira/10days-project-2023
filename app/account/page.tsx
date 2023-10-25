@@ -1,54 +1,56 @@
 import { DarkModeToggle} from "@/components/ThemeToggle";
 import SignOutButton from "@/components/signOutButton";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 import { Label } from "@/components/ui/label";
 import { db } from "@/lib/db";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default async function account() {
   const {getUser} = getKindeServerSession();
   const user = await getUser();
   // console.log(user)
 
-
   const userData = await db.user.findUnique({
     where: {
-      id: user.id||""
+      id: user?.id||""
     }
   })
+  
+
   console.log(userData)
 
   
 
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-      <div className="flex h-full min-h-full items-center justify-center rounded-md bg-white p-3 dark:bg-neutral-900">
-        {user ? (
-          <div className="flex flex-col gap-3 items-center justify-center">
-            Hi {user.given_name}
-          </div>
-        ) : (
-          <div className="flex flex-col">You are not Logged In</div>
-        )}
-      </div>
-      {user ? (
-        <div className="flex h-full  min-h-full flex-col items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
-          <div className="flex w-full justify-center">
-            <DarkModeToggle />
-          </div>
-          <div className="flex w-full justify-center">
-            <SignOutButton />
-          </div>
-        </div>
-      ) : (
-        <div className="flex h-full min-h-full items-center justify-center rounded-md bg-white p-3 dark:bg-neutral-900">
+      {
+        (!user) && (
+          <div className="flex h-full min-h-full items-center justify-center rounded-md">
           <Button asChild className="w-2/3 lg:w-48">
             <Link href="/login">Login</Link>
           </Button>
-        </div>
-      )}
+          </div>
+        )
+      }
+      { (user) && (
+          <div className="flex h-full  min-h-full flex-col md:flex-row items-center justify-center gap-3 rounded-md">
+            <div className="flex w-full justify-center">
+              <DarkModeToggle />
+            </div>
+            <div className="flex w-full justify-center">
+              <SignOutButton />
+            </div>
+            <div className="flex w-full justify-center">
+              <Link className={`${buttonVariants({ variant: "outline" })} w-2/3 lg:w-48 !border-black`} href="/account/edit" prefetch={false}>
+                Edit Profile
+              </Link>
+            </div>
+          </div>
+        ) 
+      }
       {
         (user) && (
           <div className="flex flex-col">
@@ -70,6 +72,29 @@ export default async function account() {
             </div>
 
             {/* User Profile */}
+            <div className="flex flex-col gap-2 mt-2 mb-2 px-4 md:px-10 py-3 w-full"> 
+              <Card>
+                <CardHeader>
+                <div className="w-full md:px-4 text-center md:text-left">
+                  <Label className="font-bold text-lg break-words">Personal Profile</Label>
+                </div>
+                </CardHeader>
+                <CardContent>
+                <div className="flex flex-col items-start space-y-4">
+                  <div className="w-full">
+                    <Label className="text-sm break-words"><span className="font-bold">Full Name :</span> {user.given_name + " " + user.family_name}</Label>
+                  </div>
+                  <div className="w-full">
+                    <Label className="text-sm break-words"><span className="font-bold">Address :</span> {userData?.address}</Label>
+                  </div>
+                  <div className="w-full">
+                    <Label className="text-sm break-words"><span className="font-bold">Account Created At :</span> {userData?.createdAt.toString()}</Label>
+                  </div>
+                </div>
+                </CardContent>
+              </Card>
+              
+            </div>
             
           </div>
           
