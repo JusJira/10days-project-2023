@@ -15,6 +15,7 @@ model User {
   image       String     @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png")
   accountId   Int        @default(autoincrement())
   bio         String?
+  createdAt   DateTime   @default(now())
   Order       Order[]
   Product     Product[]
   Review      Review[]
@@ -25,7 +26,7 @@ model User {
 
 model Product {
   id          Int         @id @default(autoincrement())
-  ownerId     String      
+  ownerId     String
   price       Int
   name        String
   description String?
@@ -33,7 +34,7 @@ model Product {
   quantity    Int         @default(0)
   createdAt   DateTime    @default(now())
   OrderLine   OrderLine[]
-  users       User        @relation(fields: [ownerId], references: [id])
+  users       User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   Review      Review[]
   Wishlist    Wishlist[]
 }
@@ -42,15 +43,15 @@ model Order {
   id        Int         @id @default(autoincrement())
   userId    String
   orderedAt DateTime    @default(now())
-  users     User        @relation(fields: [userId], references: [id])
+  users     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   OrderLine OrderLine[]
 }
 
 model OrderLine {
   orderId   Int
   productId Int
-  Order     Order   @relation(fields: [orderId], references: [id])
-  Product   Product @relation(fields: [productId], references: [id])
+  Order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  Product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([orderId, productId])
 }
@@ -62,8 +63,8 @@ model Review {
   score       Int
   description String
   reviewedAt  DateTime @default(now())
-  Product     Product  @relation(fields: [productId], references: [id])
-  users       User     @relation(fields: [userId], references: [id])
+  Product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  users       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
 }
@@ -71,9 +72,9 @@ model Review {
 model Wishlist {
   userId    String
   productId Int
-  wishedAt  DateTime
-  Product   Product  @relation(fields: [productId], references: [id])
-  users     User     @relation(fields: [userId], references: [id])
+  wishedAt  DateTime @default(now())
+  Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  users     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, productId])
 }

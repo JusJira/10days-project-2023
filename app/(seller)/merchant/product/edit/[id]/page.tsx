@@ -28,6 +28,8 @@ const FormSchema = productSchema;
 
 export default function Page({ params }: { params: { id: string } }) {
   const [data, setData] = React.useState(null);
+  const [upload, setUpload] = React.useState(false);
+  const [imageUrl, setImageUrl] = React.useState("");
   const [isFetching, setIsFetching] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -65,7 +67,7 @@ export default function Page({ params }: { params: { id: string } }) {
         console.error(error);
         router.push("/");
       });
-  });
+  }, []);
 
   async function onDelete() {
     const response = await fetch("/api/product/delete", {
@@ -77,8 +79,9 @@ export default function Page({ params }: { params: { id: string } }) {
         id: id,
       }),
     });
-    window.location.href = "/merchant/product";
+
     if (response?.ok) {
+      window.location.href = "/merchant/product";
       return toast({
         title: "Success",
         description: "Your product has been deleted.",
@@ -99,13 +102,14 @@ export default function Page({ params }: { params: { id: string } }) {
         stock: data.stock,
         description: data.description,
         id: id,
+        image: data.image,
       }),
     });
 
     setIsLoading(false);
-    window.location.href = "/merchant/product";
 
     if (response?.ok) {
+      window.location.href = "/merchant/product";
       return toast({
         title: "Success",
         description: "Your product has been edited.",
@@ -129,12 +133,21 @@ export default function Page({ params }: { params: { id: string } }) {
             <form onSubmit={form.handleSubmit(onSubmit)} className="">
               <div className="w-full dark:bg-neutral-600 bg-neutral-100 rounded-md grid grid-cols-1 md:grid-cols-3">
                 <div className="flex items-center justify-center p-3 flex-col gap-3">
-                  <Image
-                    src={data["image"]}
-                    alt="Product Image"
-                    width={300}
-                    height={300}
-                  />
+                  {upload ? (
+                    <Image
+                      src={imageUrl}
+                      alt="Product Image"
+                      width={300}
+                      height={300}
+                    />
+                  ) : (
+                    <Image
+                      src={data["image"]}
+                      alt="Product Image"
+                      width={300}
+                      height={300}
+                    />
+                  )}
                   <FormField
                     control={form.control}
                     name="image"
@@ -143,6 +156,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         <FormLabel>Product Image</FormLabel>
                         <FormControl>
                           <Input
+                            type="hidden"
                             placeholder="Product Image Url"
                             className="appearance-none"
                             {...field}
@@ -153,7 +167,6 @@ export default function Page({ params }: { params: { id: string } }) {
                     )}
                   />
                   <div className="flex-col flex items-center justify-center gap-3">
-                    <span>Or</span>
                     <UploadButton
                       endpoint="imageUploader"
                       onClientUploadComplete={(res) => {
@@ -161,6 +174,8 @@ export default function Page({ params }: { params: { id: string } }) {
                         console.log("Files: ", res);
                         if (res) {
                           form.setValue("image", res[0].url);
+                          setUpload(true)
+                          setImageUrl(res[0].url)
                         }
                       }}
                       onUploadError={(error: Error) => {
