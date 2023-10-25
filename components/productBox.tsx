@@ -21,8 +21,7 @@ export default function ProductBox({
           src={image}
           alt="Product Image"
           fill
-          objectFit="cover"
-          objectPosition="center"
+          className="object-cover object-center"
         />
       </div>
       <div className="p-3 flex flex-col justify-between">
