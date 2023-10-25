@@ -8,24 +8,72 @@ datasource db {
 }
 
 model User {
-  id          String   @id @unique
-  balance     Int      @default(0)
+  id          String     @id @unique
+  balance     Int        @default(0)
   address     String?
   displayName String?
-  image       String?
+  image       String     @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png")
+  accountId   Int        @default(autoincrement())
+  bio         String?
+  Order       Order[]
   Product     Product?
+  Review      Review[]
+  Wishlist    Wishlist[]
 
   @@map("users")
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  ownerId     String   @unique
+  id          Int         @id @default(autoincrement())
+  ownerId     String      @unique
   price       Int
   name        String
   description String?
-  image       String?
-  quantity    Int      @default(0)
-  createdAt   DateTime @default(now())
-  users       User     @relation(fields: [ownerId], references: [id])
+  image       String      @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202889/10-day-project/image/products/x125n4rie6tnb67parkw.jpg")
+  quantity    Int         @default(0)
+  createdAt   DateTime    @default(now())
+  OrderLine   OrderLine[]
+  users       User        @relation(fields: [ownerId], references: [id])
+  Review      Review[]
+  Wishlist    Wishlist[]
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  userId    String
+  orderedAt DateTime    @default(now())
+  users     User        @relation(fields: [userId], references: [id])
+  OrderLine OrderLine[]
+}
+
+model OrderLine {
+  orderId   Int
+  productId Int
+  Order     Order   @relation(fields: [orderId], references: [id])
+  Product   Product @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+}
+
+model Review {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  productId   Int
+  score       Int
+  description String
+  reviewedAt  DateTime @default(now())
+  Product     Product  @relation(fields: [productId], references: [id])
+  users       User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+model Wishlist {
+  userId    String
+  productId Int
+  wishedAt  DateTime
+  Product   Product  @relation(fields: [productId], references: [id])
+  users     User     @relation(fields: [userId], references: [id])
+
+  @@id([userId, productId])
 }

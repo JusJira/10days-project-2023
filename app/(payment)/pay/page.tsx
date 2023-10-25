@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,8 +18,6 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { toast } from "@/components/ui/use-toast";
 
-import { cn } from "@/lib/utils";
-
 const FormSchema = z.object({
   amount: z.coerce
     .number({
@@ -30,7 +27,7 @@ const FormSchema = z.object({
     .gte(0, {
       message: "Amount must be more than zero.",
     }),
-  accId: z.string({
+  accId: z.coerce.number({
     required_error: "An account id is required.",
   }),
 });
@@ -111,7 +108,7 @@ export default function InputForm() {
               <FormItem>
                 <FormLabel>Account ID</FormLabel>
                 <FormControl>
-                  <Input placeholder="Receiver's Account ID" {...field} />
+                  <Input type="number" placeholder="Receiver's Account ID" className="appearance-none" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -124,7 +121,7 @@ export default function InputForm() {
               <FormItem>
                 <FormLabel>Amount</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="1000" {...field} />
+                  <Input type="number" placeholder="1000" className="appearance-none" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

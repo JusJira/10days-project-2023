@@ -11,7 +11,7 @@ const postCreateSchema = z.object({
     .gte(0, {
       message: "Amount must be more than zero.",
     }),
-  accId: z.string({
+  accId: z.number({
     required_error: "An account id is required.",
   }),
 });
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
     const receiver = await db.user.findFirst({
         where: {
-            id: body.accId
+            accountId: body.accId
         }
     })
 
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
         return new Response("No receiver found", { status: 404 });
     }
     if (sender && receiver) {
-        if (amount > (sender.balance as number)) {
+        if (amount > sender.balance) {
             return new Response("Amount is more than balance", { status: 405 });
         }
         else {
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
               });
             const receive = await db.user.update({
                 where: {
-                    id: body.accId as string,
+                    id: receiver.id,
                 },
                 data: {
                     balance: receiver.balance + amount
