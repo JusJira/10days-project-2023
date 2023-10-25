@@ -19,6 +19,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import { db } from "@/lib/db"
 import { User } from "@prisma/client"
+import { Router, useRouter } from 'next/router'
+import { redirect } from "next/navigation"
 
 // Build form schema
 const profileFormSchema = z.object({
@@ -57,10 +59,11 @@ export function ProfileForm() {
 
 
   async function onSubmit(data: ProfileFormValues) {
+    try {
       const res = await fetch("/api/editProfile",
         {
           method : "PUT",
-          
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -73,6 +76,15 @@ export function ProfileForm() {
       )
       alert(JSON.stringify(data, null, 2));
       console.log(res);
+    }
+    catch (err) {
+      console.log(err)
+    }
+    finally {
+      window.location.replace("/account")
+    }
+      
+      
     
   }
 
