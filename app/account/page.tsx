@@ -10,7 +10,7 @@ import { db } from "@/lib/db";
 export default async function account() {
   const {getUser} = getKindeServerSession();
   const user = await getUser();
-  console.log(user)
+  // console.log(user)
 
 
   const userData = await db.user.findUnique({
@@ -68,7 +68,11 @@ export default async function account() {
                 </div>
               </div>
             </div>
+
+            {/* User Profile */}
+            
           </div>
+          
         )
       }
       

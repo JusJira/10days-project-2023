@@ -1,15 +1,21 @@
 import Link from 'next/link';
 import React from 'react'
 import { Button } from './ui/button';
-import { DarkModeToggle } from './ThemeToggle';
-import { Menu } from 'lucide-react';
 import { IconModeToggle } from './IconThemeToggle';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { db } from '@/lib/db';
 
-const Navbar = () => {
+const Navbar = async () => {
   const { getUser } = getKindeServerSession();
   const user = getUser()
+
+  const userData = await db.user.findUnique({
+    where: {
+      id: user.id||""
+    }
+  })
+
 
   const navLinks = [
     {
@@ -54,7 +60,7 @@ const Navbar = () => {
               <>
               <Link href="/account">
                 <Avatar>
-                  <AvatarImage src="https://nhadepso.com/wp-content/uploads/2023/03/cap-nhat-99-hinh-anh-avatar-gau-cute-de-thuong-ngo-nghinh_1.jpg" />
+                  <AvatarImage src={userData?.image} />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </Link>
