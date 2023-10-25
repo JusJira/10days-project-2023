@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 call by METHOD /api/review
 
 edit user review
+
+tested by postman
 */
 export async function PUT(req : NextRequest){
     const {id,score,description} = await req.json(); // reviewId, score ,description
@@ -48,7 +50,10 @@ export async function GET(){
 creating a review 
 */
 export async function POST(req : NextRequest) {
-    const {userId, productId, score , description} = await req.json();
+    const dbUser = await getdbUser();
+    if (!dbUser) return NextResponse.json({status : 204, message : "session failure"});
+    const userId = dbUser.id
+    const {productId, score , description} = await req.json();
     const validation = await db.user.findFirst({where : {id : userId}})
     if (!validation) return NextResponse.json({status : 204, message : "this user doesn't exist"})
     try {
