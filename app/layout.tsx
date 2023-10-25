@@ -62,6 +62,7 @@ export default async function RootLayout({
               </div>
             </Link>
           </footer>
+          
         </ThemeProvider>
       </body>
     </html>

@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import { db } from "@/lib/db"
+import { User } from "@prisma/client"
 
 // Build form schema
 const profileFormSchema = z.object({
@@ -45,7 +46,7 @@ const defaultValues: Partial<ProfileFormValues> = {
     //   bio: userData?.bio||""
 }
 
-export function ProfileForm() {
+export function ProfileForm({user } : {user : User | null}) {
     
 
   const form = useForm<ProfileFormValues>({
@@ -55,8 +56,27 @@ export function ProfileForm() {
   })
 
 
-  function onSubmit(data: ProfileFormValues) {
-    alert(JSON.stringify(data, null, 2))
+  async function onSubmit(data: ProfileFormValues) {
+    if (!user) alert('lose session error')
+    else{
+      const res = await fetch("/api/editProfile",
+        {
+          method : "PUT",
+          
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body : JSON.stringify({
+            id : user.id,
+            displayName : data.displayName,
+            bio : data.bio
+          })
+
+        }  
+      )
+      alert(JSON.stringify(data, null, 2));
+      console.log(res);
+    }
   }
 
   return (

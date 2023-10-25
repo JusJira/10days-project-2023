@@ -1,16 +1,16 @@
-import { DarkModeToggle} from "@/components/ThemeToggle";
+import { DarkModeToggle } from "@/components/ThemeToggle";
 import SignOutButton from "@/components/signOutButton";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
-import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
+import {LoginLink, getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 import { Label } from "@/components/ui/label";
 import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 export default async function account() {
-  const {getUser} = getKindeServerSession();
+  const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
   // console.log(user)
 
@@ -35,7 +35,7 @@ export default async function account() {
         (!user) && (
           <div className="flex h-full min-h-full items-center justify-center rounded-md">
           <Button asChild className="w-2/3 lg:w-48">
-            <Link href="/login">Login</Link>
+            <LoginLink className={buttonVariants()}>Sign in</LoginLink>
           </Button>
           </div>
         )

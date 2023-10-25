@@ -1,9 +1,12 @@
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { ProfileForm } from "./ProfileForm";
+import {getdbUser} from '@/lib/getUser';
+import { User } from "@prisma/client";
+
 
 export default async function EditAccount() {
-
+  const dbUser = await getdbUser();
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
       <div className="px-5">
@@ -14,7 +17,7 @@ export default async function EditAccount() {
       </div>
       <Separator />
       <div className="px-5">
-        <ProfileForm />
+        <ProfileForm user = {dbUser}/>
       </div>
     </div>
       
