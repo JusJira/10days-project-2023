@@ -29,6 +29,11 @@ const AvatarImage = React.forwardRef<
     className={cn("aspect-square h-full w-full", className)}
     {...props}
   />
+
+                  
+  // <img className='w-full !object-cover' {...props} />
+                  
+
 ))
 AvatarImage.displayName = AvatarPrimitive.Image.displayName
 

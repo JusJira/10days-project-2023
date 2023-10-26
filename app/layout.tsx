@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Metadata } from "next";
 import { Home, ShoppingCart, UserCircle2 } from "lucide-react";
+import Navbar from "@/components/Navbar";
+
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
@@ -31,8 +33,9 @@ export default async function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
-          <main className="h-full flex-[1] overflow-scroll bg-neutral-100 dark:bg-neutral-800">{children}</main>
-          <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl">
+          <Navbar />
+          <main className="h-full flex-[1] overflow-scroll">{children}</main>
+          <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl md:hidden">
             <Link
               href="/"
               className="hover:bg-neutral-300 dark:hover:bg-neutral-700 dark:text-white text-black"
@@ -63,6 +66,8 @@ export default async function RootLayout({
           </footer>
           <Toaster />
         </ThemeProvider>
+
+        <Toaster />
       </body>
     </html>
   );
