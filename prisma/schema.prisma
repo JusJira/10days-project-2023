@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
   id          String     @id @unique
   balance     Int        @default(0)
@@ -15,44 +16,55 @@ model User {
   image       String     @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png")
   accountId   Int        @default(autoincrement())
   bio         String?
-  Order       Order[]
-  Product     Product[]
-  Review      Review[]
-  Wishlist    Wishlist[]
+  createdAt   DateTime   @default(now())
+  orders      Order[]    @relation("UserOrder")
+  products    Product[]  @relation("ProductsOwn")
+  reviews     Review[]   @relation("userReview")
+  wishlists   Wishlist[] @relation("userWishlist")
 
   @@map("users")
 }
 
 model Product {
-  id          Int         @id @default(autoincrement())
-  ownerId     String      
-  price       Int
-  name        String
-  description String?
-  image       String      @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202889/10-day-project/image/products/x125n4rie6tnb67parkw.jpg")
-  quantity    Int         @default(0)
-  createdAt   DateTime    @default(now())
-  OrderLine   OrderLine[]
-  users       User        @relation(fields: [ownerId], references: [id])
-  Review      Review[]
-  Wishlist    Wishlist[]
+  id                Int         @id @default(autoincrement())
+  ownerId           String
+  price             Int
+  name              String
+  description       String?
+  image             String      @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202889/10-day-project/image/products/x125n4rie6tnb67parkw.jpg")
+  quantity          Int         @default(0)
+  createdAt         DateTime    @default(now())
+  orderLineContains OrderLine[] @relation("ContainInOrderLine")
+  owner             User        @relation("ProductsOwn", fields: [ownerId], references: [id])
+  reviews           Review[]    @relation("productReview")
+  wishlists         Wishlist[]  @relation("productWishlist")
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  userId    String
-  orderedAt DateTime    @default(now())
-  users     User        @relation(fields: [userId], references: [id])
-  OrderLine OrderLine[]
+  id         Int         @id @default(autoincrement())
+  userId     String
+  orderedAt  DateTime    @default(now())
+  user       User        @relation("UserOrder", fields: [userId], references: [id])
+  orderLines OrderLine[] @relation("OrderContain")
 }
 
 model OrderLine {
   orderId   Int
   productId Int
-  Order     Order   @relation(fields: [orderId], references: [id])
-  Product   Product @relation(fields: [productId], references: [id])
+  order     Order   @relation("OrderContain", fields: [orderId], references: [id])
+  product   Product @relation("ContainInOrderLine", fields: [productId], references: [id])
 
   @@id([orderId, productId])
+}
+
+model Wishlist {
+  userId    String
+  productId Int
+  wishedAt  DateTime @default(now())
+  product   Product  @relation("productWishlist", fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation("userWishlist", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, productId])
 }
 
 model Review {
@@ -62,18 +74,8 @@ model Review {
   score       Int
   description String
   reviewedAt  DateTime @default(now())
-  Product     Product  @relation(fields: [productId], references: [id])
-  users       User     @relation(fields: [userId], references: [id])
+  product     Product  @relation("productReview", fields: [productId], references: [id])
+  user        User     @relation("userReview", fields: [userId], references: [id])
 
   @@unique([userId, productId])
-}
-
-model Wishlist {
-  userId    String
-  productId Int
-  wishedAt  DateTime
-  Product   Product  @relation(fields: [productId], references: [id])
-  users     User     @relation(fields: [userId], references: [id])
-
-  @@id([userId, productId])
 }
