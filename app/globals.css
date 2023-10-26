@@ -74,3 +74,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 16rem);
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}

@@ -1,4 +1,5 @@
 import { DarkModeToggle } from "@/components/ThemeToggle";
+import { DarkModeToggle } from "@/components/ThemeToggle";
 import SignOutButton from "@/components/signOutButton";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
