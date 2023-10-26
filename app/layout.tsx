@@ -39,7 +39,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="h-full flex-[1] overflow-scroll">{children}</main>
+          <main className="h-full flex-[1] overflow-scroll overflow-x-hidden">{children}</main>
           <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl md:hidden">
             <Link
               href="/"

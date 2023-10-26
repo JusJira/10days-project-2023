@@ -9,6 +9,7 @@ import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default async function account() {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -24,9 +25,19 @@ export default async function account() {
       await db.user.create({
         data: {
           id: user.id as string,
+          displayName: user.given_name as string
+          
         },
       });
+
+      redirect('/account/edit')
     }
+    // const newDbUser = await db.user.findUnique({
+    //   where: {
+    //     id: user?.id||""
+    //   }
+    // })
+    
     return dbUser;
   }
   async function getUserData() {
