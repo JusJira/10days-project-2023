@@ -66,7 +66,7 @@ export default function ProductList() {
 
 
   return (
-    <div className="bg-neutral-100 dark:bg-neutral-800 h-full w-full">
+    <div className="bg-neutral-100 dark:bg-neutral-800 min-h-full w-full">
       <div className="p-8">
         <div className="grid-container">
           {products.map((p: any, index: number) => (

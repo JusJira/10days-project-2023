@@ -85,7 +85,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <div className="flex flex-row mt-10 gap-8">
             <div className="flex flex-row items-center gap-3">
               <Avatar>
-                <AvatarImage src={data?.owner.image} />
+                <AvatarImage className='object-cover object-center' src={data?.owner.image} />
                 <AvatarFallback>
                   {initials(data?.owner.displayName as string)}
                 </AvatarFallback>
