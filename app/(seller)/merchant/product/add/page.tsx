@@ -37,7 +37,7 @@ export default function InputForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
 
-    const response = await fetch("/api/product/add", {
+    const response = await fetch("/api/product", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
