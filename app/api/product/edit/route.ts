@@ -14,15 +14,16 @@ const postCreateSchema = z.object({
   name: z.string({
     required_error: "An account id is required.",
   }),
-  description: z.string(),
+  description: z.string().optional(),
   stock: z.coerce.number({
     required_error: "Amount is required",
     invalid_type_error: "Amount must be a number",
   }),
   id: z.number(),
+  image: z.string().optional()
 });
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
   try {
     const { getUser, isAuthenticated } = getKindeServerSession();
     const user = await getUser();
@@ -39,6 +40,7 @@ export async function POST(req: Request) {
     const stock = body.stock;
     const description = body.description;
     const id = body.id;
+    const image = body.image
 
     const product = await db.product.update({
       where: {
@@ -51,6 +53,7 @@ export async function POST(req: Request) {
         price: price,
         quantity: stock,
         description: description,
+        image: image
       },
     });
 

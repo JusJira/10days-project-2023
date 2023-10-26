@@ -58,10 +58,12 @@ export default async function account() {
           <span>Orders</span>
         </div>
         <div className="flex flex-col items-center justify-center">
+        <Link className="flex flex-col items-center justify-center" href={'/wallet'}>
           <Button className="aspect-square h-full flex flex-col">
             <Wallet size={32} />
           </Button>
           <span>Wallet</span>
+          </Link>
         </div>
       </div>
     </div>

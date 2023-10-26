@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react'
 import { Button } from './ui/button';
 import { IconModeToggle } from './IconThemeToggle';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { getKindeServerSession ,RegisterLink, LoginLink} from '@kinde-oss/kinde-auth-nextjs/server';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { db } from '@/lib/db';
 import initials from 'initials';
@@ -19,6 +19,10 @@ const Navbar = async () => {
 
 
   const navLinks = [
+    {
+      label: "Home",
+      link: "/"
+    },
     {
       label: "Cart",
       link: "#"
@@ -55,8 +59,8 @@ const Navbar = async () => {
             {
               (!user) ? 
               <>
-                <Link href="/login"><Button variant="ghost">Sign In</Button></Link>
-                <Link href="/register"><Button>Register</Button></Link>
+                <LoginLink><Button variant="ghost">Sign In</Button></LoginLink>
+                <RegisterLink><Button>Register</Button></RegisterLink>
               </> :
               <>
               <Link href="/account" >
