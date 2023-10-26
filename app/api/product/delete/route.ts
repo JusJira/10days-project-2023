@@ -3,7 +3,7 @@ import * as z from "zod";
 import { db } from "@/lib/db";
 
 
-export async function POST(req: Request) {
+export async function DELETE(req: Request) {
   try {
     const { getUser, isAuthenticated } = getKindeServerSession();
     const user = await getUser();
