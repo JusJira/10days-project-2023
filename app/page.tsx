@@ -13,7 +13,7 @@ export default async function Home() {
     },
   });
   return (
-    <div className="bg-neutral-100 dark:bg-neutral-800 h-full w-full">
+    <div className="bg-neutral-100 dark:bg-neutral-800 min-h-[100dvh] w-full">
       <div className="p-8">
         <div className="grid-container">
           {products.map((p, index) => (
