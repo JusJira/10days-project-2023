@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Poppins } from "next/font/google";
+import { Poppins ,JetBrains_Mono} from "next/font/google";
 import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Metadata } from "next";
@@ -20,6 +20,11 @@ const poppins = Poppins({
   weight: "400",
 });
 
+const jbn = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export default async function RootLayout({
   children,
 }: {
@@ -27,7 +32,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} flex h-[100dvh] flex-col`}>
+      <body className={`${jbn.className} flex h-[100dvh] flex-col`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

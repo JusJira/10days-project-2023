@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const name = data?.owner.displayName || "Unknown Seller";
   return (
-    <div className="p-8">
+    <div className="p-8 bg-neutral-100 dark:bg-neutral-800 h-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[16rem]">
         <div className="flex items-center justify-center relative aspect-square m-4 md:m-10 lg:m-16">
           <Image
@@ -76,7 +76,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </Link>
               ) : (
                 <Link
-                  href={`/product/edit/${id}`}
+                  href={`#`}
                   className={`${buttonVariants()}`}
                 >
                   Add to Cart

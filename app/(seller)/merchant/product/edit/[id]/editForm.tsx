@@ -47,7 +47,7 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
 
 
   async function onDelete() {
-    const response = await fetch("/api/product/delete", {
+    const response = await fetch("/api/product", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
 
-    const response = await fetch("/api/product/edit", {
+    const response = await fetch("/api/product", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
