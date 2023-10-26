@@ -1,12 +1,12 @@
 import "./globals.css";
-import { Poppins ,JetBrains_Mono} from "next/font/google";
+import { Poppins, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Metadata } from "next";
 import { Home, ShoppingCart, UserCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "ChadMart - Market for GigaChad's",
@@ -32,6 +32,28 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+      </head>
       <body className={`${jbn.className} flex h-[100dvh] flex-col`}>
         <ThemeProvider
           attribute="class"
@@ -39,7 +61,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="h-full flex-[1] overflow-scroll overflow-x-hidden">{children}</main>
+          <main className="h-full flex-[1] overflow-scroll overflow-x-hidden">
+            {children}
+          </main>
           <footer className="grid h-16 w-full grid-cols-3 grid-rows-1 dark:bg-neutral-900 bg-white shadow-2xl md:hidden">
             <Link
               href="/"
