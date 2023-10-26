@@ -76,7 +76,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </Link>
               ) : (
                 <Link
-                  href={`/product/edit/${id}`}
+                  href={`#`}
                   className={`${buttonVariants()}`}
                 >
                   Add to Cart
