@@ -5,6 +5,7 @@ import { IconModeToggle } from './IconThemeToggle';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { db } from '@/lib/db';
+import initials from 'initials';
 
 const Navbar = async () => {
   const { getUser } = getKindeServerSession();
@@ -61,7 +62,7 @@ const Navbar = async () => {
               <Link href="/account" >
                 <Avatar>
                   <AvatarImage src={userData?.image} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback>{initials(userData?.displayName as string)}</AvatarFallback>
                 </Avatar>
               </Link>
                 

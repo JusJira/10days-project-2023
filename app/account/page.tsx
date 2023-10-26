@@ -1,5 +1,4 @@
 import { DarkModeToggle } from "@/components/ThemeToggle";
-import { DarkModeToggle } from "@/components/ThemeToggle";
 import SignOutButton from "@/components/signOutButton";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -9,18 +8,37 @@ import { Label } from "@/components/ui/label";
 import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 export default async function account() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
-  // console.log(user)
-
-  const userData = await db.user.findUnique({
-    where: {
-      id: user?.id||""
+  async function checkIfNew() {
+    const dbUser = await db.user.findUnique({
+      where: {
+        id: user?.id||""
+      }
+    })
+    if (!dbUser) {
+      // create user in db
+      await db.user.create({
+        data: {
+          id: user.id as string,
+        },
+      });
     }
-  })
-  
+    return dbUser;
+  }
+  async function getUserData() {
+    if (await !isAuthenticated()) {
+      return null;
+    } else {
+      const data = await checkIfNew();
+      return data;
+    }
+  }
+
+  const userData = await getUserData();
 
   // console.log(userData)
 
@@ -62,9 +80,9 @@ export default async function account() {
           <div className="flex flex-col">
             {/* Profile Avatar / Name / Role */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-2 p-2 -m-2 mt-2 mb-2 px-3 py-2 w-full">
-              <div className="inline-flex basis-32 items-center justify-center min-w-32 min-h-32 w-32 h-32 md:w-32 md:h-32 overflow-hidden bg-[#C3DCE3] rounded-full">
+              <div className="inline-flex basis-32 items-center justify-center min-w-32 min-h-32 w-32 h-32 md:w-32 md:h-32 overflow-hidden bg-[#C3DCE3] rounded-full relative">
                 {
-                  (<img className='h-full !object-cover' src={userData?.image}></img>)
+                  (<Image className='h-full !object-cover' src={userData?.image as string} alt="Profile Image" fill></Image>)
                 }
               </div>
               <div className="flex flex-col items-center md:items-start space-y-3 md:pl-6">
