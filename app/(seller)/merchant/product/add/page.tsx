@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
-import { CldUploadButton } from "next-cloudinary";
+//import { CldUploadButton } from "next-cloudinary";
 import { UploadButton } from "@/utils/uploadthing";
 import {useRouter} from "next/navigation"
 import Image from "next/image";

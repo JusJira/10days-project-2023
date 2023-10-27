@@ -57,7 +57,7 @@ export async function POST(req : NextRequest) {
     const userId = dbUser.id;
     
     const {productId, score , description} = await req.json();
-
+    
     const my_order = await db.order.findFirst({where : {
         userId : userId,
         orderLines : {
@@ -67,6 +67,7 @@ export async function POST(req : NextRequest) {
         }
     }})
     if (!my_order) return NextResponse.json({status : 204 , message : "you didn't buy this yet"})
+    
     try {
         const res = await db.review.create({
             data : {
