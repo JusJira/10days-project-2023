@@ -53,9 +53,6 @@ dependencies:
   next:
     specifier: 13.5.6
     version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
-  next-cloudinary:
-    specifier: ^4.28.0
-    version: 4.28.0(next@13.5.6)(react@18.2.0)
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@13.5.6)(react-dom@18.2.0)(react@18.2.0)
@@ -141,29 +138,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
-
-  /@cloudinary-util/url-loader@3.12.0:
-    resolution: {integrity: sha512-cBtB2uAFbCIPOLnMN5IlcA2A9ZuGiTDafbGH8u5iu1qO+ajluhTh9RyzWCsJtXJQj3OREG4W/P3H5ujdxKmpZA==}
-    dependencies:
-      '@cloudinary-util/util': 2.2.1
-      '@cloudinary/url-gen': 1.12.0
-    dev: false
-
-  /@cloudinary-util/util@2.2.1:
-    resolution: {integrity: sha512-MEIqn5WtPP3mxSMTNNfpqlGS1UquAXcjmVdY/t/edD/ZWVjI85viBiOMIuF0W6n6UF5gTstLymfQNYx0YO/GZg==}
-    dev: false
-
-  /@cloudinary/transformation-builder-sdk@1.7.0:
-    resolution: {integrity: sha512-/FLYApYLTextepNq7R3I+nMkisAVnf+ELU0+M1Zfi4vB64n4pUT7Z4jgTfmDbMhnNsGRitLHTdiRkAoVeApxZw==}
-    dependencies:
-      '@cloudinary/url-gen': 1.12.0
-    dev: false
-
-  /@cloudinary/url-gen@1.12.0:
-    resolution: {integrity: sha512-L22tftVId19g8irjuHuXOdTCWC8p45ZiejtFeuqmOtwW7nkPH1vHt5MaEvDM4DiljnW0CKZJxE9RNjyxgx1/+w==}
-    dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.7.0
-    dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.51.0):
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
@@ -2792,18 +2766,6 @@ packages:
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
-
-  /next-cloudinary@4.28.0(next@13.5.6)(react@18.2.0):
-    resolution: {integrity: sha512-M5reG+kr1fSvg9qAt8KLOHM3bVNUTAzA9e5MqIdMlRqehmCZZBQ0UyQuASC/u5n0+cESUMQJfCj1ASPlHhyitw==}
-    peerDependencies:
-      next: ^12 || ^13
-      react: ^17 || ^18
-    dependencies:
-      '@cloudinary-util/url-loader': 3.12.0
-      '@cloudinary-util/util': 2.2.1
-      next: 13.5.6(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-    dev: false
 
   /next-themes@0.2.1(next@13.5.6)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==}

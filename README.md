@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Introduction
 
-## Getting Started
+This is our project ChadMart
 
-First, run the development server:
+The beginning of this project came from a Hackathon called 10 days project where each teams have 10 days to build a product from a given problem.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This was the given problem
+
+```
+Problem Statement
+
+Chulalongkorn University has a digital cash giveaway policy for all students, with each receiving 10,000 Bulbs to stimulate the economy within the country.
+In this regard, Chulalongkorn University seeks to support a platform that enables the buying and selling of Bulbs to thrive in the Country. Therefore, we task everyone with creating a product that can promote the exchange of Bulbs between Chulalongkorn students.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+So we created an E-Commerce product that uses digital money to buy stuff
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Used
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+These are the techs that we used in this project
 
-## Learn More
+- [Next.js](https://nextjs.org/) - Feature rich framework for Frontend and Backed
+- [Kinde](https://kinde.com) - Authentication as a service
+- [Uploadthing](https://uploadthing.com/) - Files upload
+- [Prisma](https://prisma.io) - Database ORM
+- [PostgreSQL](https://www.postgresql.org/) - Open source database
+- [shadcn UI](https://ui.shadcn.com) - Next.Js UI Library
+- [TailwindCSS](https://tailwindcss.com) - Styling
 
-To learn more about Next.js, take a look at the following resources:
+## Meet Our Team
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Our team is called  ![Static Badge](https://img.shields.io/badge/Chad-GPT-orange)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Here are the members
+- [Justin](https://github.com/jusjira) - Full-Stack, UX&UI, PM
+- [Nick](https://github.com/creampiney)- Full-Stack, UX&UI
+- [V](https://github.com/hellp002)- Full-Stack, UX&UI
