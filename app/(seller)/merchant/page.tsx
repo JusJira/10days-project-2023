@@ -52,7 +52,7 @@ export default async function account() {
         <div className="flex flex-col items-center justify-center">
           <Link
             className="flex flex-col items-center justify-center"
-            href={"/wallet"}
+            href={"/money/wallet"}
           >
             <Button className="aspect-square h-full flex flex-col">
               <Wallet size={32} />
