@@ -79,7 +79,7 @@ const Navbar = async () => {
               <>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Avatar>
+                  <Avatar className="cursor-pointer">
                     <AvatarImage className='object-cover object-center' src={userData?.image || "https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png"} />
                     <AvatarFallback>{initials(userData?.displayName as string)}</AvatarFallback>
                   </Avatar>

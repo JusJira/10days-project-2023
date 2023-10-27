@@ -77,9 +77,6 @@ export default async function account() {
               <DarkModeToggle />
             </div>
             <div className="flex w-full justify-center">
-              <SignOutButton />
-            </div>
-            <div className="flex w-full justify-center">
               <Link className={`${buttonVariants({ variant: "outline" })} w-2/3 lg:w-48 !border-black`} href="/merchant" prefetch={false}>
                 Merchant Page
               </Link>
@@ -88,6 +85,9 @@ export default async function account() {
               <Link className={`${buttonVariants({ variant: "outline" })} w-2/3 lg:w-48 !border-black`} href="/account/edit" prefetch={false}>
                 Edit Profile
               </Link>
+            </div>
+            <div className="flex w-full justify-center">
+              <SignOutButton />
             </div>
           </div>
         ) 
