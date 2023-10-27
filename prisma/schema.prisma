@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id          String     @id @unique
   balance     Int        @default(0)
@@ -35,7 +34,7 @@ model Product {
   quantity          Int         @default(0)
   createdAt         DateTime    @default(now())
   orderLineContains OrderLine[] @relation("ContainInOrderLine")
-  owner             User        @relation("ProductsOwn", fields: [ownerId], references: [id])
+  owner             User        @relation("ProductsOwn", fields: [ownerId], references: [id], onDelete: Cascade)
   reviews           Review[]    @relation("productReview")
   wishlists         Wishlist[]  @relation("productWishlist")
 }
@@ -44,15 +43,15 @@ model Order {
   id         Int         @id @default(autoincrement())
   userId     String
   orderedAt  DateTime    @default(now())
-  user       User        @relation("UserOrder", fields: [userId], references: [id])
+  user       User        @relation("UserOrder", fields: [userId], references: [id], onDelete: Cascade)
   orderLines OrderLine[] @relation("OrderContain")
 }
 
 model OrderLine {
   orderId   Int
   productId Int
-  order     Order   @relation("OrderContain", fields: [orderId], references: [id])
-  product   Product @relation("ContainInOrderLine", fields: [productId], references: [id])
+  order     Order   @relation("OrderContain", fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation("ContainInOrderLine", fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([orderId, productId])
 }
@@ -74,8 +73,8 @@ model Review {
   score       Int
   description String
   reviewedAt  DateTime @default(now())
-  product     Product  @relation("productReview", fields: [productId], references: [id])
-  user        User     @relation("userReview", fields: [userId], references: [id])
+  product     Product  @relation("productReview", fields: [productId], references: [id], onDelete: Cascade)
+  user        User     @relation("userReview", fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
 }
