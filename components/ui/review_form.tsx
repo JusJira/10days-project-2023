@@ -21,7 +21,7 @@ import { Review } from "@prisma/client"
 
 const reviewSchema = z.object({
     score: z
-      .number()
+      .number().int()
       .min(0).max(10),
     description: z.string().max(1000).optional(),
   }).strict()
@@ -107,7 +107,9 @@ export default function ReviewForm({productId,prev_review} : {productId : number
 
     return  (
     <Form {...form} >
-        <form onSubmit={(e) => {e.preventDefault();onSubmit(form.getValues())}} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            {/* TODO better ui for review score ?
+            */}
             <FormField
             control={form.control}
             name="score"
@@ -115,10 +117,10 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                 <FormItem>
                 <FormLabel>Score</FormLabel>
                 <FormControl>
-                    <Input {...field} min = {0} max = {10} onChange = {(e) => {setScore(e.target.valueAsNumber);form.setValue("score",e.target.valueAsNumber)}} value = {score}type = 'number'/>
+                    <Input {...field} onChange = {(e) => {setScore(e.target.valueAsNumber);form.setValue("score",e.target.valueAsNumber)}} value = {score}type = 'number'/>
                 </FormControl>
                 <FormDescription>
-                    This is your public display name that show in web application.
+                    This is your public score review that show in web application.
                 </FormDescription>
                 <FormMessage />
                 </FormItem>
@@ -134,7 +136,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                     <Textarea placeholder="Description" {...field}/>
                 </FormControl>
                 <FormDescription>
-                    This is your public display name that show in web application.
+                    This is your public description review that show in web application.
                 </FormDescription>
                 <FormMessage />
                 </FormItem>

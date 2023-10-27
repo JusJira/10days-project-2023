@@ -12,7 +12,7 @@ type Cascade_review = Review & {
 }
 
 export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
-
+    // magic 
     const [hydrated, setHydrated] = useState(false);
     
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
         // Returns null on first render, so the client and server match
         return null;
     }
-    
+    //
     
     return(<>
         {(reviews.length !== 0) ? (reviews.map((r) => (
@@ -51,7 +51,7 @@ export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
             </Card>
           ))) : (
             <Card className=" flex flex-col md:flex-row p-[1rem] justify-center border-r-2 box-border">
-                😢 there&aposs no one comment yet
+                😢 there&apos;s no one comment yet
             </Card>
         )}</>) 
 
