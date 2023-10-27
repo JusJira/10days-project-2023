@@ -37,10 +37,34 @@ export default function ProductList() {
   // });
 
   const queryParams = useSearchParams();
-  const searchQuery = queryParams ? queryParams.get("q") : null;
+  const searchQuery = queryParams ? queryParams.get("q") : "";
+  const startPriceQuery = queryParams ? Number(queryParams.get("startprice")) : 0;
+  const endPriceQuery = queryParams ? Number(queryParams.get("endprice")) : 0;
+  const sortMode = queryParams ? queryParams.get("sort") : undefined;
+
+  let queryArray : Array<string> = []
+        queryArray.push(`q=${searchQuery}`)   // It work = magic = don't fix it na
+        // if (searchQuery) {
+        //     queryArray.push(`q=${searchQuery}`)
+        // }
+        if (startPriceQuery != 0) {
+            queryArray.push(`startprice=${startPriceQuery}`)
+        }
+        if (endPriceQuery != 0) {
+            queryArray.push(`endprice=${Number(endPriceQuery)}`)
+        }
+
+        if (sortMode) {
+          queryArray.push(`sort=${sortMode}`)
+        }
+
+
+
+
+  const query = (queryArray.length != 0) && ("?" + queryArray.join("&"))
 
   const { data, isLoading } = useSWR(
-    `/api/search?q=${searchQuery}`,
+    `/api/search${query}`,
     fetchPosts,
     { revalidateOnFocus: false }
   );
