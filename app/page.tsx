@@ -63,7 +63,7 @@ export default async function Home() {
               </div>
               
               <div className="text-center">
-                <Label className="text-xl">users have register in platform</Label>
+                <Label className="text-xl">users have registered in platform</Label>
               </div>
             </div>
             <div className="flex flex-col items-center space-y-5">
