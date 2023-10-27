@@ -4,6 +4,7 @@ import { Review, User } from "@prisma/client";
 import { Card, CardContent } from "./card";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import initials from "initials";
+import { useEffect, useState } from "react";
 
 
 type Cascade_review = Review & {
@@ -12,10 +13,20 @@ type Cascade_review = Review & {
 
 export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
 
-    console.log(reviews)
+    const [hydrated, setHydrated] = useState(false);
     
-    return(<>{reviews.map((r) => (
-            <Card className="flex flex-col md:flex-row p-[1rem] border-r-2 box-border ">
+    useEffect(() => {
+        setHydrated(true);
+    }, []);
+    if (!hydrated) {
+        // Returns null on first render, so the client and server match
+        return null;
+    }
+    
+    
+    return(<>
+        {(reviews.length !== 0) ? (reviews.map((r) => (
+            <Card key = {r.id} className="flex flex-col md:flex-row p-[1rem] border-r-2 box-border ">
                 <div className="md:w-[40%] lg:w-[30%] border-b-2 border-b-foreground md:border-b-0 md:border-r-2 border-r-foreground flex flex-wrap m-0 h-auto">
                     <Avatar className=" mr-[1rem]">
                         <AvatarImage className='object-cover object-center' src={r.user.image || "https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png"} />
@@ -38,7 +49,11 @@ export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
                     { "Description : " +  r.description}
                 </CardContent>
             </Card>
-          ))}</>) 
+          ))) : (
+            <Card className=" flex flex-col md:flex-row p-[1rem] justify-center border-r-2 box-border">
+                😢 there's no one comment yet
+            </Card>
+        )}</>) 
 
 
 

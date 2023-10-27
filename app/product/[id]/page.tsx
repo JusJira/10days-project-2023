@@ -14,6 +14,7 @@ import { equal } from "assert";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Review, User } from "@prisma/client";
 import ReviewBox from "@/components/ui/review-box";
+import ReviewForm from "@/components/ui/review_form";
 
 type Cascade_review = Review & {
   user : User
@@ -23,7 +24,8 @@ export default async function Page({ params }: { params: { id: string } }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
   const id = parseInt(params.id);
-  const review = (await db.product.findFirst({
+
+  const is_reviewable = (await db.product.findFirst({
     where : {
       id : id,
     }
@@ -39,8 +41,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     
     },
   }));
-  if (!review) return <div> Loading ....</div>
-  const reviews : Cascade_review[] = review.reviews
+  if (!is_reviewable || !user) return <div> Loading ....</div>
+  const prev_review = await db.review.findFirst({
+    where : {
+      productId : id,
+      userId : user.id as string
+    }
+  })
+
+  const is_reviewables : Cascade_review[] = is_reviewable.reviews
   const data = await db.product.findFirst({
     where: {
       id: id,
@@ -52,7 +61,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!data) {
     redirect("/");
   }
-  if (!review) return <div> Loading ....</div>
   
   function isOwner() {
     if (isAuthenticated()) {
@@ -142,11 +150,12 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Card className="w-full">
           <CardHeader className="">
             <div className="items-center flex justify-center">Review section</div>
+            <ReviewForm productId={id} prev_review={prev_review}/>
           </CardHeader>
         </Card>
         
         <div className="rounded-[5rem] w-full min-h-[500px] ">
-          <ReviewBox reviews = {review.reviews}></ReviewBox>
+          <ReviewBox reviews = {is_reviewables}></ReviewBox>
           
            
         </div>
