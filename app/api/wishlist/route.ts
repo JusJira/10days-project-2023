@@ -28,8 +28,9 @@ required productId
 export async function POST(req : NextRequest){
     const dbUser = await getdbUser();
     if (!dbUser) return NextResponse.json({status : 204 , message : "session failure"})
-    const userId = dbUser.id;
     const {productId}= await req.json();
+    const userId = dbUser.id;
+    
     try {
         const res = await db.wishlist.create({data : {
             userId : userId,
@@ -39,7 +40,6 @@ export async function POST(req : NextRequest){
     } catch (error) {
         return NextResponse.json({status : 204,message : error });
     }
-    
 }   
 
 /*

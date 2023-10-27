@@ -50,12 +50,23 @@ export async function GET(){
 creating a review 
 */
 export async function POST(req : NextRequest) {
+    
     const dbUser = await getdbUser();
     if (!dbUser) return NextResponse.json({status : 204, message : "session failure"});
-    const userId = dbUser.id
+    
+    const userId = dbUser.id;
+    
     const {productId, score , description} = await req.json();
-    const validation = await db.user.findFirst({where : {id : userId}})
-    if (!validation) return NextResponse.json({status : 204, message : "this user doesn't exist"})
+
+    const my_order = await db.order.findFirst({where : {
+        userId : userId,
+        orderLines : {
+            some : {
+                productId : productId
+            }
+        }
+    }})
+    if (!my_order) return NextResponse.json({status : 204 , message : "you didn't buy this yet"})
     try {
         const res = await db.review.create({
             data : {
@@ -71,4 +82,23 @@ export async function POST(req : NextRequest) {
     }
 
 
+}
+
+/*
+delete all
+*/
+
+export async function DELETE(req : NextRequest){
+    
+    const dbUser = await getdbUser();
+    if (!dbUser) return NextResponse.json({status : 204 , message : "session failure"})
+    
+    const userId = dbUser.id;
+    const {productId} = await req.json();
+    try {
+        const res = await db.review.deleteMany({where : {userId : userId, productId : productId}});
+        return NextResponse.json({status : 200,message :res});    
+    } catch (error) {
+        return NextResponse.json({status : 204,message : error });
+    }
 }
