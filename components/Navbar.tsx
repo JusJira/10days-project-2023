@@ -36,7 +36,7 @@ const Navbar = async () => {
   return (
         <nav className="sticky top-0 items-center justify-between h-16 max-w-screen py-6 px-8 border-b-2 border-x-[100%] bg-background/30 backdrop-blur-md hidden md:flex">
           
-          <h1 className="text-3xl">Chad Mart</h1>
+          <h1 className="text-3xl">ChadMart</h1>
 
           {/* Desktop Navigation */}
           <ul className="pl-8 list-none md:flex hidden items-center flex-1 space-x-8">

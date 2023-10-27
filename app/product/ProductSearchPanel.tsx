@@ -61,7 +61,7 @@ const ProductSearchPanel = ({path} : {path : string}) => {
 
        
         
-        router.push(`/${path}` + (queryArray.length != 0) && ("?" + queryArray.join("&")))
+        router.push(`/${path}` + (queryArray.length != 0) && ("?" + queryArray.join("&")), { scroll: false })
         
     }, [search, startPrice, endPrice, sortMode], 500)
 
