@@ -51,7 +51,7 @@ export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
             </Card>
           ))) : (
             <Card className=" flex flex-col md:flex-row p-[1rem] justify-center border-r-2 box-border">
-                😢 there's no one comment yet
+                😢 there&aposs no one comment yet
             </Card>
         )}</>) 
 
