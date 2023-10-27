@@ -25,7 +25,6 @@ export default async function account() {
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
       <UserProfile/>
-      {user ? (
         <div className="flex h-full  min-h-full flex-col items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
           <div className="flex w-full justify-center flex-col items-center gap-3">
             <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white px-2 shadow-2xl dark:bg-black lg:w-48">
@@ -40,17 +39,10 @@ export default async function account() {
               </span>
             </div>
             <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white shadow-2xl dark:bg-black lg:w-48">
-              <Link className={`w-full text-center !p-0`} href={'/pay'}>Pay</Link>
+              <Link className={`w-full text-center !p-0`} href={'/money/pay'}>Pay</Link>
             </div>
           </div>
         </div>
-      ) : (
-        <div className="flex h-full min-h-full items-center justify-center rounded-md bg-white p-3 dark:bg-neutral-900">
-          <Button asChild className="w-2/3 lg:w-48">
-            <LoginLink className={buttonVariants()}>Sign in</LoginLink>
-          </Button>
-        </div>
-      )}
     </div>
   );
 }
