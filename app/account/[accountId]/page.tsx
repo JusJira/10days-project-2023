@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { Clock, MapPin, User2 } from "lucide-react";
 
 export default async function account({ params }: { params: { accountId: string } }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -102,13 +103,16 @@ export default async function account({ params }: { params: { accountId: string 
                 </CardHeader>
                 <CardContent>
                 <div className="flex flex-col items-start space-y-4">
-                  <div className="w-full">
+                  <div className="w-full flex flex-row space-x-4">
+                    <User2 className="w-5 h-5"/>
                     <Label className="text-sm break-words"><span className="font-bold">Full Name :</span> {(isOwner()) ? (user.given_name + " " + user.family_name) : "<Private Information>" }</Label>
                   </div>
-                  <div className="w-full">
+                  <div className="w-full flex flex-row space-x-4">
+                    <MapPin className="w-5 h-5"/>
                     <Label className="text-sm break-words"><span className="font-bold">Address :</span> {(isOwner()) ? (userData?.address) : "<Private Information>"}</Label>
                   </div>
-                  <div className="w-full">
+                  <div className="w-full flex flex-row space-x-4">
+                    <Clock className="w-5 h-5"/>
                     <Label className="text-sm break-words"><span className="font-bold">Account Created At :</span> {userData?.createdAt.toString()}</Label>
                   </div>
                 </div>
