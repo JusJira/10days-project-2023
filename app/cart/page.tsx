@@ -16,7 +16,11 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
-
+type Item = {
+    id : number,
+    quantity : number,
+    totalPrice : number 
+};
 
 const CartPage = () => {
 
@@ -134,19 +138,30 @@ const CartPage = () => {
         refreshLocalStorage()
     }
 
-    function purchase() {
-        const finalOrders = []
+    async function purchase() {
+        const finalOrders : Item[] = []
         for (let e of orderList) {
             if (e.amount != 0) {
                 finalOrders.push({
                     id: e.id,
-                    quantity: e.amount
+                    quantity: e.amount,
+                    totalPrice : e.amount * e.price
                 })
             }
         }
-
+        const res = await fetch('/api/product/transaction',{method : "POST"
+        ,headers : {
+            "Content-Type": "application/json",
+          },
+        body : JSON.stringify({ 
+            finalOrders : finalOrders,
+            totalPrice : totalPrice
+        })
+    })
+        window.location.href = '/cart'
+        localStorage.removeItem('order')
         alert("Final Order : " + JSON.stringify(finalOrders) + "\nTotal Price : " + totalPrice.toString())
-
+        return res;
     }
 
 
@@ -212,7 +227,7 @@ const CartPage = () => {
                 <div className="flex w-[95%] md:w-[70%] pt-10 justify-end">
                     {
                         ((totalPrice > 0) && (balance - totalPrice >= 0)) ? (
-                            <Button onClick={() => {purchase()}}>Purchase</Button>
+                            <Button onClick={async () => {purchase()}}>Purchase</Button>
                         ) : (
                             <Button disabled>Purchase</Button>
                         )
