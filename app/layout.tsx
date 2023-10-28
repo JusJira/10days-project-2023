@@ -69,7 +69,7 @@ export default async function RootLayout({
               </div>
             </Link>
             <Link
-              href="/"
+              href="/cart"
               className="hover:bg-neutral-300 dark:hover:bg-neutral-700 dark:text-white text-black"
             >
               <div className="flex h-full flex-col items-center justify-center pt-1">
