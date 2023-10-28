@@ -31,7 +31,7 @@ export default async function Page() {
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
       <div>
         <p>
-          There are {pluralize("product", wished?.wishlists.length, true)} is
+          There are {pluralize("product", wished?.wishlists.length, true)} in
           your wishlist
         </p>
       </div>

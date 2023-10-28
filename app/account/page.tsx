@@ -16,7 +16,7 @@ import { redirect } from "next/navigation";
 import { Heart, Package, ShoppingBag, Wallet } from "lucide-react";
 import { Clock, MapPin, User2 } from "lucide-react";
 
-export default async function account() {
+export default async function AccountProfile() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
   async function checkIfNew() {
@@ -76,9 +76,6 @@ export default async function account() {
             <DarkModeToggle />
           </div>
           <div className="flex w-full justify-center">
-            <SignOutButton />
-          </div>
-          <div className="flex w-full justify-center">
             <Link
               className={`${buttonVariants({
                 variant: "outline",
@@ -99,6 +96,9 @@ export default async function account() {
             >
               Edit Profile
             </Link>
+          </div>
+          <div className="flex w-full justify-center">
+            <SignOutButton />
           </div>
         </div>
       )}

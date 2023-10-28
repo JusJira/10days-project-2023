@@ -16,9 +16,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
+  Heart,
   LogOut,
   Store,
   User,
+  Wallet,
 } from "lucide-react"
 
 const Navbar = async () => {
@@ -94,10 +96,25 @@ const Navbar = async () => {
                         <span>Profile</span>
                       </DropdownMenuItem>
                     </Link>
+                    <Link href="/account/wishlist">
+                      <DropdownMenuItem>
+                        <Heart className="mr-2 h-4 w-4" />
+                        <span>Wishlist</span>
+                      </DropdownMenuItem>
+                    </Link>
                     <Link href="/merchant">
                       <DropdownMenuItem>
                         <Store className="mr-2 h-4 w-4" />
                         <span>Merchant</span>
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <Link href="/money">
+                      <DropdownMenuItem>
+                        <Wallet className="mr-2 h-4 w-4" />
+                        <span>Wallet</span>
                       </DropdownMenuItem>
                     </Link>
                   </DropdownMenuGroup>

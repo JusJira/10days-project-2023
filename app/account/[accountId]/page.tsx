@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Clock, MapPin, User2 } from "lucide-react";
+import AccountProfile from "../page";
 
 export default async function account({ params }: { params: { accountId: string } }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -39,7 +40,9 @@ export default async function account({ params }: { params: { accountId: string 
     }
   }
 
-
+  if (isOwner()) {
+    return <AccountProfile />
+  }
   
 
 
