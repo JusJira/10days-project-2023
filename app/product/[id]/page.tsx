@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Review, User } from "@prisma/client";
 import ReviewBox from "@/components/ui/review-box";
 import ReviewForm from "@/components/ui/review_form";
+import AddToCardButton from "./AddToCardButton";
 
 type Cascade_review = Review & {
   user : User
@@ -95,6 +96,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     return false;
   }
   const name = data?.owner.displayName || "Unknown Seller";
+
+  
   return (
     <div className="p-8 bg-neutral-100 dark:bg-neutral-800 min-h-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[16rem]">
@@ -112,18 +115,41 @@ export default async function Page({ params }: { params: { id: string } }) {
             <span className="flex flex-row items-center text-[24px] ml-2">
               {data?.price} <Lightbulb size={20} strokeWidth={2} />
             </span>
-            <h2>{data?.description}</h2>
-          </div>
-          <div className="flex flex-row mt-10 gap-8">
-            <div className="flex flex-row items-center gap-3">
-              <Avatar>
-                <AvatarImage className='object-cover object-center' src={data?.owner.image} />
-                <AvatarFallback>
-                  {initials(data?.owner.displayName as string)}
-                </AvatarFallback>
-              </Avatar>
-              <span>{name}</span>
+            <div className="flex flex-row items-center gap-3 py-5">
+              <Link href={`/account/${data?.owner.accountId}`} className="flex flex-row items-center gap-3">
+                <Avatar>
+                  <AvatarImage className='object-cover object-center' src={data?.owner.image} />
+                  <AvatarFallback>
+                    {initials(data?.owner.displayName as string)}
+                  </AvatarFallback>
+                </Avatar>
+                <span>{name}</span>
+              </Link>
             </div>
+            <h2>{data?.description}</h2>
+
+            <div className="flex items-start justify-start gap-3 pt-5 pb-8 md:pb-0">
+              {isOwner() ? (
+                <Link
+                  href={`/merchant/product/edit/${id}`}
+                  className={`${buttonVariants()}`}
+                >
+                  Edit Item
+                </Link>
+              ) : (
+                <>
+                {/* <Link href={`#`} className={`${buttonVariants()}`}>
+                  Add to Cart
+                </Link> */}
+                <AddToCardButton productId={data.id} maxQuantity={data.quantity}/>
+                <WishButton id={id} wished={await isWished()} />
+                </>
+              )}
+              
+            </div>
+          </div>
+          
+          {/* <div className="flex flex-row mt-10 gap-8">
             <div className="flex items-center justify-center gap-3">
               {isOwner() ? (
                 <Link
@@ -143,10 +169,10 @@ export default async function Page({ params }: { params: { id: string } }) {
               
             </div>
             
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className=" items-center flex-col h-[2000px]">
+      <div className=" items-center flex-col">
         <Card className="w-full">
           <CardHeader className="">
             <div className="items-center flex justify-center">Review section</div>
@@ -154,7 +180,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </CardHeader>
         </Card>
         
-        <div className="rounded-[5rem] w-full min-h-[500px] ">
+        <div className="rounded-[5rem]">
           <ReviewBox reviews = {is_reviewables}></ReviewBox>
           
            

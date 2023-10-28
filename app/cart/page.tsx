@@ -2,8 +2,7 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator'
-import { db } from '@/lib/db';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     Table,
     TableBody,
@@ -17,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const CartPage = () => {
+    const dataFetchedRef = useRef(false);
 
     const [orderList, setOrderList] = useState<Array<{id: number, name: string, amount: number, max_quantity: number, price: number}>>([]);
     // const [orderList, setOrderList] = useState<Array<any>>([]);
@@ -37,8 +37,10 @@ const CartPage = () => {
             let idWithAmount = new Map<number, number>()
 
             orderJson.forEach(element => {
-                idFilter.push(element.id);
-                idWithAmount.set(element.id, element.quantity)
+                if (element.quantity != 0) {
+                    idFilter.push(element.id);
+                    idWithAmount.set(element.id, element.quantity)
+                }
             });
 
             
@@ -73,7 +75,20 @@ const CartPage = () => {
         }
     }
 
+    function refreshLocalStorage() {
+        const refreshLocal = []
+        for (var i = 0, numOrder = orderList.length; i < numOrder; i++) {
+            refreshLocal.push({
+                id: orderList[i].id,
+                quantity: orderList[i].amount
+            })
+        }
+        localStorage.setItem("order", JSON.stringify(refreshLocal))
+    }
+
     useEffect(() => {
+        if (dataFetchedRef.current) return;
+        dataFetchedRef.current = true;
         getOrderList()
     }, [])
 
@@ -92,12 +107,14 @@ const CartPage = () => {
         const order = orderList
         order[idx].amount = Math.min(order[idx].amount + 1 , order[idx].max_quantity)
         setOrderList([...order])
+        refreshLocalStorage()
     }
 
     function decreaseQuantity(idx: number) {
         const order = orderList
         order[idx].amount = Math.max(order[idx].amount - 1 , 0)
         setOrderList([...order])
+        refreshLocalStorage()
     }
 
 
