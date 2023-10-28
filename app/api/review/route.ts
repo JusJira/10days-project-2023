@@ -9,10 +9,17 @@ edit user review
 tested by postman
 */
 export async function PUT(req : NextRequest){
-    const {id,score,description} = await req.json(); // reviewId, score ,description
+    const {productId,score,description} = await req.json(); // product , score ,description
+    const user = await getdbUser();
+    if (!user) return new Response("session failure",{status : 403})
+    const review = await db.review.findFirst({where : {
+        productId : productId,
+        userId : user.id
+    }})
+    if (!review) return new Response("cannot update because you didn't buy it",{status : 204})
     try {
         const res = await db.review.update({where : {
-            id : id
+            id : review.id
         }, data : {
             score : score,
             description : description,
@@ -21,7 +28,7 @@ export async function PUT(req : NextRequest){
         return NextResponse.json({status : 200, message : res});
 
     } catch (error) {
-        return NextResponse.json({status : 204, message : error});
+        return new Response("cannot updated",{status : 403})
     }
 }
 
@@ -40,7 +47,7 @@ export async function GET(){
         const res = await db.review.findMany({where : {userId : id}});
         return NextResponse.json({status : 200,message :res});       
     } catch (error) {
-        return NextResponse.json({status : 204,message : error })
+        return  new Response("session not avaliable",{status : 403})
     }
 }   
 
@@ -50,12 +57,24 @@ export async function GET(){
 creating a review 
 */
 export async function POST(req : NextRequest) {
+    
     const dbUser = await getdbUser();
-    if (!dbUser) return NextResponse.json({status : 204, message : "session failure"});
-    const userId = dbUser.id
+    if (!dbUser) return NextResponse.json({status : 403, message : "session failure"});
+    
+    const userId = dbUser.id;
+    
     const {productId, score , description} = await req.json();
-    const validation = await db.user.findFirst({where : {id : userId}})
-    if (!validation) return NextResponse.json({status : 204, message : "this user doesn't exist"})
+    
+    const my_order = await db.order.findFirst({where : {
+        userId : userId,
+        orderLines : {
+            some : {
+                productId : productId
+            }
+        }
+    }})
+    if (!my_order) return new Response("You didn't buy this item yet",{status : 403})
+    
     try {
         const res = await db.review.create({
             data : {
@@ -67,8 +86,27 @@ export async function POST(req : NextRequest) {
         });
         return NextResponse.json({status : 200, message : res });
     } catch (error) {
-        return NextResponse.json({status : 204, message : error});
+        return new Response("This review already avaliable",{status : 403})
     }
 
 
+}
+
+/*
+delete all
+*/
+
+export async function DELETE(req : NextRequest){
+    
+    const dbUser = await getdbUser();
+    if (!dbUser) return NextResponse.json({status : 204 , message : "session failure"})
+    
+    const userId = dbUser.id;
+    const {productId} = await req.json();
+    try {
+        const res = await db.review.deleteMany({where : {userId : userId, productId : productId}});
+        return NextResponse.json({status : 200,message :res});    
+    } catch (error) {
+        return NextResponse.json({status : 204,message : error });
+    }
 }

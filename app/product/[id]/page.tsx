@@ -11,11 +11,45 @@ import initials from "initials";
 import { redirect } from "next/navigation";
 import WishButton from "@/components/wishButton";
 import { equal } from "assert";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Review, User } from "@prisma/client";
+import ReviewBox from "@/components/ui/review-box";
+import ReviewForm from "@/components/ui/review_form";
+
+type Cascade_review = Review & {
+  user : User
+}
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
   const id = parseInt(params.id);
+
+  const is_reviewable = (await db.product.findFirst({
+    where : {
+      id : id,
+    }
+    , select : {
+        reviews : {
+          include : {
+            user : true
+              
+            
+          }
+
+      }
+    
+    },
+  }));
+  if (!is_reviewable || !user) return <div> Loading ....</div>
+  const prev_review = await db.review.findFirst({
+    where : {
+      productId : id,
+      userId : user.id as string
+    }
+  })
+
+  const is_reviewables : Cascade_review[] = is_reviewable.reviews
   const data = await db.product.findFirst({
     where: {
       id: id,
@@ -27,7 +61,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!data) {
     redirect("/");
   }
-
+  
   function isOwner() {
     if (isAuthenticated()) {
       if (user.id == data?.ownerId) {
@@ -38,7 +72,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       return false;
     }
   }
-
   async function isWished() {
     if (isAuthenticated()) {
       const wish = await db.user.findUnique({
@@ -61,7 +94,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     }
     return false;
   }
-
   const name = data?.owner.displayName || "Unknown Seller";
   return (
     <div className="p-8 bg-neutral-100 dark:bg-neutral-800 min-h-full">
@@ -110,9 +142,26 @@ export default async function Page({ params }: { params: { id: string } }) {
               )}
               
             </div>
+            
           </div>
         </div>
       </div>
+      <div className=" items-center flex-col h-[2000px]">
+        <Card className="w-full">
+          <CardHeader className="">
+            <div className="items-center flex justify-center">Review section</div>
+            <ReviewForm productId={id} prev_review={prev_review}/>
+          </CardHeader>
+        </Card>
+        
+        <div className="rounded-[5rem] w-full min-h-[500px] ">
+          <ReviewBox reviews = {is_reviewables}></ReviewBox>
+          
+           
+        </div>
+          
+      </div>
+      
     </div>
   );
 }

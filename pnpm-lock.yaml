@@ -71,6 +71,9 @@ dependencies:
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@13.5.6)(react-dom@18.2.0)(react@18.2.0)
+  pluralize:
+    specifier: ^8.0.0
+    version: 8.0.0
   react:
     specifier: ^18
     version: 18.2.0
@@ -106,6 +109,9 @@ devDependencies:
   '@types/node':
     specifier: ^20
     version: 20.8.7
+  '@types/pluralize':
+    specifier: ^0.0.32
+    version: 0.0.32
   '@types/react':
     specifier: ^18
     version: 18.2.31
@@ -150,29 +156,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
-
-  /@cloudinary-util/url-loader@3.12.0:
-    resolution: {integrity: sha512-cBtB2uAFbCIPOLnMN5IlcA2A9ZuGiTDafbGH8u5iu1qO+ajluhTh9RyzWCsJtXJQj3OREG4W/P3H5ujdxKmpZA==}
-    dependencies:
-      '@cloudinary-util/util': 2.2.1
-      '@cloudinary/url-gen': 1.12.0
-    dev: false
-
-  /@cloudinary-util/util@2.2.1:
-    resolution: {integrity: sha512-MEIqn5WtPP3mxSMTNNfpqlGS1UquAXcjmVdY/t/edD/ZWVjI85viBiOMIuF0W6n6UF5gTstLymfQNYx0YO/GZg==}
-    dev: false
-
-  /@cloudinary/transformation-builder-sdk@1.7.0:
-    resolution: {integrity: sha512-/FLYApYLTextepNq7R3I+nMkisAVnf+ELU0+M1Zfi4vB64n4pUT7Z4jgTfmDbMhnNsGRitLHTdiRkAoVeApxZw==}
-    dependencies:
-      '@cloudinary/url-gen': 1.12.0
-    dev: false
-
-  /@cloudinary/url-gen@1.12.0:
-    resolution: {integrity: sha512-L22tftVId19g8irjuHuXOdTCWC8p45ZiejtFeuqmOtwW7nkPH1vHt5MaEvDM4DiljnW0CKZJxE9RNjyxgx1/+w==}
-    dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.7.0
-    dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.51.0):
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
@@ -1515,6 +1498,10 @@ packages:
     resolution: {integrity: sha512-21TKHHh3eUHIi2MloeptJWALuCu5H7HQTdTrWIFReA8ad+aggoX+lRes3ex7/FtpC+sVUpFMQ+QTfYr74mruiQ==}
     dependencies:
       undici-types: 5.25.3
+    dev: true
+
+  /@types/pluralize@0.0.32:
+    resolution: {integrity: sha512-exDkoRIkWJlbRDRmtYDbI3ZUE28HwBwHe5VKn4mvpvMW7qIRDHO6URItErBsBSX7J8/PrDLSOHCcbUMFXwA6CA==}
     dev: true
 
   /@types/prop-types@15.7.9:
@@ -3508,6 +3495,11 @@ packages:
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
+
+  /pluralize@8.0.0:
+    resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
+    engines: {node: '>=4'}
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.4.31):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}

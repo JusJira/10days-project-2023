@@ -32,6 +32,7 @@
     "next-cloudinary": "^4.28.0",
     "next-reveal": "^1.0.6",
     "next-themes": "^0.2.1",
+    "pluralize": "^8.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pluralize": "^0.0.32",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",

@@ -18,7 +18,7 @@ export default async function UserProfile() {
         <div className="flex flex-col gap-3 items-center justify-center">
           Hi {dbUser?.displayName}
             <Image
-              className="rounded-full aspect-square"
+              className="rounded-full aspect-square object-cover object-center"
               src={dbUser?.image as string}
               alt="Profile Image"
               width={100}

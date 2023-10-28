@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Poppins, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Metadata } from "next";
@@ -13,12 +13,6 @@ export const metadata: Metadata = {
   description:
     "All-in-one market for everyone not only Chad's with everything you ever wanted",
 };
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  variable: "--font-poppins",
-  weight: "400",
-});
 
 const jbn = JetBrains_Mono({
   subsets: ["latin"],
