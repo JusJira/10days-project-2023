@@ -150,6 +150,18 @@ const CartPage = () => {
                     
                     </CardContent>
                 </Card>
+                <div className="flex w-[95%] md:w-[70%] pt-10 justify-end">
+                    {
+                        (totalPrice > 0) ? 
+                            (<Link href="#">
+                                <Button>Purchase</Button>
+                            </Link>
+                        ) : (
+                            <Button disabled>Purchase</Button>
+                        )
+                        
+                    }
+                </div>
                 
             <div>
 
