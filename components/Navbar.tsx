@@ -41,7 +41,7 @@ const Navbar = async () => {
     },
     {
       label: "Cart",
-      link: "#"
+      link: "/cart"
     },
     {
       label: "Merchant",
