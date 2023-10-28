@@ -45,13 +45,16 @@ model Order {
   orderedAt  DateTime    @default(now())
   user       User        @relation("UserOrder", fields: [userId], references: [id], onDelete: Cascade)
   orderLines OrderLine[] @relation("OrderContain")
+  totalPrice Int         
 }
 
 model OrderLine {
-  orderId   Int
-  productId Int
-  order     Order   @relation("OrderContain", fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation("ContainInOrderLine", fields: [productId], references: [id], onDelete: Cascade)
+  orderId     Int
+  productId   Int
+  order       Order   @relation("OrderContain", fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product @relation("ContainInOrderLine", fields: [productId], references: [id], onDelete: Cascade)
+  quantity    Int     
+  totalPrice  Int     
 
   @@id([orderId, productId])
 }
