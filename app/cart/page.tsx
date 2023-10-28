@@ -14,6 +14,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const CartPage = () => {
 
@@ -123,7 +124,7 @@ const CartPage = () => {
                             orderList.map(function(val, idx) {
                                 return (
                                     <TableRow key={idx}>
-                                        <TableCell className="font-medium">{val.name}</TableCell>
+                                        <TableCell className="font-medium"><Link href={`/product/${val.id}`}>{val.name}</Link></TableCell>
                                         <TableCell className="h-full text-center align-middle">
                                             <div className="flex flex-row items-center">
                                                 <Button variant="ghost" className="w-6 h-6" onClick={() => decreaseQuantity(idx)}>-</Button>
