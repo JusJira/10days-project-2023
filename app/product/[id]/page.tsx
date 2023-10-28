@@ -42,14 +42,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     
     },
   }));
-  if (!is_reviewable || !user) return <div> Loading ....</div>
-  const prev_review = await db.review.findFirst({
+  if (is_reviewable === null) return <div>Loading ...</div>
+
+  const prev_review = (!user) ? null : ( await db.review.findFirst({
     where : {
       productId : id,
       userId : user.id as string
     }
-  })
-
+  }))
+  console.log(prev_review)
   const is_reviewables : Cascade_review[] = is_reviewable.reviews
   const data = await db.product.findFirst({
     where: {
@@ -176,7 +177,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Card className="w-full">
           <CardHeader className="">
             <div className="items-center flex justify-center">Review section</div>
-            <ReviewForm productId={id} prev_review={prev_review}/>
+            {(isAuthenticated()) ? (<ReviewForm productId={id} prev_review={prev_review}/> ): (<></>)}
           </CardHeader>
         </Card>
         
