@@ -18,6 +18,7 @@ import {
 import {
   Heart,
   LogOut,
+  ShoppingCart,
   Store,
   User,
   Wallet,
@@ -111,7 +112,13 @@ const Navbar = async () => {
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <Link href="/money">
+                    <Link href="/cart">
+                      <DropdownMenuItem>
+                        <ShoppingCart className="mr-2 h-4 w-4" />
+                        <span>Cart</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/money/wallet">
                       <DropdownMenuItem>
                         <Wallet className="mr-2 h-4 w-4" />
                         <span>Wallet</span>

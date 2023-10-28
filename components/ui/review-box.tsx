@@ -5,6 +5,7 @@ import { Card, CardContent } from "./card";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import initials from "initials";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 
 type Cascade_review = Review & {
@@ -28,10 +29,12 @@ export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
         {(reviews.length !== 0) ? (reviews.map((r) => (
             <Card key = {r.id} className="flex flex-col md:flex-row p-[1rem] border-r-2 box-border ">
                 <div className="md:w-[40%] lg:w-[30%] border-b-2 border-b-foreground md:border-b-0 md:border-r-2 border-r-foreground flex flex-wrap m-0 h-auto">
-                    <Avatar className=" mr-[1rem]">
-                        <AvatarImage className='object-cover object-center' src={r.user.image || "https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png"} />
-                        <AvatarFallback>{initials(r.user.displayName as string)}</AvatarFallback>
-                    </Avatar>
+                    <Link href={`/account/${r.user.accountId}`}>
+                        <Avatar className=" mr-[1rem]">
+                            <AvatarImage className='object-cover object-center' src={r.user.image || "https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png"} />
+                            <AvatarFallback>{initials(r.user.displayName as string)}</AvatarFallback>
+                        </Avatar>
+                    </Link>
                     
                     <div className="flex flex-col">
                         <div className="md:flex block">
