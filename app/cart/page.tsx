@@ -14,8 +14,12 @@ import {
   } from "@/components/ui/table"
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+
+
 
 const CartPage = () => {
+
     const dataFetchedRef = useRef(false);
 
     const [orderList, setOrderList] = useState<Array<{id: number, name: string, amount: number, max_quantity: number, price: number}>>([]);
@@ -23,6 +27,18 @@ const CartPage = () => {
 
     const [totalPrice, setTotalPrice] = useState<number>(0)
 
+    const [balance, setBalance] = useState<number>(0)
+
+    async function getBalance() {
+        const userRes = await fetch(`/api/account/current`)
+        const userResJson = await userRes.json()
+
+
+        const res = await fetch(`/api/account/${userResJson.user.id}`)
+        const data = await res.json()
+
+        setBalance(data.message.balance)
+    }
 
     async function getOrderList() {
         const order = localStorage.getItem('order');
@@ -90,6 +106,7 @@ const CartPage = () => {
         if (dataFetchedRef.current) return;
         dataFetchedRef.current = true;
         getOrderList()
+        getBalance()
     }, [])
 
     useEffect(() => {
@@ -115,6 +132,21 @@ const CartPage = () => {
         order[idx].amount = Math.max(order[idx].amount - 1 , 0)
         setOrderList([...order])
         refreshLocalStorage()
+    }
+
+    function purchase() {
+        const finalOrders = []
+        for (let e of orderList) {
+            if (e.amount != 0) {
+                finalOrders.push({
+                    id: e.id,
+                    quantity: e.amount
+                })
+            }
+        }
+
+        alert("Final Order : " + JSON.stringify(finalOrders) + "\nTotal Price : " + totalPrice.toString())
+
     }
 
 
@@ -161,6 +193,16 @@ const CartPage = () => {
 
                                 <TableCell className="text-right col-span-2" colSpan={2}>{totalPrice}</TableCell>
                             </TableRow>
+                            <TableRow>
+                                <TableCell className="font-bold">Current Balance</TableCell>
+
+                                <TableCell className="text-right col-span-2" colSpan={2}>{balance}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className="font-bold">Left Balance</TableCell>
+
+                                <TableCell className={"text-right col-span-2 " + ((balance - totalPrice < 0) && "text-red-500")} colSpan={2}>{balance - totalPrice}</TableCell>
+                            </TableRow>
                             
                         </TableBody>
                     </Table>
@@ -169,10 +211,8 @@ const CartPage = () => {
                 </Card>
                 <div className="flex w-[95%] md:w-[70%] pt-10 justify-end">
                     {
-                        (totalPrice > 0) ? 
-                            (<Link href="#">
-                                <Button>Purchase</Button>
-                            </Link>
+                        ((totalPrice > 0) && (balance - totalPrice >= 0)) ? (
+                            <Button onClick={() => {purchase()}}>Purchase</Button>
                         ) : (
                             <Button disabled>Purchase</Button>
                         )
