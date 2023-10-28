@@ -20,6 +20,8 @@ const CartPage = () => {
     const [orderList, setOrderList] = useState<Array<{id: number, name: string, amount: number, max_quantity: number, price: number}>>([]);
     // const [orderList, setOrderList] = useState<Array<any>>([]);
 
+    const [totalPrice, setTotalPrice] = useState<number>(0)
+
 
     async function getOrderList() {
         const order = localStorage.getItem('order');
@@ -74,6 +76,14 @@ const CartPage = () => {
         getOrderList()
     }, [])
 
+    useEffect(() => {
+        let newTotalPrice = 0;
+        for (let e of orderList) {
+            newTotalPrice += e.amount * e.price
+        }
+        setTotalPrice(newTotalPrice)
+    }, [orderList])
+
 
     // Button function
 
@@ -126,7 +136,13 @@ const CartPage = () => {
                                     </TableRow>
                                 )
                             })
+                            
                         }
+                            <TableRow>
+                                <TableCell className="font-bold">Total</TableCell>
+
+                                <TableCell className="text-right col-span-2" colSpan={2}>{totalPrice}</TableCell>
+                            </TableRow>
                             
                         </TableBody>
                     </Table>
