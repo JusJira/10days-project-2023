@@ -30,7 +30,7 @@ COPY . .
 #RUN yarn build
 COPY . . 
 
-RUN npx prisma generate
+RUN npx prisma generate --schema ./prisma/schema.prisma
 # If using npm comment out above and use below instead
 RUN npm run build
 
