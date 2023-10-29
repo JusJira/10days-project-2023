@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { db } from "@/lib/db";
-import { Heart, Lightbulb } from "lucide-react";
+import { Heart, Lightbulb, Package } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -100,7 +100,11 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   
   return (
-    <div className="p-8 bg-neutral-100 dark:bg-neutral-800 min-h-full">
+    <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Package className="content-center" size={25}></Package>
+        <h3 className="text-lg font-medium">Product</h3>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[16rem]">
         <div className="flex items-center justify-center relative aspect-square m-4 md:m-10 lg:m-16">
           <Image

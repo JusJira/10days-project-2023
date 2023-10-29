@@ -10,8 +10,9 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Label } from "@/components/ui/label";
 import { db } from "@/lib/db";
-import { Lightbulb, UserCircle2 } from "lucide-react";
+import { Lightbulb, UserCircle2, Wallet } from "lucide-react";
 import UserProfile from "@/components/userProfile";
+import { Separator } from "@/components/ui/separator";
 
 export default async function account() {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -24,6 +25,11 @@ export default async function account() {
 
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Wallet className="content-center" size={25}></Wallet>
+        <h3 className="text-lg font-medium">Wallet</h3>
+      </div>
+      <Separator />
       <UserProfile/>
         <div className="flex h-full  min-h-full flex-col items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
           <div className="flex w-full justify-center flex-col items-center gap-3">

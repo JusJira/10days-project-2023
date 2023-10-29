@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
+import { ShoppingCart } from 'lucide-react';
 
 type Item = {
     id : number,
@@ -169,7 +170,8 @@ const CartPage = () => {
 
     return (
         <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-            <div className="px-5">
+            <div className="px-5 flex flex-row space-x-3">
+                <ShoppingCart className="content-center" size={25}></ShoppingCart>
                 <h3 className="text-lg font-medium">Cart</h3>
             </div>
             <Separator />
