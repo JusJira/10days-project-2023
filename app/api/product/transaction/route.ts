@@ -12,10 +12,10 @@ type Item = {
 
 export async function POST(req : NextRequest){
     const dbUser = await getDbUser();
-    if (!dbUser) return new Response("User isn't authorize",{status : 204});
+    if (!dbUser) return new Response("User isn't authorize",{status : 401});
     const current_money = dbUser.balance;
     const {finalOrders,totalPrice} : {finalOrders : Array<Item> , totalPrice : number} = await req.json();
-    if (totalPrice > current_money) return new Response("ํYou don't have enough money",{status : 204});
+    if (totalPrice > current_money) return new Response("ํYou don't have enough money",{status : 403});
 
     
 

@@ -28,7 +28,7 @@ function WishButton({ id, wished }: { id: number; wished: any }) {
       });
     }
 
-    if (response?.status == 403) {
+    if (response?.status == 401) {
       return toast({
         title: "Not Logged In",
         description:

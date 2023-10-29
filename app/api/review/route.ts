@@ -59,7 +59,7 @@ creating a review
 export async function POST(req : NextRequest) {
     
     const dbUser = await getDbUser();
-    if (!dbUser) return NextResponse.json({status : 403, message : "session failure"});
+    if (!dbUser) return NextResponse.json({status : 401, message : "session failure"});
     
     const userId = dbUser.id;
     

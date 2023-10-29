@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     const user = await getUser();
 
     if (await !isAuthenticated()) {
-      return new Response("Unauthorized", { status: 403 });
+      return new Response("Unauthorized", { status: 401 });
     }
 
     const json = await req.json();
