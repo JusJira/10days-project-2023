@@ -20,6 +20,7 @@ model User {
   products    Product[]  @relation("ProductsOwn")
   reviews     Review[]   @relation("userReview")
   wishlists   Wishlist[] @relation("userWishlist")
+  transactions  Transaction[]  @relation("TransactionOwner")
 
   @@map("users")
 }
@@ -80,4 +81,13 @@ model Review {
   user        User     @relation("userReview", fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, productId])
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  user        User     @relation("TransactionOwner", fields: [userId], references: [id])
+  amount      Int
+  description String
+  createdTimestamp  DateTime  @default(now())
 }
