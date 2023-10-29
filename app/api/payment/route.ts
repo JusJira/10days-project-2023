@@ -70,6 +70,21 @@ export async function POST(req: Request) {
                     balance: receiver.balance + amount
                 }
             })
+
+            const transactionHistory: Array<{userId: string, amount: number, description: string}> = []
+            transactionHistory.push({
+              userId: sender.id,
+              amount: -amount,
+              description: `Transfer money to ${(receiver.displayName) ? receiver.displayName : ("accountId #" + receiver.accountId.toString()) }`
+            })
+            transactionHistory.push({
+              userId: receiver.id,
+              amount: amount,
+              description: `Receive money from ${(sender.displayName) ? sender.displayName : ("accountId #" + sender.accountId.toString()) }`
+            })
+
+            const transRes = await db.transaction.createMany({ data : transactionHistory });
+
             return new Response(JSON.stringify(receive));
         }
     }
