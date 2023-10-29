@@ -3,7 +3,7 @@ import { getDbUser } from "@/lib/getUser";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(req : NextRequest) {
-    const dbUser = await getdbUser();
+    const dbUser = await getDbUser();
     if (!dbUser) return NextResponse.json({status : 403, message : "session failure"});
     // const {displayName , bio, image} = await req.json();
     // console.log(await req.json())
