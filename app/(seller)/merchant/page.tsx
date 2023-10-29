@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 
 export default async function account() {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -33,6 +34,10 @@ export default async function account() {
 
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5">
+        <h3 className="text-lg font-medium">Merchant</h3>
+      </div>
+      <Separator />
       <div className="flex h-full  min-h-full flex-row items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
         <Link
           className="flex flex-col items-center justify-center"
