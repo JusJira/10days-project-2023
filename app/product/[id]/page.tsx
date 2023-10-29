@@ -17,6 +17,7 @@ import ReviewBox from "@/components/ui/review-box";
 import ReviewForm from "@/components/ui/review_form";
 import AddToCardButton from "./AddToCardButton";
 import { Separator } from "@/components/ui/separator";
+import ReviewStackBar from "@/components/ReviewStackBar";
 
 type Cascade_review = Review & {
   user: User;
@@ -161,6 +162,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </>
               )}
             </div>
+            
           </div>
 
           {/* <div className="flex flex-row mt-10 gap-8">
