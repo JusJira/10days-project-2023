@@ -28,6 +28,10 @@ import { Store } from "lucide-react";
 
 const FormSchema = productSchema
 
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
 export default function InputForm() {
   const [resource, setResource] = React.useState<string>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -55,11 +59,13 @@ export default function InputForm() {
     setIsLoading(false);
 
     if (response?.ok) {
-      window.location.href = '/merchant/product'
-      return toast({
+      toast({
         title: "Success",
-        description: "Your product has been added.",
+        description: "Your product has been added. You will be sent back soon...",
       });
+      await delay(2000);
+      window.location.href = '/merchant/product'
+      return
     }
 
     if (!response?.ok) {

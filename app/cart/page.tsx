@@ -17,12 +17,17 @@ import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
 import { ShoppingCart } from 'lucide-react';
+import { toast } from "@/components/ui/use-toast";
 
 type Item = {
   id: number;
   quantity: number;
   totalPrice: number;
 };
+
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 const CartPage = () => {
   const dataFetchedRef = useRef(false);
@@ -173,7 +178,12 @@ const CartPage = () => {
             finalOrders : finalOrders,
             totalPrice : totalPrice
         })
-    })
+    })  
+        toast({
+          title: "Success",
+          description: "Your order is completed. You will be sent to order page soon...",
+        });
+        await delay(2000)
         window.location.href = '/account/order'
         localStorage.removeItem('order')
         // alert("Final Order : " + JSON.stringify(finalOrders) + "\nTotal Price : " + totalPrice.toString())

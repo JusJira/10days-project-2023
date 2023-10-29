@@ -24,6 +24,10 @@ import { useRouter } from "next/navigation";
 import { productSchema } from "@/utils/zod";
 import { UploadButton } from "@/utils/uploadthing";
 
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
 const FormSchema = productSchema;
 type ProfileFormValues = z.infer<typeof FormSchema>;
 
@@ -58,11 +62,14 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
     });
 
     if (response?.ok) {
-      window.location.href = "/merchant/product";
-      return toast({
+      
+      toast({
         title: "Success",
         description: "Your product has been deleted.",
       });
+      await delay(2000)
+      window.location.href = "/merchant/product"
+      return
     }
   }
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -86,14 +93,16 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
     setIsLoading(false);
 
     if (response?.ok) {
-      window.location.href = "/merchant/product";
-      return toast({
+      toast({
         title: "Success",
         description: "Your product has been edited.",
       });
+      await delay(2000)
+      window.location.href = "/merchant/product"
+      return
     }
 
-    if (!response?.ok) {
+    else if (!response?.ok) {
       return toast({
         title: "Something went wrong.",
         description: "Your was not edited.",
