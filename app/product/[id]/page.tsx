@@ -16,6 +16,7 @@ import { Review, User } from "@prisma/client";
 import ReviewBox from "@/components/ui/review-box";
 import ReviewForm from "@/components/ui/review_form";
 import AddToCardButton from "./AddToCardButton";
+import { Separator } from "@/components/ui/separator";
 
 type Cascade_review = Review & {
   user: User;
@@ -102,6 +103,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Package className="content-center" size={25}></Package>
         <h3 className="text-lg font-medium">Product</h3>
       </div>
+      <Separator />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[16rem]">
         <div className="flex items-center justify-center relative aspect-square m-4 md:m-10 lg:m-16">
           <Image
