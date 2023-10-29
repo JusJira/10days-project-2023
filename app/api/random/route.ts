@@ -18,7 +18,7 @@ export async function GET() {
   const stock = faker.number.int({ min: 1, max: 99999 });
 
   try {
-    const image = await fetch("https://source.unsplash.com/random");
+    const image = await fetch(`https://source.unsplash.com/random/?${name}`);
     const res = await db.product.create({
       data: {
         ownerId: id,
