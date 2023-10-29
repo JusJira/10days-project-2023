@@ -15,6 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { redirect } from 'next/navigation';
 
 type Item = {
     id : number,
@@ -158,9 +159,10 @@ const CartPage = () => {
             totalPrice : totalPrice
         })
     })
-        window.location.href = '/cart'
+        window.location.href = '/account/order'
         localStorage.removeItem('order')
-        alert("Final Order : " + JSON.stringify(finalOrders) + "\nTotal Price : " + totalPrice.toString())
+        // alert("Final Order : " + JSON.stringify(finalOrders) + "\nTotal Price : " + totalPrice.toString())
+        
         return res;
     }
 
