@@ -4,6 +4,44 @@ on:
     branches: [main]
 
 jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    container: node:14
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Build and Publish to Github Packages Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: jusjira/10-days/chadmart
+          registry: ghcr.io
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets. GITHUB_TOKEN }}
+          dockerfile: Dockerfile
+          buildargs: NEXT_PUBLIC_BACKEND_URL,NEXT_PUBLIC_META_API_KEY
+          tags: latest
+
+      - name: Deploy package to digitalocean
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_USERNAME: ${{ secrets.USERNAME }}
+          GITHUB_TOKEN: ${{ secrets. GITHUB_TOKEN }}
+        with:
+          host: ${{ secrets.HOST }}
+          port: 22
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: GITHUB_USERNAME, GITHUB_TOKEN
+          script: |
+            docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+            docker pull ghcr.io/jusjira/10-days/chadmart:latest
+            docker stop chadmart
+            docker system prune -f
+            docker run --name chadmart -dit -p 3939:3000 ghcr.io/jusjira/10-days/chadmart:latest
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -29,7 +67,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-        - uses: sarisia/actions-status-discord@v1
-          if: always()
-          with:
-            webhook: ${{ secrets.DISCORD_WEBHOOK }}
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
