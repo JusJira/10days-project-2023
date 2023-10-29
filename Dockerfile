@@ -28,6 +28,7 @@ COPY . .
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 #RUN yarn build
+COPY . . 
 
 RUN npx prisma generate
 # If using npm comment out above and use below instead
