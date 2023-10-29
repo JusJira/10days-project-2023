@@ -23,6 +23,27 @@ export default async function account() {
     },
   });
 
+  async function topup() {
+    try {
+      const res = await fetch(`/api/payment/paotooong/topup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: "smokeweed@everyday.com",
+            password: "asdfghjk",
+            amount: 17
+        }),
+    });
+    alert(JSON.stringify(await res.json()))
+    }
+    
+    catch (err) {
+      alert(err)
+    }
+  }
+
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
       <div className="px-5 flex flex-row space-x-3">
@@ -46,6 +67,12 @@ export default async function account() {
             </div>
             <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white shadow-2xl dark:bg-black lg:w-48">
               <Link className={`w-full text-center !p-0`} href={'/money/pay'}>Pay</Link>
+            </div>
+            <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white shadow-2xl dark:bg-black lg:w-48">
+              <Link className={`w-full text-center !p-0`} href={'/money/topup'}>Top Up</Link>
+            </div>
+            <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white shadow-2xl dark:bg-black lg:w-48">
+              <Link className={`w-full text-center !p-0`} href={'/money/withdraw'}>Withdraw</Link>
             </div>
           </div>
         </div>
