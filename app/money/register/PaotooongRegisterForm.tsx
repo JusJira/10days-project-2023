@@ -19,12 +19,14 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
+import { redirect, useSearchParams } from "next/navigation";
 
-
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 // Build form schema
-const withdrawFormSchema = z.object({
+const registerFormSchema = z.object({
   email: z
     .string()
     .email()
@@ -32,38 +34,37 @@ const withdrawFormSchema = z.object({
       message: "Please fill email",
     }),
   password: z.string()
-    .min(1, {
-      message: "Please fill password",
-    }),
-  amount: z.coerce.number().min(1, {
-      message: "Please fill positive amount"
-  })
+    .min(8, {
+      message: "The password must be at least 8 characters",
+    })
 })
 
-type WithdrawFormValues = z.infer<typeof withdrawFormSchema>
+type RegisterFormValues = z.infer<typeof registerFormSchema>
 
-export function WithdrawForm() { // change any type if u have free time, I am lazy
+export function PaotooongRegisterForm() { // change any type if u have free time, I am lazy
+  const queryParams = useSearchParams();
+  const redirectQuery = queryParams ? queryParams.get("rdb") : "/wallet";
 
   const [isProcessing, setProcessing] = useState<boolean>(false);
 
-  const defaultValues: Partial<WithdrawFormValues> = {
+  const defaultValues: Partial<RegisterFormValues> = {
     email: "",
-    password: "",
-    amount: 1
+    password: ""
   }
 
-  const form = useForm<WithdrawFormValues>({
-    resolver: zodResolver(withdrawFormSchema),
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues,
     mode: "onChange",
   })
 
 
-  async function onSubmit(data: WithdrawFormValues) {
+  async function onSubmit(data: RegisterFormValues) {
+    // alert(JSON.stringify(data))
     setProcessing(true)
     try {
 
-      const res = await fetch("/api/payment/paotooong/withdraw",
+      const res = await fetch("/api/payment/paotooong/create",
         {
           method : "POST",
 
@@ -78,26 +79,29 @@ export function WithdrawForm() { // change any type if u have free time, I am la
 
       if (resJson.status == 400) {
         toast({
-          title: "Withdraw Failed",
+          title: "Register Failed",
           description: `${resJson.message}`,
           variant: "destructive"
         })
+        setProcessing(false)
       }
       else {
         toast({
-          title: "Withdraw Successful",
-          description: `Now balance in wallet is ${resJson.message.balance}`,
+          title: "Register Successful",
+          description: `We will redirect you to previous page soon...`,
         })
+        setProcessing(false)
+        await delay(2000);
+        window.location.href = (redirectQuery || "/wallet")
       }
+      
     }
     catch (err) {
       toast({
-        title: "Withdraw Failed",
+        title: "Register Failed",
         description: `${err}`,
         variant: "destructive"
       })
-    }
-    finally {
       setProcessing(false)
     }
     
@@ -106,7 +110,7 @@ export function WithdrawForm() { // change any type if u have free time, I am la
   return (
     <>
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -135,23 +139,7 @@ export function WithdrawForm() { // change any type if u have free time, I am la
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="amount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Amount</FormLabel>
-              <FormControl>
-                <Input placeholder="Amount" type="number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Label className="text-center">Don't have Paotooong account? <Link href="/money/register?rdb=/money/withdraw" className="text-indigo-600 hover:text-indigo-400">Create one</Link></Label>
-
-        <Button className="w-fit" type="submit">Withdraw</Button>
+        <Button type="submit">Create</Button>
         
       </form>
     </Form>

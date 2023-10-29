@@ -19,6 +19,7 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 
 
@@ -105,7 +106,7 @@ export function TopupForm() { // change any type if u have free time, I am lazy
   return (
     <>
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -148,7 +149,9 @@ export function TopupForm() { // change any type if u have free time, I am lazy
           )}
         />
 
-        <Button type="submit">Top Up</Button>
+        <Label className="text-center">Don't have Paotooong account? <Link href="/money/register?rdb=/money/topup" className="text-indigo-600 hover:text-indigo-400">Create one</Link></Label>
+
+        <Button className="w-fit" type="submit">Top Up</Button>
         
       </form>
     </Form>
