@@ -17,6 +17,7 @@ import ReviewBox from "@/components/ui/review-box";
 import ReviewForm from "@/components/ui/review_form";
 import AddToCardButton from "./AddToCardButton";
 import { Separator } from "@/components/ui/separator";
+import ReviewStackBar from "@/components/ReviewStackBar";
 
 type Cascade_review = Review & {
   user: User;
@@ -161,6 +162,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </>
               )}
             </div>
+            
           </div>
 
           {/* <div className="flex flex-row mt-10 gap-8">
@@ -190,7 +192,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Card className="w-full">
           <CardHeader className="">
             <div className="items-center flex justify-center">
-              Review section
+              Review Section
             </div>
             {isAuthenticated() ? (
               <ReviewForm productId={id} prev_review={prev_review} />
