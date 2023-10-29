@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { getdbUser } from "@/lib/getUser";
+import { getDbUser } from "@/lib/getUser";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(req : NextRequest) {
