@@ -9,6 +9,17 @@ import { Store } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
+type Product = {
+  id: number;
+  ownerId: string;
+  price: number;
+  name: string;
+  description: string | null;
+  image: string;
+  quantity: number;
+  createdAt: Date;
+};
+
 async function page() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -26,7 +37,7 @@ async function page() {
       </div>
       <Separator />
       <div className="flex h-full  min-h-full flex-col items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
-        {products.map((p, index) => (
+        {products.map((p: Product, index: number) => (
           <div
             key={index}
             className="w-full dark:bg-neutral-600 bg-neutral-100 rounded-md grid grid-cols-1 md:grid-cols-3 min-h-[24rem]"
@@ -47,13 +58,27 @@ async function page() {
               </div>
               <div className="flex flex-col">
                 <span className="text-xl">Description:</span>
-                <span className="text-lg">{p.description?.substring(0, 250)}</span>
+                <span className="text-lg">
+                  {p.description?.substring(0, 250)}
+                </span>
               </div>
-              <Link className={`${buttonVariants({ variant: "outline" })} w-fit bottom-0 mt-auto`} href={`/merchant/product/edit/${p.id}`}>Edit</Link>
+              <Link
+                className={`${buttonVariants({
+                  variant: "outline",
+                })} w-fit bottom-0 mt-auto`}
+                href={`/merchant/product/edit/${p.id}`}
+              >
+                Edit
+              </Link>
             </div>
           </div>
         ))}
-        <Link href={'/merchant/product/add'} className={`${buttonVariants()} w-fit bottom-0 mt-auto`}>Add Product</Link>
+        <Link
+          href={"/merchant/product/add"}
+          className={`${buttonVariants()} w-fit bottom-0 mt-auto`}
+        >
+          Add Product
+        </Link>
       </div>
     </div>
   );

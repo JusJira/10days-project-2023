@@ -6,6 +6,14 @@ import pluralize from "pluralize";
 import { Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
+type Wishlist = {
+  product: {
+      id: number;
+      image: string;
+      name: string;
+      price: number;
+  };
+}
 export default async function Page() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -43,7 +51,7 @@ export default async function Page() {
         </p>
       </div>
       <div className="grid-container">
-        {wished?.wishlists.map((p, index) => (
+        {wished?.wishlists.map((p: Wishlist, index:number) => (
           <ProductBox
             key={index}
             name={p.product.name}

@@ -16,6 +16,15 @@ import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { Coins, Wallet } from 'lucide-react';
 
+type Transaction = {
+    id: number;
+    userId: string;
+    amount: number;
+    description: string;
+    createdTimestamp: Date;
+}
+
+
 const TransactionPage = async () => {
     const { getUser, isAuthenticated } = getKindeServerSession();
     const user = await getUser();
@@ -62,7 +71,7 @@ const TransactionPage = async () => {
                         </TableHeader>
                         <TableBody>
                         {
-                            transactionHistory.map(function(val, idx) {
+                            transactionHistory.map(function(val: Transaction, idx: number) {
                                 return (
                                     <TableRow key={idx}>
                                         <TableCell className="font-medium">{val.description}</TableCell>
