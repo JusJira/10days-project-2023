@@ -64,7 +64,7 @@ jobs:
             pm2 restart 10days
 
   discord:
-    needs: deploy
+    needs: [deploy,build]
     runs-on: ubuntu-latest
     steps:
       - uses: sarisia/actions-status-discord@v1
