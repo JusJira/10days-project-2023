@@ -8,19 +8,19 @@ datasource db {
 }
 
 model User {
-  id          String     @id @unique
-  balance     Int        @default(0)
-  address     String?
-  displayName String?
-  image       String     @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202449/10-day-project/image/users/n5o6jwbsitgdvsuxrhfa.png")
-  accountId   Int        @default(autoincrement())
-  bio         String?
-  createdAt   DateTime   @default(now())
-  orders      Order[]    @relation("UserOrder")
-  products    Product[]  @relation("ProductsOwn")
-  reviews     Review[]   @relation("userReview")
-  wishlists   Wishlist[] @relation("userWishlist")
-  transactions  Transaction[]  @relation("TransactionOwner")
+  id           String        @id @unique
+  balance      Int           @default(0)
+  address      String?
+  displayName  String?
+  image        String        @default("https://uploadthing.com/f/4a65c7f9-7bb1-4498-99bb-4148be482108-t9vzc5.png")
+  accountId    Int           @default(autoincrement())
+  bio          String?
+  createdAt    DateTime      @default(now())
+  orders       Order[]       @relation("UserOrder")
+  products     Product[]     @relation("ProductsOwn")
+  reviews      Review[]      @relation("userReview")
+  transactions Transaction[] @relation("TransactionOwner")
+  wishlists    Wishlist[]    @relation("userWishlist")
 
   @@map("users")
 }
@@ -31,7 +31,7 @@ model Product {
   price             Int
   name              String
   description       String?
-  image             String      @default("https://res.cloudinary.com/dqervfik7/image/upload/v1698202889/10-day-project/image/products/x125n4rie6tnb67parkw.jpg")
+  image             String      @default("https://uploadthing.com/f/84b973a7-92c9-4077-ba4e-ea668ad0115f-fkry6q.jpg")
   quantity          Int         @default(0)
   createdAt         DateTime    @default(now())
   orderLineContains OrderLine[] @relation("ContainInOrderLine")
@@ -44,18 +44,18 @@ model Order {
   id         Int         @id @default(autoincrement())
   userId     String
   orderedAt  DateTime    @default(now())
+  totalPrice Int
   user       User        @relation("UserOrder", fields: [userId], references: [id], onDelete: Cascade)
   orderLines OrderLine[] @relation("OrderContain")
-  totalPrice Int         
 }
 
 model OrderLine {
-  orderId      Int
-  productId    Int
-  order        Order   @relation("OrderContain", fields: [orderId], references: [id], onDelete: Cascade)
-  product      Product @relation("ContainInOrderLine", fields: [productId], references: [id], onDelete: Cascade)
-  quantity    Int     
-  totalPrice  Int     
+  orderId    Int
+  productId  Int
+  quantity   Int
+  totalPrice Int
+  order      Order   @relation("OrderContain", fields: [orderId], references: [id], onDelete: Cascade)
+  product    Product @relation("ContainInOrderLine", fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([orderId, productId])
 }
@@ -84,10 +84,10 @@ model Review {
 }
 
 model Transaction {
-  id          Int      @id @default(autoincrement())
-  userId      String
-  user        User     @relation("TransactionOwner", fields: [userId], references: [id])
-  amount      Int
-  description String
-  createdTimestamp  DateTime  @default(now())
+  id               Int      @id @default(autoincrement())
+  userId           String
+  amount           Int
+  description      String
+  createdTimestamp DateTime @default(now())
+  user             User     @relation("TransactionOwner", fields: [userId], references: [id])
 }
