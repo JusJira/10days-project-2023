@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { getdbUser } from "@/lib/getUser";
+import { getDbUser } from "@/lib/getUser";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -9,7 +9,7 @@ for showing wishlist to user
 
 export async function GET(){
     
-    const dbUser = await getdbUser();
+    const dbUser = await getDbUser();
     if (!dbUser) return NextResponse.json({status : 204 , message : "session failure"})
     const userId = dbUser.id;
     try {
@@ -26,7 +26,7 @@ required productId
 */
 
 export async function POST(req : NextRequest){
-    const dbUser = await getdbUser();
+    const dbUser = await getDbUser();
     if (!dbUser) return NextResponse.json({status : 204 , message : "session failure"})
     const {productId}= await req.json();
     const userId = dbUser.id;
@@ -47,7 +47,7 @@ delete user wishlist
 */
 
 export async function DELETE(req : NextRequest){
-    const dbUser = await getdbUser();
+    const dbUser = await getDbUser();
     if (!dbUser) return NextResponse.json({status : 204 , message : "session failure"})
     const userId = dbUser.id;
     const {productId} = await req.json();

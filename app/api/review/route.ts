@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { getdbUser } from "@/lib/getUser";
+import { getDbUser } from "@/lib/getUser";
 import { NextRequest, NextResponse } from "next/server";
 /*
 call by METHOD /api/review
@@ -10,7 +10,7 @@ tested by postman
 */
 export async function PUT(req : NextRequest){
     const {productId,score,description} = await req.json(); // product , score ,description
-    const user = await getdbUser();
+    const user = await getDbUser();
     if (!user) return new Response("session failure",{status : 403})
     const review = await db.review.findFirst({where : {
         productId : productId,
@@ -41,7 +41,7 @@ export async function GET(){
     // need to pass user id to show user reviews
     
     try {
-        const user = await getdbUser();
+        const user = await getDbUser();
         if (!user) return NextResponse.json({status : 204, message : "you didn't login"})
         const id = user.id;
         const res = await db.review.findMany({where : {userId : id}});
@@ -58,7 +58,7 @@ creating a review
 */
 export async function POST(req : NextRequest) {
     
-    const dbUser = await getdbUser();
+    const dbUser = await getDbUser();
     if (!dbUser) return NextResponse.json({status : 403, message : "session failure"});
     
     const userId = dbUser.id;
@@ -98,7 +98,7 @@ delete all
 
 export async function DELETE(req : NextRequest){
     
-    const dbUser = await getdbUser();
+    const dbUser = await getDbUser();
     if (!dbUser) return NextResponse.json({status : 204 , message : "session failure"})
     
     const userId = dbUser.id;

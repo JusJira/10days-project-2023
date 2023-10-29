@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { getdbUser } from "@/lib/getUser";
+import { getDbUser } from "@/lib/getUser";
 import { OrderLine, Product, User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,7 +11,7 @@ type Item = {
 
 
 export async function POST(req : NextRequest){
-    const dbUser = await getdbUser();
+    const dbUser = await getDbUser();
     if (!dbUser) return new Response("User isn't authorize",{status : 204});
     const current_money = dbUser.balance;
     const {finalOrders,totalPrice} : {finalOrders : Array<Item> , totalPrice : number} = await req.json();
