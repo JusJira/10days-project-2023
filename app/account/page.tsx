@@ -170,12 +170,15 @@ export default async function AccountProfile() {
                   </Button>
                   <span>Wishlist</span>
                 </Link>
-                <div className="flex flex-col items-center justify-center">
+                <Link
+                  className="flex flex-col items-center justify-center"
+                  href={"/account/order"}
+                >
                   <Button className="aspect-square h-full flex flex-col">
-                    <ShoppingBag size={32} />
+                  <ShoppingBag size={32}/>
                   </Button>
-                  <span>Orders</span>
-                </div>
+                  <span>Order</span>
+                </Link>
                 <div className="flex flex-col items-center justify-center">
                   <Link
                     className="flex flex-col items-center justify-center"
