@@ -35,6 +35,8 @@ const CartPage = () => {
 
     const [balance, setBalance] = useState<number>(0)
 
+    const [isPurchasing, setIsPurchasing] = useState<boolean>(false)
+
     async function getBalance() {
         const userRes = await fetch(`/api/account/current`)
         const userResJson = await userRes.json()
@@ -141,6 +143,8 @@ const CartPage = () => {
     }
 
     async function purchase() {
+        setIsPurchasing(true)
+
         const finalOrders : Item[] = []
         for (let e of orderList) {
             if (e.amount != 0) {
@@ -231,7 +235,15 @@ const CartPage = () => {
                 <div className="flex w-[95%] md:w-[70%] pt-10 justify-end">
                     {
                         ((totalPrice > 0) && (balance - totalPrice >= 0)) ? (
-                            <Button onClick={async () => {purchase()}}>Purchase</Button>
+                            
+                                (isPurchasing == true) ? (
+                                    <Button disabled>Purchase</Button>
+                                ) : (
+                                    <Button onClick={async () => {purchase()}}>Purchase</Button>
+                                )
+
+                        
+                            
                         ) : (
                             <Button disabled>Purchase</Button>
                         )
