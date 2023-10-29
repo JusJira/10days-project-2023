@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator'
-import React, { useEffect, useRef, useState } from 'react'
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Table,
     TableBody,
@@ -19,128 +19,138 @@ import { redirect } from 'next/navigation';
 import { ShoppingCart } from 'lucide-react';
 
 type Item = {
-    id : number,
-    quantity : number,
-    totalPrice : number 
+  id: number;
+  quantity: number;
+  totalPrice: number;
 };
 
 const CartPage = () => {
+  const dataFetchedRef = useRef(false);
 
-    const dataFetchedRef = useRef(false);
+  const [orderList, setOrderList] = useState<
+    Array<{
+      id: number;
+      name: string;
+      amount: number;
+      max_quantity: number;
+      price: number;
+    }>
+  >([]);
+  // const [orderList, setOrderList] = useState<Array<any>>([]);
 
-    const [orderList, setOrderList] = useState<Array<{id: number, name: string, amount: number, max_quantity: number, price: number}>>([]);
-    // const [orderList, setOrderList] = useState<Array<any>>([]);
-
-    const [totalPrice, setTotalPrice] = useState<number>(0)
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
     const [balance, setBalance] = useState<number>(0)
 
     const [isPurchasing, setIsPurchasing] = useState<boolean>(false)
 
-    async function getBalance() {
-        const userRes = await fetch(`/api/account/current`)
-        const userResJson = await userRes.json()
+  async function getBalance() {
+    const userRes = await fetch(`/api/account/current`);
+    const userResJson = await userRes.json();
 
+    const res = await fetch(`/api/account/${userResJson.user.id}`);
+    const data = await res.json();
 
-        const res = await fetch(`/api/account/${userResJson.user.id}`)
-        const data = await res.json()
+    setBalance(data.message.balance);
+  }
 
-        setBalance(data.message.balance)
+  async function getOrderList() {
+    const order = localStorage.getItem("order");
+    if (!order) {
+      return;
     }
+    try {
+      const orderJson: Array<{ id: number; quantity: number }> =
+        JSON.parse(order);
 
-    async function getOrderList() {
-        const order = localStorage.getItem('order');
-        if (!order) {
-            return;
+      const idFilter: Array<number> = [];
+      let idWithAmount = new Map<number, number>();
+
+      orderJson.forEach((element) => {
+        if (element.quantity != 0) {
+          idFilter.push(element.id);
+          idWithAmount.set(element.id, element.quantity);
         }
-        try {
-            const orderJson: Array<{id: number, quantity: number}> = JSON.parse(order);
-            
+      });
 
-            const idFilter: Array<number> = []
-            let idWithAmount = new Map<number, number>()
+      const res = await fetch(`/api/product/all/${idFilter.join("_")}`);
+      const data = await res.json();
 
-            orderJson.forEach(element => {
-                if (element.quantity != 0) {
-                    idFilter.push(element.id);
-                    idWithAmount.set(element.id, element.quantity)
-                }
-            });
+      const productList = data.message;
 
-            
+      const orders: Array<{
+        id: number;
+        name: string;
+        amount: number;
+        max_quantity: number;
+        price: number;
+      }> = [];
+      for (let e of productList) {
+        orders.push({
+          id: e.id,
+          name: e.name,
+          amount: Math.min(e.quantity, idWithAmount.get(e.id) || 0),
+          max_quantity: e.quantity,
+          price: e.price,
+        });
+      }
 
-            const res = await fetch(`/api/product/all/${idFilter.join("_")}`)
-            const data = await res.json()
+      setOrderList(orders);
+      // console.log(productList)
 
-            const productList = data.message
-
-            const orders: Array<{id: number, name: string, amount: number, max_quantity: number, price: number}> = []
-            for (let e of productList) {
-                orders.push({
-                    id: e.id,
-                    name: e.name,
-                    amount: Math.min(e.quantity, idWithAmount.get(e.id) || 0) ,
-                    max_quantity: e.quantity,
-                    price: e.price
-                })
-            }
-           
-
-            setOrderList(orders)
-            // console.log(productList)
-
-            // const o = orderList
-            // o[0].quantity = 100
-            // setOrderList(o)
-        }
-        catch (err) {
-            // localStorage.removeItem('order');
-            return;
-        }
+      // const o = orderList
+      // o[0].quantity = 100
+      // setOrderList(o)
+    } catch (err) {
+      // localStorage.removeItem('order');
+      return;
     }
+  }
 
-    function refreshLocalStorage() {
-        const refreshLocal = []
-        for (var i = 0, numOrder = orderList.length; i < numOrder; i++) {
-            refreshLocal.push({
-                id: orderList[i].id,
-                quantity: orderList[i].amount
-            })
-        }
-        localStorage.setItem("order", JSON.stringify(refreshLocal))
+  function refreshLocalStorage() {
+    const refreshLocal = [];
+    for (var i = 0, numOrder = orderList.length; i < numOrder; i++) {
+      refreshLocal.push({
+        id: orderList[i].id,
+        quantity: orderList[i].amount,
+      });
     }
+    localStorage.setItem("order", JSON.stringify(refreshLocal));
+  }
 
-    useEffect(() => {
-        if (dataFetchedRef.current) return;
-        dataFetchedRef.current = true;
-        getOrderList()
-        getBalance()
-    }, [])
+  useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+    getOrderList();
+    getBalance();
+  }, []);
 
-    useEffect(() => {
-        let newTotalPrice = 0;
-        for (let e of orderList) {
-            newTotalPrice += e.amount * e.price
-        }
-        setTotalPrice(newTotalPrice)
-    }, [orderList])
-
-
-    // Button function
-
-    function increaseQuantity(idx: number) {
-        const order = orderList
-        order[idx].amount = Math.min(order[idx].amount + 1 , order[idx].max_quantity)
-        setOrderList([...order])
-        refreshLocalStorage()
+  useEffect(() => {
+    let newTotalPrice = 0;
+    for (let e of orderList) {
+      newTotalPrice += e.amount * e.price;
     }
+    setTotalPrice(newTotalPrice);
+  }, [orderList]);
 
-    function decreaseQuantity(idx: number) {
-        const order = orderList
-        order[idx].amount = Math.max(order[idx].amount - 1 , 0)
-        setOrderList([...order])
-        refreshLocalStorage()
-    }
+  // Button function
+
+  function increaseQuantity(idx: number) {
+    const order = orderList;
+    order[idx].amount = Math.min(
+      order[idx].amount + 1,
+      order[idx].max_quantity
+    );
+    setOrderList([...order]);
+    refreshLocalStorage();
+  }
+
+  function decreaseQuantity(idx: number) {
+    const order = orderList;
+    order[idx].amount = Math.max(order[idx].amount - 1, 0);
+    setOrderList([...order]);
+    refreshLocalStorage();
+  }
 
     async function purchase() {
         setIsPurchasing(true)
@@ -214,15 +224,19 @@ const CartPage = () => {
                             <TableRow>
                                 <TableCell className="font-bold">Total</TableCell>
 
-                                <TableCell className="text-right col-span-2" colSpan={2}>{totalPrice}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-bold">Current Balance</TableCell>
+                  <TableCell className="text-right col-span-2" colSpan={2}>
+                    {totalPrice}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold">Current Balance</TableCell>
 
-                                <TableCell className="text-right col-span-2" colSpan={2}>{balance}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className="font-bold">Left Balance</TableCell>
+                  <TableCell className="text-right col-span-2" colSpan={2}>
+                    {balance}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold">Left Balance</TableCell>
 
                                 <TableCell className={"text-right col-span-2 " + ((balance - totalPrice < 0) && "text-red-500")} colSpan={2}>{balance - totalPrice}</TableCell>
                             </TableRow>
@@ -259,4 +273,4 @@ const CartPage = () => {
     )
 }
 
-export default CartPage
+export default CartPage;

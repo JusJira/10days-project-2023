@@ -5,7 +5,7 @@ import { db } from "./db";
 return user in our database
 (Need to be called in server side?)
 */
-export async function getdbUser(){
+export async function getDbUser(){
     const { getUser, isAuthenticated } = getKindeServerSession();
     const user = await getUser();
     async function getUserData() {
