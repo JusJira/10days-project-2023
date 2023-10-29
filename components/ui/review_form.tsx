@@ -32,10 +32,8 @@ type ReviewFormValue = z.infer<typeof reviewSchema>
 export default function ReviewForm({productId,prev_review} : {productId : number,prev_review : Review | null}){
     
 
-    const { toast } = useToast()
-    
-    
-    
+    const { toast } = useToast();
+    const [type,setType] = useState<string>((prev_review) ? "PUT" : "POST");
     const defaultValues: Partial<ReviewFormValue> = {
       score: prev_review?.score||10,
       description: prev_review?.description||"",
@@ -49,7 +47,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
 
     const onSubmit = async (data : ReviewFormValue) => {
         try {
-            const type = (prev_review) ? "PUT" : "POST"
+            
             const res = await fetch("/api/review",
               {
                 method : type ,
@@ -66,14 +64,14 @@ export default function ReviewForm({productId,prev_review} : {productId : number
               }
             )
             if (res.ok && type === "PUT") {
-                console.log(await res.json())
-                    toast({
+                toast({
                 title: "Edit Review",
                 description: `The Review is saved.`,
                 })
              //   window.location.replace("/product/" + productId.toString());
                 
             } else if (res.ok && type === "POST"){
+                setType("PUT");
                     toast({
                 title: "Create Review",
                 description: `The Review is created.`,
@@ -92,8 +90,6 @@ export default function ReviewForm({productId,prev_review} : {productId : number
             }
         }
           catch (err) {
-            alert(err);
-            console.log(err)
             toast({
                 title: "You cannot review this product",
                 description: `You didn't buy this product, so you don't cannot access this button`,
@@ -142,7 +138,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                 </FormItem>
             )}
             />
-        <Button type="submit">{(!prev_review) ? "Create Review" : "Edit Review"}</Button>
+        <Button type="submit">{(type === "POST") ? "Create Review" : "Edit Review"}</Button>
         </form>
     </Form>)
 }
