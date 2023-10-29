@@ -12,7 +12,7 @@ model User {
   balance      Int           @default(0)
   address      String?
   displayName  String?
-  image        String        @default("https://uploadthing.com/f/4a65c7f9-7bb1-4498-99bb-4148be482108-t9vzc5.png")
+  image        String        @default("https://utfs.io/f/4a65c7f9-7bb1-4498-99bb-4148be482108-t9vzc5.png")
   accountId    Int           @default(autoincrement())
   bio          String?
   createdAt    DateTime      @default(now())
@@ -31,7 +31,7 @@ model Product {
   price             Int
   name              String
   description       String?
-  image             String      @default("https://uploadthing.com/f/84b973a7-92c9-4077-ba4e-ea668ad0115f-fkry6q.jpg")
+  image             String      @default("https://utfs.io/f/84b973a7-92c9-4077-ba4e-ea668ad0115f-fkry6q.jpg")
   quantity          Int         @default(0)
   createdAt         DateTime    @default(now())
   orderLineContains OrderLine[] @relation("ContainInOrderLine")
