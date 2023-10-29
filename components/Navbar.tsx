@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
+  Coins,
   Heart,
   LogOut,
   ShoppingCart,
@@ -122,6 +123,12 @@ const Navbar = async () => {
                       <DropdownMenuItem>
                         <Wallet className="mr-2 h-4 w-4" />
                         <span>Wallet</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/account/transaction">
+                      <DropdownMenuItem>
+                        <Coins className="mr-2 h-4 w-4" />
+                        <span>Transaction History</span>
                       </DropdownMenuItem>
                     </Link>
                   </DropdownMenuGroup>
