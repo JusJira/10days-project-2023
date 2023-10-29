@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
+import { Coins, Wallet } from 'lucide-react';
 
 const TransactionPage = async () => {
     const { getUser, isAuthenticated } = getKindeServerSession();
@@ -42,8 +43,9 @@ const TransactionPage = async () => {
 
     return (
         <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-            <div className="px-5">
-                <h3 className="text-lg font-medium">Transaction History</h3>
+            <div className="px-5 flex flex-row space-x-3">
+                <Coins className="content-center" size={25}></Coins>
+            <h3 className="text-lg font-medium">Transaction History</h3>
             </div>
             <Separator />
             <div className="flex flex-col items-center">

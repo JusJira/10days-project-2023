@@ -10,8 +10,9 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Label } from "@/components/ui/label";
 import { db } from "@/lib/db";
-import { Lightbulb, UserCircle2 } from "lucide-react";
+import { Lightbulb, UserCircle2, Wallet } from "lucide-react";
 import UserProfile from "@/components/userProfile";
+import { Separator } from "@/components/ui/separator";
 
 export default async function account() {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -22,8 +23,34 @@ export default async function account() {
     },
   });
 
+  async function topup() {
+    try {
+      const res = await fetch(`/api/payment/paotooong/topup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: "smokeweed@everyday.com",
+            password: "asdfghjk",
+            amount: 17
+        }),
+    });
+    alert(JSON.stringify(await res.json()))
+    }
+    
+    catch (err) {
+      alert(err)
+    }
+  }
+
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Wallet className="content-center" size={25}></Wallet>
+        <h3 className="text-lg font-medium">Wallet</h3>
+      </div>
+      <Separator />
       <UserProfile/>
         <div className="flex h-full  min-h-full flex-col items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
           <div className="flex w-full justify-center flex-col items-center gap-3">
@@ -40,6 +67,12 @@ export default async function account() {
             </div>
             <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white shadow-2xl dark:bg-black lg:w-48">
               <Link className={`w-full text-center !p-0`} href={'/money/pay'}>Pay</Link>
+            </div>
+            <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white shadow-2xl dark:bg-black lg:w-48">
+              <Link className={`w-full text-center !p-0`} href={'/money/topup'}>Top Up</Link>
+            </div>
+            <div className="flex h-10 w-2/3 flex-row items-center justify-center rounded-md border-[1px] border-black bg-white shadow-2xl dark:bg-black lg:w-48">
+              <Link className={`w-full text-center !p-0`} href={'/money/withdraw'}>Withdraw</Link>
             </div>
           </div>
         </div>

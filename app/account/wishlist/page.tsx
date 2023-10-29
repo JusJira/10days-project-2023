@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import React from "react";
 import pluralize from "pluralize";
+import { Heart } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 export default async function Page() {
   const { getUser } = getKindeServerSession();
@@ -29,6 +31,11 @@ export default async function Page() {
   
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Heart className="content-center" size={25}></Heart>
+        <h3 className="text-lg font-medium">Wishlist</h3>
+      </div>
+      <Separator />
       <div>
         <p>
           There are {pluralize("product", wished?.wishlists.length, true)} in

@@ -18,6 +18,7 @@ import {
   Heart,
   Package,
   ShoppingBag,
+  User, 
   Wallet,
 } from "lucide-react";
 import { Clock, MapPin, User2 } from "lucide-react";
@@ -65,7 +66,8 @@ export default async function AccountProfile() {
 
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-      <div className="px-5">
+      <div className="px-5 flex flex-row space-x-3">
+        <User className="content-center" size={25}></User>
         <h3 className="text-lg font-medium">Profile</h3>
       </div>
       <Separator />

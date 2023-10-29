@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { db } from "@/lib/db";
-import { Heart, Lightbulb } from "lucide-react";
+import { Heart, Lightbulb, Package } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -18,40 +18,38 @@ import ReviewForm from "@/components/ui/review_form";
 import AddToCardButton from "./AddToCardButton";
 
 type Cascade_review = Review & {
-  user : User
-}
+  user: User;
+};
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
   const id = parseInt(params.id);
 
-  const is_reviewable = (await db.product.findFirst({
-    where : {
-      id : id,
-    }
-    , select : {
-        reviews : {
-          include : {
-            user : true
-              
-            
-          }
-
-      }
-    
+  const is_reviewable = await db.product.findFirst({
+    where: {
+      id: id,
     },
-  }));
-  if (is_reviewable === null) return <div>Loading ...</div>
+    select: {
+      reviews: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  });
+  if (is_reviewable === null) return <div>Loading ...</div>;
 
-  const prev_review = (!user) ? null : ( await db.review.findFirst({
-    where : {
-      productId : id,
-      userId : user.id as string
-    }
-  }))
-  console.log(prev_review)
-  const is_reviewables : Cascade_review[] = is_reviewable.reviews
+  const prev_review = !user
+    ? null
+    : await db.review.findFirst({
+        where: {
+          productId: id,
+          userId: user.id as string,
+        },
+      });
+  console.log(prev_review);
+  const is_reviewables: Cascade_review[] = is_reviewable.reviews;
   const data = await db.product.findFirst({
     where: {
       id: id,
@@ -63,7 +61,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!data) {
     redirect("/");
   }
-  
+
   function isOwner() {
     if (isAuthenticated()) {
       if (user.id == data?.ownerId) {
@@ -98,9 +96,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
   const name = data?.owner.displayName || "Unknown Seller";
 
-  
   return (
-    <div className="p-8 bg-neutral-100 dark:bg-neutral-800 min-h-full">
+    <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Package className="content-center" size={25}></Package>
+        <h3 className="text-lg font-medium">Product</h3>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 min-h-[16rem]">
         <div className="flex items-center justify-center relative aspect-square m-4 md:m-10 lg:m-16">
           <Image
@@ -117,9 +118,15 @@ export default async function Page({ params }: { params: { id: string } }) {
               {data?.price} <Lightbulb size={20} strokeWidth={2} />
             </span>
             <div className="flex flex-row items-center gap-3 py-5">
-              <Link href={`/account/${data?.owner.accountId}`} className="flex flex-row items-center gap-3">
+              <Link
+                href={`/account/${data?.owner.accountId}`}
+                className="flex flex-row items-center gap-3"
+              >
                 <Avatar>
-                  <AvatarImage className='object-cover object-center' src={data?.owner.image} />
+                  <AvatarImage
+                    className="object-cover object-center"
+                    src={data?.owner.image}
+                  />
                   <AvatarFallback>
                     {initials(data?.owner.displayName as string)}
                   </AvatarFallback>
@@ -139,17 +146,21 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </Link>
               ) : (
                 <>
-                {/* <Link href={`#`} className={`${buttonVariants()}`}>
-                  Add to Cart
-                </Link> */}
-                <AddToCardButton productId={data.id} maxQuantity={data.quantity}/>
-                <WishButton id={id} wished={await isWished()} />
+                  {data.quantity == 0 ? (
+                    <Button disabled={true}>Out of Stock</Button>
+                  ) : (
+                    <AddToCardButton
+                      productId={data.id}
+                      maxQuantity={data.quantity}
+                    />
+                  )}
+
+                  <WishButton id={id} wished={await isWished()} />
                 </>
               )}
-              
             </div>
           </div>
-          
+
           {/* <div className="flex flex-row mt-10 gap-8">
             <div className="flex items-center justify-center gap-3">
               {isOwner() ? (
@@ -176,19 +187,21 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className=" items-center flex-col">
         <Card className="w-full">
           <CardHeader className="">
-            <div className="items-center flex justify-center">Review section</div>
-            {(isAuthenticated()) ? (<ReviewForm productId={id} prev_review={prev_review}/> ): (<></>)}
+            <div className="items-center flex justify-center">
+              Review section
+            </div>
+            {isAuthenticated() ? (
+              <ReviewForm productId={id} prev_review={prev_review} />
+            ) : (
+              <></>
+            )}
           </CardHeader>
         </Card>
-        
+
         <div className="rounded-[5rem]">
-          <ReviewBox reviews = {is_reviewables}></ReviewBox>
-          
-           
+          <ReviewBox reviews={is_reviewables}></ReviewBox>
         </div>
-          
       </div>
-      
     </div>
   );
 }

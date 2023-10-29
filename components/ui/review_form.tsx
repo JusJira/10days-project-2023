@@ -32,10 +32,8 @@ type ReviewFormValue = z.infer<typeof reviewSchema>
 export default function ReviewForm({productId,prev_review} : {productId : number,prev_review : Review | null}){
     
 
-    const { toast } = useToast()
-    
-    
-    
+    const { toast } = useToast();
+    const [type,setType] = useState<string>((prev_review) ? "PUT" : "POST");
     const defaultValues: Partial<ReviewFormValue> = {
       score: prev_review?.score||10,
       description: prev_review?.description||"",
@@ -47,9 +45,38 @@ export default function ReviewForm({productId,prev_review} : {productId : number
       })
     const [score,setScore] = useState(defaultValues.score);
 
+
+    const onDelete = async () => {
+      try {
+        const res = await fetch("/api/review",
+          {
+          method : "DELETE" ,
+          headers :{
+            "Content-Type": "application/json",
+          }, body : JSON.stringify({
+            productId : productId
+          })
+          }
+        )
+        setType("POST");
+        form.setValue("score",10);
+        form.setValue("description","");
+        window.location.replace("/product/" + productId.toString());
+        toast({
+          title: "Successfully Delete review",
+          description: `Your review was deleted.`,})
+        
+      } catch (err) {
+        console.log(err);
+      }
+
+
+    };
+
     const onSubmit = async (data : ReviewFormValue) => {
+
         try {
-            const type = (prev_review) ? "PUT" : "POST"
+            
             const res = await fetch("/api/review",
               {
                 method : type ,
@@ -66,24 +93,27 @@ export default function ReviewForm({productId,prev_review} : {productId : number
               }
             )
             if (res.ok && type === "PUT") {
-                console.log(await res.json())
-                    toast({
+                toast({
                 title: "Edit Review",
                 description: `The Review is saved.`,
                 })
-             //   window.location.replace("/product/" + productId.toString());
+               window.location.replace("/product/" + productId.toString());
                 
             } else if (res.ok && type === "POST"){
+                setType("PUT");
+                window.location.replace("/product/" + productId.toString());
                     toast({
                 title: "Create Review",
                 description: `The Review is created.`,
                     })
+                
             } else {
             //alert(res)
                 toast({
                     title: "You cannot review this product",
                     description: `You didn't buy this product, so you don't cannot access this button`,
                 })
+                
             // toast({
             //   title: "Edit Profile",
             //   description: `The profile is saved.`,
@@ -92,8 +122,6 @@ export default function ReviewForm({productId,prev_review} : {productId : number
             }
         }
           catch (err) {
-            alert(err);
-            console.log(err)
             toast({
                 title: "You cannot review this product",
                 description: `You didn't buy this product, so you don't cannot access this button`,
@@ -107,7 +135,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
 
     return  (
     <Form {...form} >
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={ form.handleSubmit(onSubmit)} className="space-y-8">
             {/* TODO better ui for review score ?
             */}
             <FormField
@@ -142,7 +170,10 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                 </FormItem>
             )}
             />
-        <Button type="submit">{(!prev_review) ? "Create Review" : "Edit Review"}</Button>
+        <div className="flex justify-between">
+        <Button type="submit"> {(type === "POST") ? "Create Review" : "Edit Review"}</Button>
+        {(type === "PUT") ? <Button type="submit"  onClick = {(e) => {e.preventDefault(); onDelete();}}>Delete Review</Button>: <></>}
+        </div>
         </form>
     </Form>)
 }

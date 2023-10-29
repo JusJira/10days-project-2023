@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { db } from "@/lib/db";
-import { ShoppingBag, Wallet } from "lucide-react";
+import { ShoppingBag, Store, Wallet } from "lucide-react";
 import { Package } from "lucide-react";
 import Link from "next/link";
 import {
@@ -34,7 +34,8 @@ export default async function account() {
 
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-      <div className="px-5">
+      <div className="px-5 flex flex-row space-x-3">
+        <Store className="content-center" size={25}></Store>
         <h3 className="text-lg font-medium">Merchant</h3>
       </div>
       <Separator />

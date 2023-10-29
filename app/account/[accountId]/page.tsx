@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Clock, MapPin, User2 } from "lucide-react";
+import { Clock, MapPin, User, User2 } from "lucide-react";
 import AccountProfile from "../page";
 
 export default async function account({ params }: { params: { accountId: string } }) {
@@ -51,7 +51,8 @@ export default async function account({ params }: { params: { accountId: string 
 
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-      <div className="px-5">
+      <div className="px-5 flex flex-row space-x-3">
+        <User className="content-center" size={25}></User>
         <h3 className="text-lg font-medium">Profile</h3>
       </div>
       <Separator />

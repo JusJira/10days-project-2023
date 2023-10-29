@@ -4,19 +4,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { redirect } from "next/navigation";
-import { toast } from "@/components/ui/use-toast";
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table"
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { redirect } from 'next/navigation';
+import { ShoppingCart } from 'lucide-react';
 
 type Item = {
   id: number;
@@ -40,7 +40,9 @@ const CartPage = () => {
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  const [balance, setBalance] = useState<number>(0);
+    const [balance, setBalance] = useState<number>(0)
+
+    const [isPurchasing, setIsPurchasing] = useState<boolean>(false)
 
   async function getBalance() {
     const userRes = await fetch(`/api/account/current`);
@@ -150,102 +152,77 @@ const CartPage = () => {
     refreshLocalStorage();
   }
 
-  async function purchase() {
-    const finalOrders: Item[] = [];
-    for (let e of orderList) {
-      if (e.amount != 0) {
-        finalOrders.push({
-          id: e.id,
-          quantity: e.amount,
-          totalPrice: e.amount * e.price,
-        });
-      }
+    async function purchase() {
+        setIsPurchasing(true)
+
+        const finalOrders : Item[] = []
+        for (let e of orderList) {
+            if (e.amount != 0) {
+                finalOrders.push({
+                    id: e.id,
+                    quantity: e.amount,
+                    totalPrice : e.amount * e.price
+                })
+            }
+        }
+        const res = await fetch('/api/product/transaction',{method : "POST"
+        ,headers : {
+            "Content-Type": "application/json",
+          },
+        body : JSON.stringify({ 
+            finalOrders : finalOrders,
+            totalPrice : totalPrice
+        })
+    })
+        window.location.href = '/account/order'
+        localStorage.removeItem('order')
+        // alert("Final Order : " + JSON.stringify(finalOrders) + "\nTotal Price : " + totalPrice.toString())
+        
+        return res;
     }
-    const res = await fetch("/api/product/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        finalOrders: finalOrders,
-        totalPrice: totalPrice,
-      }),
-    });
-    if (res?.ok) {
-      return toast({
-        title: "Success",
-        description: "Your order has been processed",
-      });
-    }
-    if (!res?.ok) {
-        return toast({
-          title: "Unsuccessful",
-          description: "Your order has not been processed",
-          variant: "destructive"
-        });
-      }
-    // window.location.href = "/account/order";
-    // localStorage.removeItem("order");
 
-    // alert("Final Order : " + JSON.stringify(finalOrders) + "\nTotal Price : " + totalPrice.toString())
 
-    return res;
-  }
-
-  return (
-    <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-      <div className="px-5">
-        <h3 className="text-lg font-medium">Cart</h3>
-      </div>
-      <Separator />
-      <div className="flex flex-col items-center">
-        <Card className="w-[95%] md:w-[70%]">
-          <CardContent className="pt-5">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="">Item</TableHead>
-                  {/* <TableHead>Status</TableHead> */}
-                  <TableHead className="w-[100px]">Quantity</TableHead>
-                  <TableHead className="text-right w-[60px]">Price</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {orderList.map(function (val, idx) {
-                  return (
-                    <TableRow key={idx}>
-                      <TableCell className="font-medium">
-                        <Link href={`/product/${val.id}`}>{val.name}</Link>
-                      </TableCell>
-                      <TableCell className="h-full text-center align-middle">
-                        <div className="flex flex-row items-center">
-                          <Button
-                            variant="ghost"
-                            className="w-6 h-6"
-                            onClick={() => decreaseQuantity(idx)}
-                          >
-                            -
-                          </Button>
-                          <div className="grid w-full content-center">
-                            {val.amount}
-                          </div>
-                          <Button
-                            variant="ghost"
-                            className="w-6 h-6"
-                            onClick={() => increaseQuantity(idx)}
-                          >
-                            +
-                          </Button>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {val.amount * val.price}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-                <TableRow>
-                  <TableCell className="font-bold">Total</TableCell>
+    return (
+        <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+            <div className="px-5 flex flex-row space-x-3">
+                <ShoppingCart className="content-center" size={25}></ShoppingCart>
+                <h3 className="text-lg font-medium">Cart</h3>
+            </div>
+            <Separator />
+            <div className="flex flex-col items-center">
+                <Card className="w-[95%] md:w-[70%]"> 
+                    <CardContent className="pt-5">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="">Item</TableHead>
+                                {/* <TableHead>Status</TableHead> */}
+                                <TableHead className="w-[100px]">Quantity</TableHead>
+                                <TableHead className="text-right w-[60px]">Price</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                        {
+                            orderList.map(function(val, idx) {
+                                return (
+                                    <TableRow key={idx}>
+                                        <TableCell className="font-medium"><Link href={`/product/${val.id}`}>{val.name}</Link></TableCell>
+                                        <TableCell className="h-full text-center align-middle">
+                                            <div className="flex flex-row items-center">
+                                                <Button variant="ghost" className="w-6 h-6" onClick={() => decreaseQuantity(idx)}>-</Button>
+                                                <div className="grid w-full content-center">{val.amount}</div>
+                                                <Button variant="ghost" className="w-6 h-6" onClick={() => increaseQuantity(idx)}>+</Button>
+                                            </div>
+                                            
+                                        </TableCell>
+                                        <TableCell className="text-right">{val.amount * val.price}</TableCell>
+                                    </TableRow>
+                                )
+                            })
+                            
+                        }
+                            <TableRow>
+                                <TableCell className="font-bold">Total</TableCell>
 
                   <TableCell className="text-right col-span-2" colSpan={2}>
                     {totalPrice}
@@ -261,38 +238,39 @@ const CartPage = () => {
                 <TableRow>
                   <TableCell className="font-bold">Left Balance</TableCell>
 
-                  <TableCell
-                    className={
-                      "text-right col-span-2 " +
-                      (balance - totalPrice < 0 && "text-red-500")
-                    }
-                    colSpan={2}
-                  >
-                    {balance - totalPrice}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-        <div className="flex w-[95%] md:w-[70%] pt-10 justify-end">
-          {totalPrice > 0 && balance - totalPrice >= 0 ? (
-            <Button
-              onClick={async () => {
-                purchase();
-              }}
-            >
-              Purchase
-            </Button>
-          ) : (
-            <Button disabled>Purchase</Button>
-          )}
-        </div>
+                                <TableCell className={"text-right col-span-2 " + ((balance - totalPrice < 0) && "text-red-500")} colSpan={2}>{balance - totalPrice}</TableCell>
+                            </TableRow>
+                            
+                        </TableBody>
+                    </Table>
+                    
+                    </CardContent>
+                </Card>
+                <div className="flex w-[95%] md:w-[70%] pt-10 justify-end">
+                    {
+                        ((totalPrice > 0) && (balance - totalPrice >= 0)) ? (
+                            
+                                (isPurchasing == true) ? (
+                                    <Button disabled>Purchase</Button>
+                                ) : (
+                                    <Button onClick={async () => {purchase()}}>Purchase</Button>
+                                )
 
-        <div></div>
-      </div>
-    </div>
-  );
-};
+                        
+                            
+                        ) : (
+                            <Button disabled>Purchase</Button>
+                        )
+                        
+                    }
+                </div>
+                
+            <div>
+
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default CartPage;

@@ -23,6 +23,8 @@ import { UploadButton } from "@/utils/uploadthing";
 import {useRouter} from "next/navigation"
 import Image from "next/image";
 import { productSchema } from "@/utils/zod";
+import { Separator } from "@/components/ui/separator";
+import { Store } from "lucide-react";
 
 const FormSchema = productSchema
 
@@ -70,7 +72,14 @@ export default function InputForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-full w-full overflow-scroll py-32">
+    
+    <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Store className="content-center" size={25}></Store>
+        <h3 className="text-lg font-medium">Merchant &gt; Product &gt; Adding</h3>
+      </div>
+      <Separator />
+      <div className="flex flex-col items-center justify-center w-full">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -190,5 +199,7 @@ export default function InputForm() {
         </form>
       </Form>
     </div>
+    </div>
+    
   );
 }

@@ -4,6 +4,8 @@ import React from "react";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import { Store } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +20,11 @@ async function page() {
   });
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Store className="content-center" size={25}></Store>
+        <h3 className="text-lg font-medium">Merchant &gt; Product</h3>
+      </div>
+      <Separator />
       <div className="flex h-full  min-h-full flex-col items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
         {products.map((p, index) => (
           <div

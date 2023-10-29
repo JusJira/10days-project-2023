@@ -19,6 +19,7 @@ import {
     AccordionTrigger,
   } from "@/components/ui/accordion"
 import Link from 'next/link';
+import { ShoppingBag } from 'lucide-react';
 
 const OrderPage = async () => {
     const { getUser } = getKindeServerSession();
@@ -60,7 +61,8 @@ const OrderPage = async () => {
 
     return (
         <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
-            <div className="px-5">
+            <div className="px-5 flex flex-row space-x-3">
+                <ShoppingBag className="content-center" size={25}></ShoppingBag>
                 <h3 className="text-lg font-medium">Order</h3>
             </div>
             <Separator />

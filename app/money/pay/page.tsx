@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import React from "react";
 import { toast } from "@/components/ui/use-toast";
+import { Wallet } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const FormSchema = z.object({
   amount: z.coerce
@@ -95,43 +97,51 @@ export default function InputForm() {
   }
 
   return (
-    <div className="flex items-center justify-center h-full w-full">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-2/3 space-y-6"
-        >
-          <FormField
-            control={form.control}
-            name="accId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Account ID</FormLabel>
-                <FormControl>
-                  <Input type="number" placeholder="Receiver's Account ID" className="appearance-none" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="amount"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Amount</FormLabel>
-                <FormControl>
-                  <Input type="number" placeholder="1000" className="appearance-none" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button className="w-full" type="submit" disabled={isLoading}>
-            Pay
-          </Button>
-        </form>
-      </Form>
+    <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
+      <div className="px-5 flex flex-row space-x-3">
+        <Wallet className="content-center" size={25}></Wallet>
+        <h3 className="text-lg font-medium">Wallet &gt; Pay</h3>
+      </div>
+      <Separator />
+      <div className="flex items-center justify-center h-full w-full">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-2/3 space-y-6"
+          >
+            <FormField
+              control={form.control}
+              name="accId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Account ID</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="Receiver's Account ID" className="appearance-none" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Amount</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="1000" className="appearance-none" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button className="w-full" type="submit" disabled={isLoading}>
+              Pay
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
+    
   );
 }
