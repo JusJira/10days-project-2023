@@ -1,6 +1,11 @@
+import { db } from "@/lib/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req : NextRequest) {
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
+
     const data = await req.json()
 
     try {
@@ -14,24 +19,59 @@ export async function POST(req : NextRequest) {
                 password: data.password
             }),
         });
+        
 
         const loginJson = await loginRes.json()
 
-        // const payRes = await fetch(`https://paotooong.thinc.in.th/v1/wallet/pay/${process.env.COMPANT_PAOTOOONG_ID}`, {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       "Authorization" : `Bearer ${loginJson.token.accesstoken}`
-        //     },
-        //     body: JSON.stringify({
-        //         amount: data.amount
-        //     }),
-        // });
+        console.log(loginJson)
 
-        return NextResponse.json({status : 200 , message : loginJson});
+        if (loginJson.code) {
+            return NextResponse.json({status : 400 , message : "Email or password is not correct"})
+        }
+
+        const payRes = await fetch(`https://paotooong.thinc.in.th/v1/wallet/pay/${process.env.COMPANT_PAOTOOONG_ID}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization" : `Bearer ${loginJson.token.accessToken}`
+            },
+            body: JSON.stringify({
+                amount: data.amount
+            }),
+        });
+
+        const payJson = await payRes.json()
+
+        console.log(payJson)
+
+        if (payJson.code) {
+            return NextResponse.json({status : 400 , message : "No enough money in Paotooong"})
+        }
+
+        const dbRes = await db.user.update({
+            where: {
+                id: user.id || ""
+            },
+            data: {
+                balance: {
+                    increment: data.amount
+                }
+            }
+        })
+
+        const transRes = await db.transaction.create({
+            data: {
+                userId: user.id || "",
+                amount: data.amount,
+                description: "Top up money from Paotooong"
+            }
+        })
+        
+
+        return NextResponse.json({status : 200 , message : dbRes});
     }
     catch (err) {
-        return NextResponse.json({status : 402 , message : "error occured"});
+        return NextResponse.json({status : 400 , message : "Error occured"});
     }
     
 
