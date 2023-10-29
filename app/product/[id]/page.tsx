@@ -192,7 +192,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Card className="w-full">
           <CardHeader className="">
             <div className="items-center flex justify-center">
-              Review section
+              Review Section
             </div>
             {isAuthenticated() ? (
               <ReviewForm productId={id} prev_review={prev_review} />
