@@ -13,7 +13,13 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Heart, Package, ShoppingBag, Wallet } from "lucide-react";
+import {
+  ArrowRightLeft,
+  Heart,
+  Package,
+  ShoppingBag,
+  Wallet,
+} from "lucide-react";
 import { Clock, MapPin, User2 } from "lucide-react";
 
 export default async function AccountProfile() {
@@ -141,16 +147,25 @@ export default async function AccountProfile() {
               <CardContent>
                 <div className="flex flex-col items-start space-y-4">
                   <div className="w-full flex flex-row space-x-4">
-                    <User2 className="w-5 h-5"/>
-                    <Label className="text-sm break-words"><span className="font-bold">Full Name :</span> {user.given_name + " " + user.family_name}</Label>
+                    <User2 className="w-5 h-5" />
+                    <Label className="text-sm break-words">
+                      <span className="font-bold">Full Name :</span>{" "}
+                      {user.given_name + " " + user.family_name}
+                    </Label>
                   </div>
                   <div className="w-full flex flex-row space-x-4">
-                    <MapPin className="w-5 h-5"/>
-                    <Label className="text-sm break-words"><span className="font-bold">Address :</span> {userData?.address}</Label>
+                    <MapPin className="w-5 h-5" />
+                    <Label className="text-sm break-words">
+                      <span className="font-bold">Address :</span>{" "}
+                      {userData?.address}
+                    </Label>
                   </div>
                   <div className="w-full flex flex-row space-x-4">
-                    <Clock className="w-5 h-5"/>
-                    <Label className="text-sm break-words"><span className="font-bold">Account Created At :</span> {userData?.createdAt.toString()}</Label>
+                    <Clock className="w-5 h-5" />
+                    <Label className="text-sm break-words">
+                      <span className="font-bold">Account Created At :</span>{" "}
+                      {userData?.createdAt.toString()}
+                    </Label>
                   </div>
                 </div>
               </CardContent>
@@ -159,37 +174,44 @@ export default async function AccountProfile() {
 
           {/* User Orders */}
           <div className="flex flex-col gap-2 px-4 md:px-10 py-3 w-full">
-            <Card>
-              <CardContent className="!p-6 flex flex-row justify-center items-center gap-6">
+            <Card className="flex items-center justify-center">
+              <CardContent className="!p-6 grid grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1 w-fit gap-3">
                 <Link
-                  className="flex flex-col items-center justify-center"
+                  className="flex flex-col items-center justify-center gap-1"
                   href={"/account/wishlist"}
                 >
                   <Button className="aspect-square h-full flex flex-col">
-                  <Heart fill="red" color="red" size={32}/>
+                    <Heart color="#dc2626" size={32} className="hover:fill-red-600"/>
                   </Button>
                   <span>Wishlist</span>
                 </Link>
                 <Link
-                  className="flex flex-col items-center justify-center"
+                  className="flex flex-col items-center justify-center gap-1"
                   href={"/account/order"}
                 >
                   <Button className="aspect-square h-full flex flex-col">
-                  <ShoppingBag size={32}/>
+                    <ShoppingBag size={32} />
                   </Button>
                   <span>Order</span>
                 </Link>
-                <div className="flex flex-col items-center justify-center">
-                  <Link
-                    className="flex flex-col items-center justify-center"
-                    href={"/money/wallet"}
-                  >
-                    <Button className="aspect-square h-full flex flex-col">
-                      <Wallet size={32} />
-                    </Button>
-                    <span>Wallet</span>
-                  </Link>
-                </div>
+                <Link
+                  className="flex flex-col items-center justify-center gap-1"
+                  href={"/money/wallet"}
+                >
+                  <Button className="aspect-square h-full flex flex-col">
+                    <Wallet size={32} />
+                  </Button>
+                  <span>Wallet</span>
+                </Link>
+                <Link
+                  className="flex flex-col items-center justify-center gap-1"
+                  href={"/account/transaction"}
+                >
+                  <Button className="aspect-square h-full flex flex-col">
+                    <ArrowRightLeft size={32} />
+                  </Button>
+                  <span>Transactions</span>
+                </Link>
               </CardContent>
             </Card>
           </div>
