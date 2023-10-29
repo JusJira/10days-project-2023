@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast';
 import React, { useEffect, useRef, useState } from 'react'
 import {
@@ -173,7 +173,7 @@ const AddToCardButton = ({productId, maxQuantity} : {productId: number, maxQuant
     return (
         <div className="flex flex-row">
             <Dialog>
-                <DialogTrigger><Button>Add to Cart</Button></DialogTrigger>
+                <DialogTrigger className={buttonVariants({ variant: "default" })}>Add to Cart</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Adding to Cart</DialogTitle>
