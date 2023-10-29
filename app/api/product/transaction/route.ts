@@ -15,7 +15,7 @@ export async function POST(req : NextRequest){
     if (!dbUser) return new Response("User isn't authorize",{status : 204});
     const current_money = dbUser.balance;
     const {finalOrders,totalPrice} : {finalOrders : Array<Item> , totalPrice : number} = await req.json();
-    if (totalPrice > current_money) return new Response("ํYou don't have enougn money",{status : 204});
+    if (totalPrice > current_money) return new Response("ํYou don't have enough money",{status : 204});
 
     
 
@@ -82,6 +82,24 @@ export async function POST(req : NextRequest){
             }
         }
     })
+
+    // Create transaction history
+    const transactionHistory: Array<{userId: string, amount: number, description: string}> = []
+    transactionHistory.push({
+        userId: dbUser.id,
+        amount: -totalPrice,
+        description: `Payment for order #${main_trans.id}`
+    })
+    for (let i = 0; i < transaction.length; ++i) {
+        transactionHistory.push({
+            userId: (await product_line[i]).ownerId,
+            amount: transaction[i].totalPrice,
+            description: `Receive money from order #${main_trans.id}`
+        })
+    }
+
+    const res = await db.transaction.createMany({ data : transactionHistory });
+
     return NextResponse.json({status : 200,message : merchant_updater});
 
 
