@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast"
 import { Review } from "@prisma/client"
+import ReactStars from 'react-stars'
 
 const reviewSchema = z.object({
     score: z
@@ -35,7 +36,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
     const { toast } = useToast();
     const [type,setType] = useState<string>((prev_review) ? "PUT" : "POST");
     const defaultValues: Partial<ReviewFormValue> = {
-      score: prev_review?.score||10,
+      score: prev_review?.score||3,
       description: prev_review?.description||"",
     }
     const form = useForm<ReviewFormValue>({
@@ -59,7 +60,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
           }
         )
         setType("POST");
-        form.setValue("score",10);
+        form.setValue("score",3);
         form.setValue("description","");
         window.location.replace("/product/" + productId.toString());
         toast({
@@ -145,7 +146,19 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                 <FormItem>
                 <FormLabel>Score</FormLabel>
                 <FormControl>
-                    <Input {...field} onChange = {(e) => {setScore(e.target.valueAsNumber);form.setValue("score",e.target.valueAsNumber)}} value = {score}type = 'number'/>
+                  <div className="flex flex-row items-center">
+                    <ReactStars
+                      count={5}
+                      onChange={(e) => {setScore(e);form.setValue("score",e)}}
+                      value = {score}
+                      size={24}
+                      half={false}
+                      color2={'#ffd700'} 
+                    />
+                    <div className="ml-3">({score})</div>
+                  </div>
+                
+                  {/* <Input {...field} onChange = {(e) => {setScore(e.target.valueAsNumber);form.setValue("score",e.target.valueAsNumber)}} value = {score}type = 'number'/> */}
                 </FormControl>
                 <FormDescription>
                     This is your public score review that show in web application.

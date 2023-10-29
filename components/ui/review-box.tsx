@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import initials from "initials";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import ReactStars from "react-stars";
 
 
 type Cascade_review = Review & {
@@ -40,8 +41,16 @@ export default function ReviewBox({reviews} : {reviews : Cascade_review[]}){
                         <div className="md:flex block">
                             {"Name : " +  ((r.user.displayName) ? r.user.displayName : "Anonymous") }
                         </div>
-                        <div className="md:flex block">
-                            {`Score : ${r.score}`}
+                        <div className="flex items-center">
+                            <div className="mr-3">{`Score : `} </div>
+                            <ReactStars count={5}
+                                value = {r.score}
+                                size={24}
+                                half={false}
+                                edit={false}
+                                color2={'#ffd700'} 
+                            />
+                            <div className="ml-3">({r.score})</div>
                         </div>
                         <div>
                             {`Create At : ${r.reviewedAt.toLocaleString()}`}
