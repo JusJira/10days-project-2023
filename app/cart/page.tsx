@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
 import { ShoppingCart } from 'lucide-react';
+import { classNames } from "uploadthing/client";
 
 type Item = {
   id: number;
@@ -26,7 +27,7 @@ type Item = {
 
 const CartPage = () => {
   const dataFetchedRef = useRef(false);
-
+  const [run,setRun] = useState<string>('');
   const [orderList, setOrderList] = useState<
     Array<{
       id: number;
@@ -246,20 +247,31 @@ const CartPage = () => {
                     
                     </CardContent>
                 </Card>
-                <div className="flex w-[95%] md:w-[70%] pt-10 justify-end">
+                <div className="flex w-[95%] md:w-[70%] pt-10 justify-end ">
                     {
                         ((totalPrice > 0) && (balance - totalPrice >= 0)) ? (
                             
                                 (isPurchasing == true) ? (
-                                    <Button disabled>Purchase</Button>
+                                  <div className = 'block' onFocus={() => {setRun('transition-all translate-x-[-60vw] duration-[2000ms]')}} 
+                                  onBlur={() => {setRun('')}}
+                                  onMouseEnter={() => {setRun('transition-all translate-x-[-60vw] duration-[2000ms]')}} 
+                                  onMouseLeave={() => {setRun('');console.log('leave')}}>
+                                    fadsfasfd
+                                    <Button className = {run}>Purchase</Button>
+                                  </div>
                                 ) : (
                                     <Button onClick={async () => {purchase()}}>Purchase</Button>
                                 )
 
                         
                             
-                        ) : (
-                            <Button disabled>Purchase</Button>
+                        ) : (<div className = 'block' 
+                        onFocus={() => {setRun('transition-all translate-x-[-60vw] duration-[2000ms]')}} 
+                        onBlur={() => {setRun('')}}
+                        onMouseEnter={() => {setRun('transition-all translate-x-[-60vw] duration-[2000ms]')}} 
+                        onMouseLeave={() => {setRun('');console.log('leave')}}>
+                            <Button className = {run} >Purchase</Button>
+                            </div>
                         )
                         
                     }
