@@ -35,6 +35,7 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
   const [imageUrl, setImageUrl] = React.useState(productData.image);
   const [isFetching, setIsFetching] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [disableButton, setDisableButton] = React.useState<boolean>(false)
 
   const defaultValues: Partial<ProfileFormValues> = {
     price: productData.price|| "",
@@ -51,6 +52,7 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
 
 
   async function onDelete() {
+    setDisableButton(true)
     const response = await fetch("/api/product", {
       method: "DELETE",
       headers: {
@@ -71,9 +73,11 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
       window.location.href = "/merchant/product"
       return
     }
+    setDisableButton(false)
   }
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
+    setDisableButton(true)
 
     const response = await fetch("/api/product", {
       method: "PUT",
@@ -103,12 +107,14 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
     }
 
     else if (!response?.ok) {
+      setDisableButton(false)
       return toast({
         title: "Something went wrong.",
         description: "Your was not edited.",
         variant: "destructive",
       });
     }
+    
   }
 
   return (
@@ -236,7 +242,7 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
                 <Button
                   className="w-full mx-32"
                   type="submit"
-                  disabled={isLoading}
+                  disabled={disableButton}
                 >
                   Save
                 </Button>
@@ -248,6 +254,7 @@ export default function EditForm({ productData, id }: { productData: any, id: nu
               className="w-full mx-32"
               variant={"destructive"}
               onClick={() => onDelete()}
+              disabled={disableButton}
             >
               Delete
             </Button>
