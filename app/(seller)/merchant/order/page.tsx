@@ -105,7 +105,7 @@ const OrderPage = async () => {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className="relative flex gap-10 flex-row">
+                      <div className="relative flex gap-2 md:gap-10 flex-col md:flex-row">
                         <Image
                           src={val.image}
                           alt="Product Image"
@@ -122,7 +122,7 @@ const OrderPage = async () => {
                           <div>Quantity : {d.quantity}</div>
                           <div>Money Paid : {d.totalPrice}</div>
                         </div>
-                        <Card className="w-[350px]">
+                        <Card className="w-full md:w-[350px]">
                           <CardHeader>
                             <CardTitle>Customer Info</CardTitle>
                           </CardHeader>
