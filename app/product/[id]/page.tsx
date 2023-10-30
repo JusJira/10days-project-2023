@@ -189,7 +189,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
       </div>
       <div className=" items-center flex-col">
-        <Card className="w-full">
+        <Card id="review-section" className="w-full">
           <CardHeader className="">
             <div className="items-center flex justify-center">
               Review Section
