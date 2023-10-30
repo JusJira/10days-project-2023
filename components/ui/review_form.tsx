@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast"
 import { Review } from "@prisma/client"
 import ReactStars from 'react-stars'
+// import { useRouter } from 'next/navigation'
 
 const reviewSchema = z.object({
     score: z
@@ -29,9 +30,12 @@ const reviewSchema = z.object({
 
 type ReviewFormValue = z.infer<typeof reviewSchema>
 
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 export default function ReviewForm({productId,prev_review} : {productId : number,prev_review : Review | null}){
-    
+    // const router = useRouter()
 
     const { toast } = useToast();
     const [type,setType] = useState<string>((prev_review) ? "PUT" : "POST");
@@ -46,8 +50,11 @@ export default function ReviewForm({productId,prev_review} : {productId : number
       })
     const [score,setScore] = useState(defaultValues.score);
 
+    const [disableButton, setDisableButton] = useState<boolean>(false)
+
 
     const onDelete = async () => {
+      setDisableButton(true)
       try {
         const res = await fetch("/api/review",
           {
@@ -62,12 +69,18 @@ export default function ReviewForm({productId,prev_review} : {productId : number
         setType("POST");
         form.setValue("score",3);
         form.setValue("description","");
-        window.location.replace("/product/" + productId.toString());
+        // window.location.hash = '#review-section'
+        
+        //         window.location.reload()
+        //         location.reload(true);
         toast({
           title: "Successfully Delete review",
           description: `Your review was deleted.`,})
+        await delay(1000)
+        window.location.replace("/product/" + productId.toString());
         
       } catch (err) {
+        setDisableButton(false)
         console.log(err);
       }
 
@@ -75,6 +88,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
     };
 
     const onSubmit = async (data : ReviewFormValue) => {
+      setDisableButton(true)
 
         try {
             
@@ -98,15 +112,23 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                 title: "Edit Review",
                 description: `The Review is saved.`,
                 })
-               window.location.replace("/product/" + productId.toString());
+                // window.location.hash = '#review-section'
+                await delay(1000)
+                window.location.replace("/product/" + productId.toString());
+                // router.replace("/product/" + productId.toString(), { scroll: false })
+                // window.location.reload()
                 
             } else if (res.ok && type === "POST"){
                 setType("PUT");
-                window.location.replace("/product/" + productId.toString());
+                // window.location.hash = '#review-section'
+                // window.location.reload()
                     toast({
                 title: "Create Review",
                 description: `The Review is created.`,
                     })
+                  
+                    await delay(1000)
+                    window.location.replace("/product/" + productId.toString());
                 
             } else {
             //alert(res)
@@ -114,6 +136,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                     title: "You cannot review this product",
                     description: `You didn't buy this product, so you don't cannot access this button`,
                 })
+                setDisableButton(false)
                 
             // toast({
             //   title: "Edit Profile",
@@ -127,6 +150,7 @@ export default function ReviewForm({productId,prev_review} : {productId : number
                 title: "You cannot review this product",
                 description: `You didn't buy this product, so you don't cannot access this button`,
             })
+            setDisableButton(false)
           }
           finally {
            
@@ -184,8 +208,8 @@ export default function ReviewForm({productId,prev_review} : {productId : number
             )}
             />
         <div className="flex justify-between">
-        <Button type="submit"> {(type === "POST") ? "Create Review" : "Edit Review"}</Button>
-        {(type === "PUT") ? <Button type="submit"  onClick = {(e) => {e.preventDefault(); onDelete();}}>Delete Review</Button>: <></>}
+        <Button type="submit" disabled={disableButton}> {(type === "POST") ? "Create Review" : "Edit Review"}</Button>
+        {(type === "PUT") ? <Button type="submit" disabled={disableButton}  onClick = {(e) => {e.preventDefault(); onDelete();}}>Delete Review</Button>: <></>}
         </div>
         </form>
     </Form>)

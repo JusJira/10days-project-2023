@@ -46,6 +46,7 @@ export function PaotooongRegisterForm() { // change any type if u have free time
   const redirectQuery = queryParams ? queryParams.get("rdb") : "/wallet";
 
   const [isProcessing, setProcessing] = useState<boolean>(false);
+  const [allowSubmit, setAllowSubmit] = useState<boolean>(true);
 
   const defaultValues: Partial<RegisterFormValues> = {
     email: "",
@@ -62,6 +63,7 @@ export function PaotooongRegisterForm() { // change any type if u have free time
   async function onSubmit(data: RegisterFormValues) {
     // alert(JSON.stringify(data))
     setProcessing(true)
+    setAllowSubmit(false)
     try {
 
       const res = await fetch("/api/payment/paotooong/create",
@@ -84,6 +86,7 @@ export function PaotooongRegisterForm() { // change any type if u have free time
           variant: "destructive"
         })
         setProcessing(false)
+        setAllowSubmit(true)
       }
       else {
         toast({
@@ -103,6 +106,7 @@ export function PaotooongRegisterForm() { // change any type if u have free time
         variant: "destructive"
       })
       setProcessing(false)
+      setAllowSubmit(true)
     }
     
   }
@@ -139,7 +143,7 @@ export function PaotooongRegisterForm() { // change any type if u have free time
           )}
         />
 
-        <Button type="submit">Create</Button>
+        <Button type="submit" disabled={!allowSubmit}>Create</Button>
         
       </form>
     </Form>

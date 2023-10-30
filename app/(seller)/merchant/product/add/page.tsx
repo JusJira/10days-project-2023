@@ -28,15 +28,22 @@ import { Store } from "lucide-react";
 
 const FormSchema = productSchema
 
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
 export default function InputForm() {
   const [resource, setResource] = React.useState<string>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [disableButton, setDisableButton] = React.useState<boolean>(false)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
+    setDisableButton(true)
 
     const response = await fetch("/api/product", {
       method: "POST",
@@ -55,14 +62,17 @@ export default function InputForm() {
     setIsLoading(false);
 
     if (response?.ok) {
-      window.location.href = '/merchant/product'
-      return toast({
+      toast({
         title: "Success",
-        description: "Your product has been added.",
+        description: "Your product has been added. You will be sent back soon...",
       });
+      await delay(1500);
+      window.location.href = '/merchant/product'
+      return
     }
 
     if (!response?.ok) {
+      setDisableButton(false)
       return toast({
         title: "Something went wrong.",
         description: "Your product was not created",
@@ -193,7 +203,7 @@ export default function InputForm() {
               </FormItem>
             )}
           />
-          <Button className="w-full" type="submit" disabled={isLoading}>
+          <Button className="w-full" type="submit" disabled={disableButton}>
             Add Product
           </Button>
         </form>

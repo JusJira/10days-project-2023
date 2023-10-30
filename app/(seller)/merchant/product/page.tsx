@@ -9,6 +9,8 @@ import { Store } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
+
+
 type Product = {
   id: number;
   ownerId: string;
