@@ -16,8 +16,10 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
-import { ShoppingCart } from 'lucide-react';
+import { Loader2, ShoppingCart } from 'lucide-react';
 import { toast } from "@/components/ui/use-toast";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 type Item = {
   id: number;
@@ -48,6 +50,7 @@ const CartPage = () => {
     const [balance, setBalance] = useState<number>(0)
 
     const [isPurchasing, setIsPurchasing] = useState<boolean>(false)
+    const [allowSubmit, setAllowSubmit] = useState<boolean>(true);
 
   async function getBalance() {
     const userRes = await fetch(`/api/account/current`);
@@ -159,6 +162,7 @@ const CartPage = () => {
 
     async function purchase() {
         setIsPurchasing(true)
+        setAllowSubmit(false)
 
         const finalOrders : Item[] = []
         for (let e of orderList) {
@@ -179,10 +183,12 @@ const CartPage = () => {
             totalPrice : totalPrice
         })
     })  
+       
         toast({
           title: "Success",
           description: "Your order is completed. You will be sent to order page soon...",
         });
+        setIsPurchasing(false)
         await delay(2000)
         window.location.href = '/account/order'
         localStorage.removeItem('order')
@@ -260,7 +266,7 @@ const CartPage = () => {
                     {
                         ((totalPrice > 0) && (balance - totalPrice >= 0)) ? (
                             
-                                (isPurchasing == true) ? (
+                                (allowSubmit == false) ? (
                                     <Button disabled>Purchase</Button>
                                 ) : (
                                     <Button onClick={async () => {purchase()}}>Purchase</Button>
@@ -279,6 +285,14 @@ const CartPage = () => {
 
                 </div>
             </div>
+            <Dialog open={isPurchasing} >
+              <DialogContent>
+                <div className="w-full text-center justify-center">
+                  <Label className="text-xl">Processing...</Label>
+                  <Loader2 className="h-10 w-full animate-spin justify-center" />
+                </div>
+              </DialogContent>
+            </Dialog>
         </div>
     )
 }
