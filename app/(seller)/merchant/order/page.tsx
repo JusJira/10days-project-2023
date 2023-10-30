@@ -62,11 +62,12 @@ const OrderPage = async () => {
       image: true,
       orderLineContains: {
         orderBy: {
-            order: {
-                orderedAt: "desc"
-            }
+          order: {
+            orderedAt: "desc",
+          },
         },
         select: {
+          totalPrice: true,
           productId: true,
           orderId: true,
           quantity: true,
@@ -75,7 +76,7 @@ const OrderPage = async () => {
               user: {
                 select: {
                   displayName: true,
-                  address: true
+                  address: true,
                 },
               },
             },
@@ -119,18 +120,18 @@ const OrderPage = async () => {
                           <div>Product # {d.productId}</div>
                           <div>Order # {d.orderId}</div>
                           <div>Quantity : {d.quantity}</div>
+                          <div>Money Paid : {d.totalPrice}</div>
                         </div>
                         <Card className="w-[350px]">
-                            <CardHeader>
-                              <CardTitle>Customer Info</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              <div>Name : {d.order.user.displayName}</div>
-                              <div>Address : {d.order.user.address}</div>
-                            </CardContent>
-                          </Card>
+                          <CardHeader>
+                            <CardTitle>Customer Info</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div>Name : {d.order.user.displayName}</div>
+                            <div>Address : {d.order.user.address}</div>
+                          </CardContent>
+                        </Card>
                       </div>
-                      
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>

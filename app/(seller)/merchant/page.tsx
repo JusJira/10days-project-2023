@@ -46,7 +46,8 @@ export default async function account() {
         <h3 className="text-lg font-medium">Merchant</h3>
       </div>
       <Separator />
-      <div className="flex h-full  min-h-full flex-row items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
+      <div className="w-full flex items-center justify-center  rounded-md bg-white p-3 dark:bg-neutral-900">
+      <div className="grid grid-cols-3 w-fit h-full  min-h-full items-center justify-center gap-3">
         <Link
           className="flex flex-col items-center justify-center"
           href={"/merchant/product"}
@@ -76,6 +77,7 @@ export default async function account() {
             <span>Wallet</span>
           </Link>
         </div>
+      </div>
       </div>
       <div className="flex h-full  min-h-full flex-row items-center justify-center gap-3 rounded-md bg-white p-3 dark:bg-neutral-900">
         <Card className="w-[350px]">
