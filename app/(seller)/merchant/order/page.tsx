@@ -90,7 +90,7 @@ const OrderPage = async () => {
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
       {prodOrder.map(function (val, idx) {
         return val.orderLineContains.map((d, index) => (
-          <div className="flex flex-col items-center">
+          <div key={index} className="flex flex-col items-center">
             <Card className="w-[95%] md:w-[70%]">
               <CardContent className="pt-5">
                 <Accordion type="single" collapsible>
