@@ -78,6 +78,7 @@ const ProductSearchPanel = ({ path }: { path: string }) => {
     const url = await fetch("/api/product/random");
     if (url.ok) {
       const data = await url.json();
+      window.location.href = "/"
       window.location.href = "/product/" + data[0].id;
       setRandoming(false);
     }
