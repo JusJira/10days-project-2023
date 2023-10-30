@@ -20,6 +20,7 @@ import {
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/use-toast";
 
 const ProductSearchPanel = ({ path }: { path: string }) => {
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -81,6 +82,16 @@ const ProductSearchPanel = ({ path }: { path: string }) => {
     //   console.log(data)
       window.location.href = data
       setRandoming(false);
+    }
+    else {
+        if (url.status === 401) {
+            setRandoming(false);
+            return toast({
+              title: "Not logged in",
+              description: "You need to be logged-in before using this feature.",
+              variant: "destructive",
+            });
+          }
     }
   };
 
