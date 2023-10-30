@@ -37,9 +37,9 @@ export default async function Home() {
             <Button>
               {
                 (isAuthenticated()) ? (
-                  <Link href="/product">Get Start!</Link>
+                  <Link href="/product">Get Started!</Link>
                 ) : (
-                  <LoginLink>Get Start!</LoginLink>
+                  <LoginLink>Get Started!</LoginLink>
                 )
               }
             </Button>
@@ -50,7 +50,7 @@ export default async function Home() {
         </div> */}
       </div>
 
-      <div className="py-14 flex flex-col items-center justify-center space-y-10">
+      <div className="py-14 flex flex-col items-center justify-center space-y-10 px-1">
           <div className="text-center">
             <Label className="font-bold text-2xl">Web application for trading everything...</Label>
           </div>
