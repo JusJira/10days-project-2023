@@ -28,8 +28,9 @@ export async function GET(req: Request) {
         id: true,
       },
     });
+    const url = process.env.KINDE_SITE_URL + '/product/' + product[0].id
 
-    return new Response(JSON.stringify(product));
+    return new Response(JSON.stringify(url));
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 });
