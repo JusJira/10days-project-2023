@@ -25,6 +25,7 @@ type Cascade_review = Review & {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
+  const auth = await isAuthenticated();
   const user = await getUser();
   const id = parseInt(params.id);
 
@@ -153,6 +154,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     <Button disabled={true}>Out of Stock</Button>
                   ) : (
                     <AddToCardButton
+                      auth={auth}
                       productId={data.id}
                       maxQuantity={data.quantity}
                     />
@@ -162,7 +164,6 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </>
               )}
             </div>
-            
           </div>
 
           {/* <div className="flex flex-row mt-10 gap-8">

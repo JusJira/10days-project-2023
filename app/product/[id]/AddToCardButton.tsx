@@ -14,7 +14,7 @@ import {
   } from "@/components/ui/dialog"
   
 
-const AddToCardButton = ({productId, maxQuantity} : {productId: number, maxQuantity: number}) => {
+const AddToCardButton = ({productId, maxQuantity,auth} : {productId: number, maxQuantity: number, auth: boolean}) => {
 
     const dataFetchedRef = useRef(false);
 
@@ -58,6 +58,18 @@ const AddToCardButton = ({productId, maxQuantity} : {productId: number, maxQuant
         setQuantity(Math.min(quantity + 1, maxQuantity))
     }
 
+    function checkAuth() {
+        if (!auth) {
+            toast({
+                title: "Can't add to cart",
+                description: "Please login before adding items to your cart",
+                variant: 'destructive',
+            })
+        }
+        else {
+            addToCart()
+        }
+    }
     function addToCart() {
         var isMoreThanStock = false
         var finalAddedQuantity = quantity
@@ -173,7 +185,7 @@ const AddToCardButton = ({productId, maxQuantity} : {productId: number, maxQuant
     return (
         <div className="flex flex-row">
             <Dialog>
-                <DialogTrigger className={buttonVariants({ variant: "default" })}>Add to Cart</DialogTrigger>
+                <DialogTrigger className={buttonVariants({ variant: "default" })} >Add to Cart</DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Adding to Cart</DialogTitle>
@@ -189,7 +201,7 @@ const AddToCardButton = ({productId, maxQuantity} : {productId: number, maxQuant
                                     (quantity == 0) ? (
                                         <Button className="ml-4" disabled>Add to Cart</Button>
                                     ) : (
-                                        <DialogClose asChild><Button className="ml-4" onClick={() => addToCart()}>Add to Cart</Button></DialogClose>
+                                        <DialogClose asChild><Button className="ml-4" onClick={() => checkAuth()}>Add to Cart</Button></DialogClose>
                                     )
                                 }
                                 </div>
