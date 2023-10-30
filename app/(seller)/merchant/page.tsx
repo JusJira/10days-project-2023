@@ -31,6 +31,13 @@ export default async function account() {
       },
     },
   });
+  const orders = await db.orderLine.count({
+    where: {
+      product: {
+        ownerId: user.id as string,
+      },
+    },
+  })
 
   return (
     <div className="relative flex min-h-full flex-col gap-3 bg-neutral-100 p-3 dark:bg-neutral-800">
@@ -51,7 +58,7 @@ export default async function account() {
         </Link>
         <Link
           className="flex flex-col items-center justify-center"
-          href={"/account/order"}
+          href={"/merchant/order"}
         >
           <Button className="aspect-square h-full flex flex-col">
           <ShoppingBag size={32}/>
@@ -81,6 +88,8 @@ export default async function account() {
             <p>{products}</p>
             <Label htmlFor="name">Added to Wishlist</Label>
             <p>{wished}</p>
+            <Label htmlFor="name">Product Orders</Label>
+            <p>{orders}</p>
           </CardContent>
         </Card>
       </div>
